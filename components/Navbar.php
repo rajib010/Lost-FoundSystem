@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <style>
@@ -22,11 +23,12 @@
             display: flex;
             align-items: center;
             gap: 1vw;
+            margin-left: 7vw;
         }
 
         .img-div {
             width: 5rem;
-            background-color: slategrey;
+            background-color: #C5BBBB;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -41,28 +43,32 @@
 
         .list-items {
             display: flex;
-            width: 35%;
+            width: 65%;
+            line-height: 10vw;
             justify-content: space-between;
-            margin: auto;
+            margin-left: auto;
             list-style: none;
             font-size: 1.4rem;
+            padding-right: 2vw;
         }
 
         .loginButton {
             width: 7vw;
             height: 3rem;
-            margin: auto 0;
+            margin: 2vw auto;
             border-radius: 1vw;
             background-color: #F38402;
             cursor: pointer;
             color: white;
-            display: none;
+            display: block;
+            margin-top: 3vw;
         }
 
         .user-info {
             width: 6vw;
-            height: fit-content;
-
+            height: 7vw;
+            padding-top: 2vw;
+            display: block;
         }
 
         .user-info>img {
@@ -71,18 +77,11 @@
             height: fit-content;
         }
 
-        .user-info>img :hover .logoutBtn {
-            display: block;
-        }
-
-        .bar-icons {
-            display: none;
-        }
-
         .logoutBtn {
             display: none;
             position: absolute;
-            right: 1.7rem;
+            top: 5vw;
+            right: 3.5rem;
             transform: translateX(-50%);
             background-color: #F38402;
             color: white;
@@ -95,7 +94,107 @@
         .user-info:hover .logoutBtn {
             display: block;
         }
+
+        .bar-icons {
+            display: none;
+        }
+
+        .bar-button {
+            width: 4rem;
+            height: 2rem;
+            border-radius: 0.2rem;
+        }
+
+        /* for mobile devices */
+        @media(max-width: 628px) {
+            .nav-bar {
+                height: 14vw;
+                padding: 0px 4vw;
+            }
+
+            .img-div {
+                height: 9vw;
+            }
+
+            .img-div img {
+                width: 70%;
+            }
+
+            .logo-div h1 {
+                font-size: 1.4rem;
+            }
+
+            .list-items {
+                display: none;
+                flex-direction: column;
+                text-align: center;
+                background-color: slategray;
+                position: absolute;
+                top: 12vw;
+                right: 4vw;
+                width: 90vw;
+                padding: 2vw;
+                
+                border-bottom-left-radius: 5vw;
+                border-bottom-right-radius: 5vw;
+                gap: 4vw;
+            }
+            .list-items li{
+                border-bottom: 1px solid white;
+            }
+
+            .show-items {
+                display: flex;
+            }
+
+            .loginButton {
+                display: block;
+                margin: -3.5vw auto 0px;
+                width: 19vw;
+            }
+
+            .user-info {
+                display: flex;
+                flex-direction: row;
+                /* position: relative; */
+               align-items: center;
+               padding: 6vw 0px;
+               width: 100%;
+
+            }
+
+            .user-info > img {
+                width: 10vw;
+               margin-left: 38vw;
+               margin-top: -2vw;
+        }
+
+            .user-info .logoutBtn {
+                display: none;
+                position: relative;
+                padding: 2vw;
+                margin-left: 6vw;
+            }
+
+            
+
+            .bar-icons {
+                display: block;
+            }
+
+            .bar-button {
+                height: 3rem;
+                background-color: #C5BBBB;
+                border-radius: 0.4rem;
+                cursor: pointer;
+            }
+
+            .bar-button i {
+                font-size: xx-large;
+            }
+        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -106,18 +205,31 @@
         </div>
         <ul class="list-items">
             <li>Post</li>
-            <li>about</li>
-            <li>contact</li>
+            <li>About</li>
+            <li>Contact</li>
             <li>Reviews</li>
             <li>*</li>
+            <li><button class="loginButton">Join now</button></li>
+            <!-- <li>
+                <div class="user-info">
+                    <img src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png" class="user-image" alt="">
+                    <button class="logoutBtn">Logout</button>
+                </div>
+            </li> -->
         </ul>
-        <button class="loginButton">Join now</button>
-        <div class="user-info">
-            <img src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png" alt="">
-            <button class="logOutBtn">Logout</button>
+
+        <div class="bar-icons">
+            <button class="bar-button">
+                <i class="fa-solid fa-bars"></i>
+            </button>
         </div>
-        <div class="bar-icons">bars</div>
     </nav>
+
+    <script>
+        document.querySelector(".bar-button").addEventListener("click", function () {
+            document.querySelector("ul.list-items").classList.toggle("show-items");
+        });
+    </script>
 </body>
 
 </html>
