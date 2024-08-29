@@ -105,8 +105,42 @@
             border-radius: 0.2rem;
         }
 
+
+        /* for tablets */
+
+        @media (min-width:768px)and  (max-width:1024px){
+            .nav-bar{
+                height: 9vw;
+            }
+            .img-div{
+                height: 7vw;
+            }
+            .img-div img{
+                width: 80%;
+            }
+            .logo-div h1{
+                font-size: 2.4vw;
+            }
+            .list-items li{
+                font-size: 1.1rem;
+            }
+            .loginButton{
+                width: 9vw;
+                height: 2rem;
+            }
+
+            .logoutBtn{
+               margin-left: 10vw;
+              padding: 1vw;
+              right: 2vw;
+              top: 8vw;
+            }
+        }
+
+
+
         /* for mobile devices */
-        @media(max-width: 628px) {
+        @media(max-width: 767px) {
             .nav-bar {
                 height: 14vw;
                 padding: 0px 4vw;
@@ -134,7 +168,6 @@
                 right: 4vw;
                 width: 90vw;
                 padding: 2vw;
-                
                 border-bottom-left-radius: 5vw;
                 border-bottom-right-radius: 5vw;
                 gap: 4vw;
@@ -156,7 +189,6 @@
             .user-info {
                 display: flex;
                 flex-direction: row;
-                /* position: relative; */
                align-items: center;
                padding: 6vw 0px;
                width: 100%;
@@ -175,8 +207,6 @@
                 padding: 2vw;
                 margin-left: 6vw;
             }
-
-            
 
             .bar-icons {
                 display: block;
@@ -209,13 +239,13 @@
             <li>Contact</li>
             <li>Reviews</li>
             <li>*</li>
-            <li><button class="loginButton">Join now</button></li>
-            <!-- <li>
+            <!-- <li><button class="loginButton">Join now</button></li> -->
+            <li>
                 <div class="user-info">
                     <img src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png" class="user-image" alt="">
                     <button class="logoutBtn">Logout</button>
                 </div>
-            </li> -->
+            </li>
         </ul>
 
         <div class="bar-icons">
