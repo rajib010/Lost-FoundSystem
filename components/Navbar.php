@@ -108,35 +108,39 @@
 
         /* for tablets */
 
-        @media (min-width:768px)and  (max-width:1024px){
-            .nav-bar{
+        @media (min-width:768px)and (max-width:1024px) {
+            .nav-bar {
                 height: 9vw;
             }
-            .img-div{
+
+            .img-div {
                 height: 7vw;
             }
-            .img-div img{
+
+            .img-div img {
                 width: 80%;
             }
-            .logo-div h1{
+
+            .logo-div h1 {
                 font-size: 2.4vw;
             }
-            .list-items li{
+
+            .list-items li {
                 font-size: 1.1rem;
             }
-            .loginButton{
+
+            .loginButton {
                 width: 9vw;
                 height: 2rem;
             }
 
-            .logoutBtn{
-               margin-left: 10vw;
-              padding: 1vw;
-              right: 2vw;
-              top: 8vw;
+            .logoutBtn {
+                margin-left: 10vw;
+                padding: 1vw;
+                right: 2vw;
+                top: 8vw;
             }
         }
-
 
 
         /* for mobile devices */
@@ -172,7 +176,8 @@
                 border-bottom-right-radius: 5vw;
                 gap: 4vw;
             }
-            .list-items li{
+
+            .list-items li {
                 border-bottom: 1px solid white;
             }
 
@@ -189,17 +194,17 @@
             .user-info {
                 display: flex;
                 flex-direction: row;
-               align-items: center;
-               padding: 6vw 0px;
-               width: 100%;
+                align-items: center;
+                padding: 6vw 0px;
+                width: 100%;
 
             }
 
-            .user-info > img {
+            .user-info>img {
                 width: 10vw;
-               margin-left: 38vw;
-               margin-top: -2vw;
-        }
+                margin-left: 38vw;
+                margin-top: -2vw;
+            }
 
             .user-info .logoutBtn {
                 display: none;
@@ -256,7 +261,7 @@
     </nav>
 
     <script>
-        document.querySelector(".bar-button").addEventListener("click", function () {
+        document.querySelector(".bar-button").addEventListener("click", function() {
             document.querySelector("ul.list-items").classList.toggle("show-items");
         });
     </script>
