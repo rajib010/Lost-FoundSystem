@@ -25,7 +25,6 @@
             right: 0;
             bottom: 0;
             background-color: rgba(26, 24, 24, 0.6);
-            /* Adjust color and opacity */
             z-index: 1;
         }
 
@@ -130,7 +129,7 @@
             <div class="sub-content">
                 <h3>Our Mission</h3>
                 <p>At Lost & Found, our goal is to make the process of finding lost items as smooth and stress-free as
-                    possible. We understand how important personal belongings can be, and we’re committed to providing a
+                    possible. We understand how important personal belongings can be, and we're committed to providing a
                     reliable service that maximizes the chances of recovery. Our platform offers a comprehensive
                     database where users can report lost items, browse found items, and receive updates on their
                     inquiries.</p>
