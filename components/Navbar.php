@@ -8,15 +8,19 @@
         }
 
         .nav-bar {
-            width: 95vw;
-            margin: auto;
+            width: 95%;
+            margin: 1vw auto;
             height: 7vw;
             background-color: #3EA048;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 2vw;
-            border-radius: 10vw;
+            border-radius: vw;
+            color: white;
+            font-weight: bolder;
+            position: relative;
+            z-index: 10;
         }
 
         .logo-div {
@@ -81,7 +85,7 @@
             display: none;
             position: absolute;
             top: 5vw;
-            right: 3.5rem;
+            right: 1.5rem;
             transform: translateX(-50%);
             background-color: #F38402;
             color: white;
@@ -137,8 +141,8 @@
             .logoutBtn {
                 margin-left: 10vw;
                 padding: 1vw;
-                right: 2vw;
-                top: 8vw;
+                right: 1vw;
+                top: 5vw;
             }
         }
 
@@ -148,6 +152,8 @@
             .nav-bar {
                 height: 14vw;
                 padding: 0px 4vw;
+                z-index: 10;
+
             }
 
             .img-div {
@@ -168,13 +174,14 @@
                 text-align: center;
                 background-color: slategray;
                 position: absolute;
-                top: 12vw;
-                right: 4vw;
+                top: 14.2vw;
+                right: 1vw;
                 width: 90vw;
-                padding: 2vw;
+                padding: 1vw;
                 border-bottom-left-radius: 5vw;
                 border-bottom-right-radius: 5vw;
                 gap: 4vw;
+                z-index: 9;
             }
 
             .list-items li {
@@ -210,7 +217,7 @@
                 display: none;
                 position: relative;
                 padding: 2vw;
-                margin-left: 6vw;
+               top: 1vw;
             }
 
             .bar-icons {
@@ -228,6 +235,7 @@
                 font-size: xx-large;
             }
         }
+
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -244,13 +252,13 @@
             <li>Contact</li>
             <li>Reviews</li>
             <li>*</li>
-            <!-- <li><button class="loginButton">Join now</button></li> -->
-            <li>
+            <li><button class="loginButton">Join now</button></li>
+            <!-- <li>
                 <div class="user-info">
                     <img src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png" class="user-image" alt="">
                     <button class="logoutBtn">Logout</button>
                 </div>
-            </li>
+            </li> -->
         </ul>
 
         <div class="bar-icons">

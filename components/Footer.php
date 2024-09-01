@@ -13,8 +13,9 @@
         }
 
         footer {
-            width: 95vw;
+            width: 95%;
             margin: auto;
+            margin-top: 0px;
             min-height: 14vw;
             background-color: black;
             color: white;
