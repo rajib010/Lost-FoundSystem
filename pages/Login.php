@@ -133,6 +133,12 @@
             background-position: center;
         }
 
+        p>span>a {
+            color: blue;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
         /* Tablet devices (768px to 1024px) */
         @media (min-width: 768px) and (max-width: 1024px) {
             .main-content {
@@ -250,11 +256,16 @@
                     </div>
                     <div class="input-container" data-icon="🔒">
                         <input type="password" placeholder="Enter your password" class="inputField" id="password">
-                        <span class="toggle-password" onclick="togglePasswordVisibility()"><i class="fa-solid fa-eye-slash"></i></span>
+                        <span class="toggle-password" onclick="togglePasswordVisibility()"><i
+                                class="fa-solid fa-eye-slash"></i></span>
                     </div>
                     <p><a href="#">Forgot Password?</a></p>
                     <button type="submit" class="loginBtn">Login</button>
-                    <p>Don't have an account? <span>Sign up now.</span></p>
+                    <p>Don't have an account?
+                        <span>
+                            <a href="../pages/Signup.php">Sign up now.</a>
+                        </span>
+                    </p>
                 </form>
             </div>
         </div>
