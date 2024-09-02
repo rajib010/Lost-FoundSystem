@@ -1,0 +1,138 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+.review-section {
+    width: 95%;
+    margin: 2vw auto 3vw 0vw;
+    text-align: center;
+}
+
+.review-section>.review>h1 {
+    font-size: 2.4vw;
+    padding: 1vw 0vw 3vw 0vw;
+}
+
+.sliderImage {
+    width: 40%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 2vw;
+}
+
+.sliderImage>.userImage {
+    width: 50%;
+}
+
+.userImage>img {
+    width: 100%;
+    height: 20vw;
+
+    border-radius: 8px;
+}
+
+.sliderBtn {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 2vw 2vw;
+    cursor: pointer;
+    font-size: 3vw;
+    border-radius: 100%;
+    transition: background-color 0.3s ease;
+    position: absolute;
+    right: -10%;
+}
+
+.sliderBtn:hover {
+    background-color: #0056b3;
+}
+
+#userReview {
+    font-size: 1.5rem;
+    margin-bottom: 1vw;
+}
+
+.fade-out {
+    opacity: 0;
+}
+
+.fade-in {
+    opacity: 1;
+}
+
+
+/* for tablet devices */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    .review-section>.review>h1 {
+        font-size: 4vw;
+    }
+
+    .sliderImage {
+        width: 50%;
+    }
+
+    .sliderImage>.userImage {
+        width: 70%;
+    }
+
+    .userImage>img {
+        height: 35vw;
+    }
+
+    .sliderBtn {
+        padding: 4vw 4vw;
+        border-radius: 100%;
+        font-size: 3vw;
+    }
+
+    #userReview {
+        font-size: 1rem;
+    }
+
+    #userName {
+        font-size: 0.9rem;
+    }
+}
+
+
+/* for mobile devices */
+@media (max-width: 767px) {
+
+
+    .review-section>.review>h1 {
+        font-size: 4.5vw;
+    }
+
+    .sliderImage {
+        width: 50%;
+    }
+
+    .sliderImage>.userImage {
+        width: 70%;
+    }
+
+    .userImage>img {
+        height: 35vw;
+    }
+
+    .sliderBtn {
+        padding: 4vw 4vw;
+        border-radius: 100%;
+        font-size: 3vw;
+    }
+
+    #userReview {
+        font-size: 1rem;
+    }
+
+    #userName {
+        font-size: 0.8rem;
+    }
+}

@@ -2,7 +2,7 @@
         main {
             width: 95%;
             margin: 0px auto;
-            background-image: url(../public/bg\ img.jfif);
+            background-image: url(../../public/bg\ img.jfif);
             background-size: cover;
             background-position: center;
             position: relative;
