@@ -1,138 +1,98 @@
-* {
-    box-sizing: border-box;
-    margin: 0px;
-    padding: 0px;
-}
-
 .review-section {
-    width: 95%;
-    margin: 2vw auto 3vw 0vw;
+    padding: 40px 20px;
     text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    margin: 40px auto;
+    max-width: 1200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.review-section>.review>h1 {
-    font-size: 2.4vw;
-    padding: 1vw 0vw 3vw 0vw;
+.review h1 {
+    font-size: 2.5em;
+    color: #ff5722;
+    margin-bottom: 30px;
 }
 
 .sliderImage {
-    width: 40%;
-    margin: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    margin-bottom: 2vw;
+    margin-bottom: 20px;
 }
 
-.sliderImage>.userImage {
-    width: 50%;
-}
-
-.userImage>img {
-    width: 100%;
-    height: 20vw;
-
-    border-radius: 8px;
+.userImage img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .sliderBtn {
-    background-color: #007BFF;
-    color: white;
+    background-color: #ff5722;
     border: none;
-    padding: 2vw 2vw;
+    padding: 10px;
+    border-radius: 50%;
     cursor: pointer;
-    font-size: 3vw;
-    border-radius: 100%;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-left: 10px;
     transition: background-color 0.3s ease;
-    position: absolute;
-    right: -10%;
 }
 
 .sliderBtn:hover {
-    background-color: #0056b3;
+    background-color: #e64a19;
 }
 
 #userReview {
-    font-size: 1.5rem;
-    margin-bottom: 1vw;
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 10px;
 }
 
-.fade-out {
-    opacity: 0;
+#userName {
+    font-size: 1.5em;
+    color: #333;
 }
 
-.fade-in {
-    opacity: 1;
-}
+@media (min-width:768px) and (max-width:1024px) {
 
-
-/* for tablet devices */
-@media (min-width: 768px) and (max-width: 1024px) {
-
-    .review-section>.review>h1 {
-        font-size: 4vw;
+    .review h1 {
+        font-size: 2.2em;
     }
-
-    .sliderImage {
-        width: 50%;
-    }
-
-    .sliderImage>.userImage {
-        width: 70%;
-    }
-
-    .userImage>img {
-        height: 35vw;
-    }
-
-    .sliderBtn {
-        padding: 4vw 4vw;
-        border-radius: 100%;
-        font-size: 3vw;
+    .userImage img {
+        width: 90px;
+        height: 90px;
     }
 
     #userReview {
-        font-size: 1rem;
+        font-size: 1.1em;
     }
 
     #userName {
-        font-size: 0.9rem;
+        font-size: 1.4em;
     }
+    
 }
 
-
-/* for mobile devices */
 @media (max-width: 767px) {
 
-
-    .review-section>.review>h1 {
-        font-size: 4.5vw;
+    .review h1 {
+        font-size: 2em;
     }
-
-    .sliderImage {
-        width: 50%;
-    }
-
-    .sliderImage>.userImage {
-        width: 70%;
-    }
-
-    .userImage>img {
-        height: 35vw;
-    }
-
-    .sliderBtn {
-        padding: 4vw 4vw;
-        border-radius: 100%;
-        font-size: 3vw;
+    .userImage img {
+        width: 80px;
+        height: 80px;
     }
 
     #userReview {
-        font-size: 1rem;
+        font-size: 1em;
     }
 
     #userName {
-        font-size: 0.8rem;
+        font-size: 1.2em;
     }
+
+    
 }

@@ -1,102 +1,76 @@
-* {
-    box-sizing: border-box;
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
 
-a {
-    text-decoration: none;
-    color: white;
-    font-size: 1.2vw;
-}
 
 .top-main {
-    height: 60vh;
-    position: relative;
-    width: 95%;
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: black;
-}
-
-.top-main::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url(../../public/bg\ img.jfif);
-    background-size: cover;
-    background-position: center;
-    opacity: 0.6;
-    z-index: -1;
-}
-
-.top-contents {
-    position: relative;
-    z-index: 1;
+    padding: 50px 20px;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    margin: 40px auto;
+    max-width: 1200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.top-contents>h1 {
-    font-size: 4vw;
-    margin-bottom: 2vw;
+.top-contents h1 {
+    font-size: 3em;
+    color: #ff5722;
+    margin-bottom: 20px;
 }
 
-.top-contents>p {
-    font-style: italic;
-    font-size: 1.5vw;
-    margin-bottom: 7vw;
+.top-contents p {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #555;
 }
 
 .getStartBtn {
-    height: 3vw;
-    width: 7vw;
-    background-color: #F38402;
+    background-color: #ff5722;
     border: none;
-    color: white;
-    cursor: pointer;
+    padding: 15px 30px;
     border-radius: 5px;
-    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .getStartBtn:hover {
-    background-color: rgb(3, 83, 3);
+    background-color: #e64a19;
 }
 
-@media (min-width: 768px) and (max-width: 1024px) {
 
-    .top-contents>.getStartBtn {
-        width: 12vw;
-        height: 4.5vw;
+@media (min-width:768px) and (max-width:1024px) {
+    .top-contents h1 {
+        font-size: 2.5em;
     }
+
+    .top-contents p {
+        font-size: 1.3em;
+    }
+
+    .getStartBtn {
+        font-size: 1.1em;
+        padding: 14px 25px;
+    }
+
 }
 
-/* for mobile devices */
 @media (max-width: 767px) {
-
-    .top-main {
-        height: 30vh;
+    .top-contents h1 {
+        font-size: 2.2em;
     }
 
-    .top-contents>h1 {
-        font-size: 5vw;
+    .top-contents p {
+        font-size: 1.2em;
     }
 
-    .top-contents>p {
-        font-size: 2.5vw;
+    .getStartBtn {
+        font-size: 1em;
+        padding: 12px 20px;
     }
-
-    .top-contents>.getStartBtn {
-        width: 20vw;
-        height: 7vw;
-    }
-
 }

@@ -1,0 +1,254 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+.top-main {
+    padding: 50px 20px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    margin: 40px auto;
+    max-width: 1200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.top-contents h1 {
+    font-size: 3em;
+    color: #ff5722;
+    margin-bottom: 20px;
+}
+
+.top-contents p {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.getStartBtn {
+    background-color: #ff5722;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.getStartBtn:hover {
+    background-color: #e64a19;
+}
+
+/* Posts Section */
+.posts-section {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    margin: 40px auto;
+    max-width: 1200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.posts-section h1 {
+    font-size: 2.5em;
+    color: #ff5722;
+    margin-bottom: 30px;
+}
+
+.all-posts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.single-post {
+    width: calc(25% - 20px);
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: left;
+}
+
+.post-img img {
+    width: 100%;
+    height: auto;
+}
+
+.post-desc {
+    padding: 15px;
+}
+
+.post-desc h3 {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.post-desc p {
+    font-size: 1em;
+    color: #555;
+}
+
+.btndiv {
+    margin-top: 30px;
+}
+
+.viewMoreBtn {
+    background-color: #ff5722;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+.viewMoreBtn:hover {
+    background-color: #e64a19;
+}
+
+.viewMoreBtn a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Review Section */
+.review-section {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    margin: 40px auto;
+    max-width: 1200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.review h1 {
+    font-size: 2.5em;
+    color: #ff5722;
+    margin-bottom: 30px;
+}
+
+.sliderImage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.userImage img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.sliderBtn {
+    background-color: #ff5722;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.sliderBtn:hover {
+    background-color: #e64a19;
+}
+
+#userReview {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+#userName {
+    font-size: 1.5em;
+    color: #333;
+}
+
+/* Responsive Styles */
+@media (max-width: 767px) {
+    .top-contents h1 {
+        font-size: 2.2em;
+    }
+
+    .top-contents p {
+        font-size: 1.2em;
+    }
+
+    .getStartBtn {
+        font-size: 1em;
+        padding: 12px 20px;
+    }
+
+    .posts-section h1, .review h1 {
+        font-size: 2em;
+    }
+
+    .single-post {
+        width: 100%;
+    }
+
+    .userImage img {
+        width: 80px;
+        height: 80px;
+    }
+
+    #userReview {
+        font-size: 1em;
+    }
+
+    #userName {
+        font-size: 1.2em;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .top-contents h1 {
+        font-size: 2.5em;
+    }
+
+    .top-contents p {
+        font-size: 1.3em;
+    }
+
+    .getStartBtn {
+        font-size: 1.1em;
+        padding: 14px 25px;
+    }
+
+    .posts-section h1, .review h1 {
+        font-size: 2.2em;
+    }
+
+    .single-post {
+        width: calc(33.33% - 20px);
+    }
+
+    .userImage img {
+        width: 90px;
+        height: 90px;
+    }
+
+    #userReview {
+        font-size: 1.1em;
+    }
+
+    #userName {
+        font-size: 1.4em;
+    }
+}

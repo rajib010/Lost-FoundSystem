@@ -1,136 +1,101 @@
-* {
-    box-sizing: border-box;
-    margin: 0px;
-    padding: 0px;
-}
+
 
 .posts-section {
-    width: 95%;
-    padding: 2vw 0px;
-    margin: auto;
-    min-height: 50vh;
+    padding: 40px 20px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    margin: 40px auto;
+    max-width: 1200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.posts-section>h1 {
-    text-align: center;
-    font-size: 2.4vw;
-    margin-bottom: 2vw;
+.posts-section h1 {
+    font-size: 2.5em;
+    color: #ff5722;
+    margin-bottom: 30px;
 }
 
 .all-posts {
-    width: 100%;
     display: flex;
-    justify-content: space-between;
-    padding: 1vw;
     flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
 }
 
-.all-posts>.single-post {
-    width: 23%;
+.single-post {
+    width: calc(25% - 20px);
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: left;
+}
+
+.post-img img {
+    width: 100%;
     height: auto;
-    margin-bottom: 2vw;
 }
 
-.single-post>.post-img {
-    width: 100%;
-    margin: auto;
-    height: 40vh;
-    border-radius: 10px;
+.post-desc {
+    padding: 15px;
 }
 
-.post-img>img {
-    width: 100%;
-    height: inherit;
-    border-radius: 10px;
+.post-desc h3 {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 10px;
 }
 
-.single-post>.post-desc {
-
-    border: 1px dotted black;
-    width: 100%;
-    height: 9vw;
-    margin-top: 0.5vw;
-    padding: 1vw;
-    border-radius: 1vw;
+.post-desc p {
+    font-size: 1em;
+    color: #555;
 }
 
 .btndiv {
-    width: 100%;
-    display: flex;
-    justify-content: right;
+    margin-top: 30px;
 }
 
 .viewMoreBtn {
-    width: 7vw;
-    height: 2.8vw;
-    border-radius: 0.4vw;
-    background-color: #F38402;
-
-}
-
-.viewMoreBtn>a {
-
+    background-color: #ff5722;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
     color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
 }
 
 .viewMoreBtn:hover {
-    background-color: rgb(3, 83, 3);
-    cursor: pointer;
+    background-color: #e64a19;
 }
 
-/* for tablet devices */
-@media (min-width: 768px) and (max-width: 1024px) {
-
-
-    .all-posts>.single-post {
-        width: 48%;
-    }
-
-    .single-post>.post-desc {
-        height: 12vw;
-        padding: 1vw 3vw;
-    }
-
-    .viewMoreBtn {
-        height: 4vw;
-        width: 8vw;
-    }
-
-    .viewMoreBtn>a {
-        font-size: 1.8vw;
-    }
+.viewMoreBtn a {
+    color: white;
+    text-decoration: none;
 }
 
 
-/* for mobile devices */
+@media (min-width:768px) and (max-width:1024px) {
+
+    .posts-section h1{
+        font-size: 2.2em;
+    }
+
+    .single-post {
+        width: calc(33.33% - 20px);
+    }
+}
+
 @media (max-width: 767px) {
 
-    .posts-section>h1 {
-        font-size: 4.5vw;
+    .posts-section h1{
+        font-size: 2em;
     }
 
-    .all-posts>.single-post {
-        width: 80%;
-        margin: 1vw auto;
+    .single-post {
+        width: 100%;
     }
-
-    .single-post>.post-desc {
-        height: 20vw;
-        padding: 2vw 4vw;
-    }
-
-    .btndiv {
-        margin-top: 2vw;
-        padding-right: 5vw;
-    }
-
-    .viewMoreBtn {
-        width: 13vw;
-        height: 6vw;
-    }
-
-    .viewMoreBtn>a {
-        font-size: 3vw;
-    }
-
 }

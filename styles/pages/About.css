@@ -1,93 +1,90 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
 
-        main {
-            width: 95%;
-            margin: 0px auto;
-            background-image: url(../../public/bg\ img.jfif);
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            padding: 1vw;
-        }
+main {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
-        main::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(26, 24, 24, 0.6);
-            z-index: 1;
-        }
+.top-text {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #ff5722; 
+}
 
-        .allContent-div {
-            width: 95%;
-            margin: auto;
-            min-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            gap: 2vw;
-            position: relative;
-            z-index: 2;
-            color: white;
-        }
+.allContent-div {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
-        .top-text {
-            font-size: 4vw;
-            text-align: center;
-            margin: 2vw;
-            position: relative;
-            z-index: 2;
-            color: white;
-        }
+.sub-content {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
 
-        h3 {
-            font-size: 3vw;
-            position: relative;
-            z-index: 2;
-        }
+.sub-content h3 {
+    color: #333;
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
 
-        .sub-content p {
-            font-size: 2vw;
-            margin-bottom: 1vw;
-            position: relative;
-            z-index: 2;
-        }
+.sub-content p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #555;
+}
 
-        .sub-content {
-            display: flex;
-            flex-direction: column;
-            gap: 1vw;
-        }
+/* Responsive styles for screens with a maximum width of 767px (Mobile) */
+@media (max-width: 767px) {
+    .top-text {
+        font-size: 2em;
+    }
 
-        @media (min-width: 768px) and (max-width: 1024px) {
-            .top-text {
-                font-size: 3vw;
-            }
+    .allContent-div {
+        gap: 10px;
+    }
 
-            .sub-content>h3 {
-                font-size: 3.5vw;
-            }
+    .sub-content h3 {
+        font-size: 1.5em;
+    }
 
-            .sub-content>p {
-                font-size: 2.7vw;
-                line-height: 1.5;
-            }
+    .sub-content p {
+        font-size: 1em;
+    }
 
-        }
+    main {
+        padding: 20px 10px;
+    }
+}
 
-        @media(max-width:757px) {
-            .top-text{
-                font-size: 4.7vw;
-            }
+/* Responsive styles for screens with a width between 768px and 1024px (Tablet) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .top-text {
+        font-size: 2.2em;
+    }
 
-            .sub-content > h3{
-                font-size: 4vw;
-            }
+    .sub-content h3 {
+        font-size: 1.6em;
+    }
 
-            .sub-content> p{
-                font-size: 3.3vw;
-                line-height: 1.5;
-            }
-        }
-    
+    .sub-content p {
+        font-size: 1.05em;
+    }
+
+    main {
+        padding: 30px 15px;
+    }
+}

@@ -10,14 +10,14 @@
     <nav class="nav-bar">
         <div class="logo-div">
             <div class="img-div"><img src="../public/logo.svg" alt="logo"></div>
-            <h1>lost&found</h1>
+            <h1><a href="../pages/index.php">lost&found</a></h1>
         </div>
         <ul class="list-items">
-            <li>Post</li>
-            <li>About</li>
-            <li>Contact</li>
-            <li>Reviews</li>
-            <li><button class="loginButton">Join now</button></li>
+            <li><a href="../pages/ViewPosts.php">Post</a></li>
+            <li><a href="../pages/About.php">About</a></li>
+            <li><a href="../pages/Contact.php">Contact</a></li>
+            <li><a href="../pages/CreateReview.php">Reviews</a></li>
+            <li><button class="loginButton"><a href="../pages/Signup.php">Join now</a></button></li>
         </ul>
 
         <div class="theme-switch-wrapper">

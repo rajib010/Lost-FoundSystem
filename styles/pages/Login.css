@@ -116,7 +116,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url(../public/lost.svg);
+    background-image: url(../../public/lost.svg);
     background-size: cover;
     background-position: center;
 }

@@ -7,10 +7,11 @@
     <meta name="description" content="Learn more about our team and mission.">
     <title>About Us</title>
     <link rel="stylesheet" href="../styles/pages/About.css"/>
+    
 </head>
 
 <body>
-    <?php 
+    <?php
     if (file_exists("../components/Navbar.php")) {
         require("../components/Navbar.php");
     } else {
@@ -45,7 +46,7 @@
         </div>
     </main>
 
-    <?php 
+    <?php
     if (file_exists("../components/Footer.php")) {
         require("../components/Footer.php");
     } else {

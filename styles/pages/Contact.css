@@ -1,93 +1,155 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('background.jpg'); /* Consistent background */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: #333;
+}
 
+main {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
-        main {
-            width: 95%;
-            margin: 0 auto;
-            background-image: url(../../public/bg\ img.jfif);
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            padding: 1vw;
-        }
+.top-text {
+    font-size: 2.5em;
+    color: #ff5722; /* Matching the theme color */
+    margin-bottom: 30px;
+}
 
-        main::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(64, 61, 61, 0.6);
-            z-index: 1;
-        }
+.allContent-div {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
 
-        .allContent-div {
-            width: 95%;
-            margin: auto;
-            min-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            gap: 1vw;
-            position: relative;
-            z-index: 2;
-            color: white;
-        }
+.sub-content {
+    text-align: left;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-        .top-div {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            width: 100%;
-        }
+.sub-content h3 {
+    color: #ff5722;
+    font-size: 1.8em;
+    margin-bottom: 15px;
+}
 
-        .top-div>h1 {
-            width: 40%;
-            font-size: 6vw;
-            text-align: left;
-            color: white;
-            margin: 0;
-        }
+.sub-content p {
+    font-size: 1.1em;
+    margin: 10px 0;
+}
 
-        .logo-img {
-            width: 40%;
-            display: flex;
-            margin: auto;
-            justify-content: flex-end;
-        }
+.sub-content span {
+    font-weight: bold;
+    color: #ff5722; 
+}
 
-        .logo-img>img {
-            width: 8vw;
-            height: auto;
-        }
+.contact-form-div {
+    margin-top: 30px;
+}
 
-        .main-content {
-            width: 90%;
-            margin: auto;
-            padding: 2vw;
-            display: flex;
-            flex-direction: column;
-            background: rgba(169, 166, 166, 0.3);
-            backdrop-filter: blur(10px);
-            border-radius: 10px;
-        }
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 
-        .main-content>.contents {
-            line-height: 1.5;
-            font-size: 2rem;
-            color: white;
-        }
+.form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
 
-        .contents > span{
-            font-size: 2vw;
-            font-style: italic;
-        }
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
 
-        @media (max-width: 768px) {
-            .top-div>h1 {
-                font-size: 6vw;
-            }
+.form-group input, .form-group textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
 
-            .logo-img>img {
-                width: 100px;
-            }
-        }
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: #ff5722; /* Focus border color matches theme */
+    box-shadow: 0 0 5px rgba(255, 87, 34, 0.5);
+}
+
+.submit-btn {
+    background-color: #ff5722;
+    border: none;
+    padding: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #e64a19;
+}
+
+/* Responsive styles for screens with a maximum width of 767px (Mobile) */
+@media (max-width: 767px) {
+    .top-text {
+        font-size: 2em;
+    }
+
+    .sub-content h3 {
+        font-size: 1.5em;
+    }
+
+    .sub-content p {
+        font-size: 1em;
+    }
+
+    main {
+        padding: 20px 10px;
+    }
+
+    .submit-btn {
+        padding: 12px;
+        font-size: 1em;
+    }
+}
+
+/* Responsive styles for screens with a width between 768px and 1024px (Tablet) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .top-text {
+        font-size: 2.2em;
+    }
+
+    .sub-content h3 {
+        font-size: 1.6em;
+    }
+
+    .sub-content p {
+        font-size: 1.05em;
+    }
+
+    main {
+        padding: 30px 15px;
+    }
+
+    .submit-btn {
+        padding: 14px;
+        font-size: 1.05em;
+    }
+}

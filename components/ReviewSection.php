@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="../styles/components/ReviewSection.css" />
+    <link rel="stylesheet" href="../styles/components/ReviewSection.css">   
 </head>
 
 <body>
@@ -11,8 +11,7 @@
             <h1>Our Happy Users</h1>
             <div class="sliderImage">
                 <div class="userImage">
-                    <img src="https://variety.com/wp-content/uploads/2023/07/GettyImages-1511418315.jpg?w=250&h=140&crop=1&resize=681%2C383"
-                        alt="User Image">
+                    <img src="https://variety.com/wp-content/uploads/2023/07/GettyImages-1511418315.jpg?w=250&h=140&crop=1&resize=681%2C383" alt="User Image">
                 </div>
                 <button class="sliderBtn" onclick="nextUser()">></button>
             </div>
