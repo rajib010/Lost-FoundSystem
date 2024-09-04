@@ -2,10 +2,6 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-image: url('background.jpg'); /* Consistent background */
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
     color: #333;
 }
 
@@ -21,7 +17,7 @@ main {
 
 .top-text {
     font-size: 2.5em;
-    color: #ff5722; /* Matching the theme color */
+    color: #ff5722; 
     margin-bottom: 30px;
 }
 
@@ -86,7 +82,7 @@ main {
 
 .form-group input:focus, .form-group textarea:focus {
     outline: none;
-    border-color: #ff5722; /* Focus border color matches theme */
+    border-color: #ff5722;
     box-shadow: 0 0 5px rgba(255, 87, 34, 0.5);
 }
 
@@ -106,7 +102,7 @@ main {
     background-color: #e64a19;
 }
 
-/* Responsive styles for screens with a maximum width of 767px (Mobile) */
+/* mobile */
 @media (max-width: 767px) {
     .top-text {
         font-size: 2em;
@@ -130,7 +126,7 @@ main {
     }
 }
 
-/* Responsive styles for screens with a width between 768px and 1024px (Tablet) */
+/* for tablets */
 @media (min-width: 768px) and (max-width: 1024px) {
     .top-text {
         font-size: 2.2em;

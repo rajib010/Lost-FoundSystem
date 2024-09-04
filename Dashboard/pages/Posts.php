@@ -2,16 +2,68 @@
 <html lang="en">
 
 <head>
-    <title>Admin Dashboard</title>
+    <title>Manage Posts</title>
     <link rel="stylesheet" href="../styles/index.css">
-    <link rel="stylesheet" href="../styles/tables.css">
+    <style>
+        .admin-dashboard {
+            display: flex;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        button.delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        button.edit-btn {
+            background-color: rgb(56, 56, 182);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        button.delete-btn:hover {
+            background-color: #c0392b;
+        }
+    </style>
 </head>
 
 <body>
-    <header class="admin-header">
-        <h1>Welcome, Admin</h1>
-        <button class="logout-btn">Log out</button>
-    </header>
+<?php require("../components/Header.php") ?>
+
 
     <main class="admin-dashboard">
         <?php require("../components/Nav.php") ?>

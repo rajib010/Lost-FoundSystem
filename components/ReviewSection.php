@@ -2,7 +2,108 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="../styles/components/ReviewSection.css">   
+    <style>
+        .review-section {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            margin: 40px auto;
+            max-width: 1200px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .review h1 {
+            font-size: 2.5em;
+            color: #ff5722;
+            margin-bottom: 30px;
+        }
+
+        .sliderImage {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .userImage img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .sliderBtn {
+            background-color: #ff5722;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-left: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sliderBtn:hover {
+            background-color: #e64a19;
+        }
+
+        #userReview {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        #userName {
+            font-size: 1.5em;
+            color: #333;
+        }
+
+        @media (min-width:768px) and (max-width:1024px) {
+
+            .review h1 {
+                font-size: 2.2em;
+            }
+
+            .userImage img {
+                width: 90px;
+                height: 90px;
+            }
+
+            #userReview {
+                font-size: 1.1em;
+            }
+
+            #userName {
+                font-size: 1.4em;
+            }
+
+        }
+
+        @media (max-width: 767px) {
+
+            .review h1 {
+                font-size: 2em;
+            }
+
+            .userImage img {
+                width: 80px;
+                height: 80px;
+            }
+
+            #userReview {
+                font-size: 1em;
+            }
+
+            #userName {
+                font-size: 1.2em;
+            }
+
+
+        }
+    </style>
 </head>
 
 <body>
@@ -13,7 +114,7 @@
                 <div class="userImage">
                     <img src="https://variety.com/wp-content/uploads/2023/07/GettyImages-1511418315.jpg?w=250&h=140&crop=1&resize=681%2C383" alt="User Image">
                 </div>
-                <button class="sliderBtn" onclick="nextUser()">></button>
+                <button class="sliderBtn" onclick="nextUser()">&#8250</button>
             </div>
             <p id="userReview">"I found my lost something! This system is a life saver."</p>
             <h3 id="userName">John Doe</h3>

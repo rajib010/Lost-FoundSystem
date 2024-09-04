@@ -14,7 +14,7 @@
         .found-item {
             display: flex;
             align-items: center;
-            background-color: #1b4d28;
+            background-color: #ff5722;
             padding: 10px 20px;
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -32,6 +32,12 @@
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
+
+        }
+
+        #here{
+            text-decoration: none;
+            color: white;
         }
 
         .here-btn:hover {
@@ -90,7 +96,7 @@
             background-color: #e64a19;
         }
 
-        
+
         @media (max-width: 767px) {
             .found-item {
                 flex-direction: column;
@@ -122,7 +128,7 @@
             }
         }
 
-        
+
         @media (min-width: 768px) and (max-width: 1024px) {
             .post-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -142,4 +148,3 @@
                 height: 4vw;
             }
         }
-    

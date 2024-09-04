@@ -7,7 +7,9 @@
     <meta name="description" content="Learn more about our team and mission.">
     <title>About Us</title>
     <link rel="stylesheet" href="../styles/pages/About.css"/>
-    
+    <style>
+       
+    </style>
 </head>
 
 <body>

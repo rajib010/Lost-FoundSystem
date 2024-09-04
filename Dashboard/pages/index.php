@@ -3,15 +3,44 @@
 
 <head>
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../styles/index.css">
+    <style>
+        .admin-dashboard {
+            display: flex;
+        }
+
+        .admin-stats {
+            flex-grow: 1;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-item {
+            background-color: #e0e0e0;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item h3 {
+            margin: 0 0 10px;
+            color: #333;
+            font-size: 1.2em;
+        }
+
+        .stat-item p {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #ff5722;
+        }
+    </style>
+
 </head>
 
 <body>
-    <header class="admin-header">
-        <h1>Welcome, Admin</h1>
-        <button class="logout-btn">Log out</button>
-    </header>
 
+    <?php require("../components/Header.php") ?>
     <main class="admin-dashboard">
         <?php require("../components/Nav.php") ?>
 

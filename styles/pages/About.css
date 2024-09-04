@@ -3,11 +3,13 @@ body {
     margin: 0;
     padding: 0;
     color: #333;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 main {
     padding: 40px 20px;
-    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     text-align: center;
     background-color: rgba(255, 255, 255, 0.9);
@@ -47,7 +49,8 @@ main {
     color: #555;
 }
 
-/* Responsive styles for screens with a maximum width of 767px (Mobile) */
+
+/* for mobiles */
 @media (max-width: 767px) {
     .top-text {
         font-size: 2em;
@@ -70,7 +73,7 @@ main {
     }
 }
 
-/* Responsive styles for screens with a width between 768px and 1024px (Tablet) */
+/* for Tablet */
 @media (min-width: 768px) and (max-width: 1024px) {
     .top-text {
         font-size: 2.2em;

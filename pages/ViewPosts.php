@@ -17,7 +17,7 @@
     <div class="header">
         <div class="found-item">
             <span>Click here if you have found an item!!!</span>
-            <button class="here-btn"><a href="./AddPost.php">Here!</a></button>
+            <button class="here-btn"><a href="./AddPost.php" id="here">Here!</a></button>
         </div>
     </div>
 

@@ -2,18 +2,72 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Send Mail</title>
     <link rel="stylesheet" href="../styles/index.css">
-    <link rel="stylesheet" href="../styles/Mail.css">
+    <style>
+        .admin-panel {
+            padding: 5px 20px;
+            width: 80vw;
+            margin: 0 auto;
+        }
+
+        .admin-dashboard {
+            display: flex;
+        }
+
+        /* Form Styles */
+        .mail-form {
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group>label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .form-group>textarea {
+            resize: vertical;
+        }
+
+        .send-btn {
+            background-color: #ff5722;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 50%;
+            margin: auto;
+        }
+
+        .send-btn:hover {
+            background-color: #e64a19;
+        }
+    </style>
 </head>
 
 <body>
-    <header class="admin-header">
-        <h1>Welcome, Admin</h1>
-        <button class="logout-btn">Log out</button>
-    </header>
+    <?php require("../components/Header.php") ?>
 
     <main class="admin-dashboard">
         <?php require("../components/Nav.php"); ?>
