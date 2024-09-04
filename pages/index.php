@@ -15,13 +15,11 @@
 
         require("../components/TopMain.php");
 
-        require("../components/PostsSection.php");
+        require("../components/YourPosts.php");
 
         require("../components/ReviewSection.php");
 
         require("../components/Faqs.php");
-
-        require("../components/Cta.php");
 
         require("../components/Footer.php");
     ?>

@@ -9,6 +9,7 @@
             background-color: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             margin: 40px auto;
+            overflow: hidden;
             max-width: 1200px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -20,6 +21,7 @@
         }
 
         .sliderImage {
+            width: 110%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -27,8 +29,8 @@
         }
 
         .userImage img {
-            width: 100px;
-            height: 100px;
+            width: 300px;
+            height: 300px;
             border-radius: 50%;
             object-fit: cover;
         }
@@ -36,13 +38,14 @@
         .sliderBtn {
             background-color: #ff5722;
             border: none;
-            padding: 10px;
-            border-radius: 50%;
+            width: 5vw;
+            height: 5vw;
+            border-radius: 100%;
             cursor: pointer;
             color: white;
             font-weight: bold;
-            font-size: 1.2em;
-            margin-left: 10px;
+            font-size: 2.2em;
+            margin-left: 5vw;
             transition: background-color 0.3s ease;
         }
 
@@ -68,8 +71,17 @@
             }
 
             .userImage img {
-                width: 90px;
-                height: 90px;
+                width: 275px;
+                height: 275px;
+            }
+            .userImage img {
+                width: 250px;
+                height: 250px;
+            }
+
+            .sliderBtn{
+                width: 8vw;
+                height: 8vw;
             }
 
             #userReview {
@@ -89,8 +101,13 @@
             }
 
             .userImage img {
-                width: 80px;
-                height: 80px;
+                width: 250px;
+                height: 250px;
+            }
+
+            .sliderBtn{
+                width: 8vw;
+                height: 8vw;
             }
 
             #userReview {

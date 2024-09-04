@@ -7,11 +7,11 @@
     <meta name="description" content="Learn more about our team and mission.">
     <title>ViewPosts</title>
     <link rel="stylesheet" href="../styles/pages/ViewPost.css" />
-    
+
 </head>
 
 <body>
-    <?php  require("../components/Navbar.php"); ?>
+    <?php require("../components/Navbar.php"); ?>
 
 
     <div class="header">
@@ -22,8 +22,23 @@
     </div>
 
     <div class="content">
+        <div class="filter">
+            <form action="" method="">
+                <label>Filter items by:</label>
+                <select name="filterpost">
+                    <option selected disabled>---Select Category---</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="animal">Animal</option>
+                    <option value="jwellery">Jwellery</option>
+                    <option value="documents">Documents</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="other">Other</option>
+                </select>
+            </form>
+        </div>
         <h2>Recently Posted...</h2>
-        <div class="post-grid">
+
+        <div class="post-grid" onclick="">
             <div class="post-item">
                 <img src="https://via.placeholder.com/150" alt="Post Image">
                 <p class="post-title">Title of the post</p>
@@ -78,6 +93,12 @@
 
 
     <?php require("../components/Footer.php");  ?>
+
+    <script>
+        function navigatePost(e, i) {
+            e.preventDefault();
+        }
+    </script>
 </body>
 
 </html>
