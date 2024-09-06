@@ -63,11 +63,17 @@ body {
     width: 100%;
 }
 
-.input-container {
+.input-container{
     position: relative;
     margin-bottom: 1vw;
 }
 
+.userType-container {
+    width: 100%;
+    display: flex;
+    gap: 1vw;
+    margin: 1vw auto;
+}
 .input-container::before {
     content: attr(data-icon);
     position: absolute;
@@ -116,7 +122,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url(../../public/lost.svg);
+    background-image: url(../public/lost.svg);
     background-size: cover;
     background-position: center;
 }

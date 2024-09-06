@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Learn more about our team and mission.">
     <title>ViewPosts</title>
-    <link rel="stylesheet" href="../styles/pages/ViewPost.css" />
+    <link rel="stylesheet" href="../styles/ViewPost.css" />
 
 </head>
 

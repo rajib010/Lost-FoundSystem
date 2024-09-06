@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="../styles/pages/Signup.css">
+    <link rel="stylesheet" href="../styles/Signup.css">
 </head>
 
 <body>
     <main>
-        <form action="" method="" onsubmit="" class="myForm">
+        <form action="../controllers/Signup.php" method="post" class="myForm">
             <h1>Sign up to get connected with us...</h1>
             <div class="inputContainer">
                 <label for="fullName">Full Name</label>
@@ -28,7 +28,7 @@
             <div class="inputContainer">
                 <label for="password">Password</label>
                 <div class="passwordContainer">
-                    <input type="password" placeholder="Enter password" class="passwordField" id="password">
+                    <input type="password" placeholder="Enter password" class="passwordField" name="password" id="password">
                     <span class="toggle-password" onclick="togglePasswordVisibility()"><i
                             class="fa-solid fa-eye-slash"></i></span>
                 </div>
@@ -37,15 +37,15 @@
             <div class="inputContainer">
                 <label for="cpassword">Confirm Password</label>
                 <div class="passwordContainer">
-                    <input type="password" placeholder="Confirm Password" class="passwordField" id="cpassword">
+                    <input type="password" placeholder="Confirm Password" name="confirmPassword" class="passwordField" id="cpassword">
                     <span class="toggle-password" onclick="togglePasswordVisibility()"><i
                             class="fa-solid fa-eye-slash"></i></span>
                 </div>
                 <p class="error">Error</p>
             </div>
             <div class="inputContainer">
-                <label for="mobile">Mobile No</label>
-                <input type="text" id="mobile" class="inputField" name="mobile" placeholder="98xxxxxxxx" required>
+                <label for="phoneNo">Phone No</label>
+                <input type="text" id="phoneNo" class="inputField" name="phoneNo" placeholder="98xxxxxxxx" required>
                 <p class="error">Error</p>
             </div>
             <div class="inputContainer">
@@ -56,14 +56,14 @@
             </div>
             <div class="inputContainer profileContainer">
                 <label for="profile">Profile Image</label>
-                <input type="file" name="profile" id="profile" class="inputField" required>
+                <input type="file" name="profileImg" id="profile" class="inputField" required>
                 <p class="error">Error</p>
             </div>
             <div class="loginPoint">
                 <p>Already have an account? <span><a href="../pages/Login.php">Login</a></span></p>
             </div>
             <div class="signup">
-                <button class="loginButton" type="submit">Sign up</button>
+                <button class="loginButton" type="submit" name="submitBtn">Sign up</button>
             </div>
         </form>
     </main>
