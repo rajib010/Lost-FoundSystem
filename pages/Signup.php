@@ -1,57 +1,85 @@
 <?php
+include "../utility/Database.php";
+
+$db = new Database();
 $errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (isset($_POST['submitBtn'])) {
-        if (empty($_POST["fullName"])) {
+        $name = $_POST["fullName"];
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+        $confirmPassword = $_POST["confirmPassword"];
+        $phoneNumber = $_POST["phone_number"];
+        $address = $_POST["address"];
+
+        // Validate inputs
+        if (empty($name)) {
             $errors['fullName'] = "Full Name is required";
         }
-        if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors['email'] = "Invalid email address";
         }
-        if (strlen($_POST["password"]) < 6) {
+        if (strlen($password) < 6) {
             $errors['password'] = "Password must be at least 6 characters";
         }
-        if ($_POST["password"] !== $_POST["confirmPassword"]) {
+        if ($password !== $confirmPassword) {
             $errors['confirmPassword'] = "Passwords do not match";
         }
-        if (!preg_match("/^\d{10}$/", $_POST["phone_number"])) {
+        if (!preg_match("/^\d{10}$/", $phoneNumber)) {
             $errors['phone_number'] = "Invalid phone number";
         }
-        if (empty($_POST["address"])) {
+        if (empty($address)) {
             $errors['address'] = "Address is required";
         }
-        // if (!isset($_FILES['profileImg']) || $_FILES['profileImg']['error'] != 0) {
-        //     $errors['profileImg'] = "Profile image is required or failed to upload";
-        // } else {
-        //     // Check allowed file types
-        //     $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-        //     $fileType = $_FILES['profileImg']['type'];
 
-        //     if (!in_array($fileType, $allowedTypes)) {
-        //         $errors['profileImg'] = "Only JPG, PNG, and GIF formats are allowed.";
-        //     } else {
-        //         // Process image upload
-        //         $fileExtension = pathinfo($_FILES['profileImg']['name'], PATHINFO_EXTENSION);
-        //         $fileName = uniqid() . '.' . $fileExtension;
-        //         $uploadDir = 'uploads/';
-        //         $targetFile = $uploadDir . $fileName;
+        if (!isset($_FILES['profileImg']) || $_FILES['profileImg']['error'] != 0) {
+            $errors['profileImg'] = "Profile image is required or failed to upload";
+        } else {
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            $fileType = $_FILES['profileImg']['type'];
 
-        //         if (!move_uploaded_file($_FILES['profileImg']['tmp_name'], $targetFile)) {
-        //             $errors['profileImg'] = "Failed to upload image.";
-        //         }
-        //     }
-        // }
+            if (!in_array($fileType, $allowedTypes)) {
+                $errors['profileImg'] = "Only JPG, PNG, and GIF formats are allowed.";
+            } else {
+                $fileExtension = pathinfo($_FILES['profileImg']['name'], PATHINFO_EXTENSION);
+                $fileName = uniqid() . '.' . $fileExtension;
+                $uploadDir = '../uploads/user/';
+                $targetFile = $uploadDir . $fileName;
 
-        // If no errors, redirect to the login page
+                if (!move_uploaded_file($_FILES['profileImg']['tmp_name'], $targetFile)) {
+                    $errors['profileImg'] = "Failed to upload image.";
+                }
+            }
+        }
+
+        // If no errors, carry on with the signup process
         if (empty($errors)) {
-            header('location: ./Login.php');
-            exit();
+            $result = $db->insert("user_info", [
+                'name' => $name,
+                'email' => $email,
+                'password' => $password,
+                'phone_number' => $phoneNumber,
+                'address' => $address,
+                'profileImg' => $fileName 
+            ]);
+
+            if ($result) {
+                echo "<script>
+                        if (confirm('You have been registered successfully. Click OK to redirect to the login page')) {
+                            window.location.href = './Login.php';
+                        }
+                      </script>";
+                exit();
+            } else {
+                echo "Error during signup";
+            }
         }
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

@@ -21,14 +21,14 @@ class Database
     {
         $columns = implode(', ', array_keys($params));
         $placeholders = implode(', ', array_fill(0, count($params), '?'));
-
+    
         $sql = "INSERT INTO $table ($columns) VALUES ($placeholders)";
         $stmt = $this->conn->prepare($sql);
-
+    
         if ($stmt) {
             $types = '';
             $values = array();
-
+    
             foreach ($params as $key => $value) {
                 if ($key == 'profile') {
                     $types .= 'b';
@@ -44,20 +44,23 @@ class Database
                 }
                 $values[] = $value;
             }
-
+    
             $stmt->bind_param($types, ...$values);
-
+    
             if ($stmt->execute()) {
-                echo "Inserted successfully";
+                $stmt->close();
+                return true;
             } else {
                 echo "Error inserting data: " . $stmt->error;
+                $stmt->close();
+                return false;
             }
-            $stmt->close();
         } else {
             echo "Error preparing statement: " . $this->conn->error;
+            return false;
         }
-    }
-
+    } 
+    
     // Function to update tables...
     public function update($table, $params = array(), $where = null)
     {
@@ -151,4 +154,3 @@ class Database
         }
     }
 }
-?>

@@ -8,19 +8,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["loginBtn"])) {
         $email = $_POST["email"];
         $password = $_POST["password"];
+        if(empty($email)){
+            $errors['email']="Email cannot be empty";
+        }
+        if(empty($password)){
+            $errors['password']="Password cannot be empty";
+        }
         $userType = isset($_POST['userType']) ? $_POST['userType'] : 0;
 
-        // Use prepared statements to prevent SQL injection
-        $stmt = $db->conn->prepare("SELECT * FROM user_info WHERE email = ? AND user_type = ?");
-        $stmt->bind_param("si", $email, $userType);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        $where = "email='$email' and user_type='$userType'";
+        $result = $db->select("user_info", "*", null, $where, null, null);
 
         if ($result->num_rows == 0) {
             $errors['email'] = "User does not exist.";
         } else {
             $row = $result->fetch_assoc();
-            if ($row["password"] != $password) {
+            if (!password_verify($password, $row["password"])) {
                 $errors["password"] = "Invalid password. Try again.";
             } else {
                 session_start();
