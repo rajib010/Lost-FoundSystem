@@ -1,3 +1,11 @@
+<?php
+include "../../utility/Database.php";
+session_start();
+if(empty($_SESSION['loggedinadmin'])){
+    header('location: ../../pages/Login.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

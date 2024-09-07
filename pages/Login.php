@@ -8,11 +8,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["loginBtn"])) {
         $email = $_POST["email"];
         $password = $_POST["password"];
-        if(empty($email)){
-            $errors['email']="Email cannot be empty";
+        if (empty($email)) {
+            $errors['email'] = "Email cannot be empty";
         }
-        if(empty($password)){
-            $errors['password']="Password cannot be empty";
+        if (empty($password)) {
+            $errors['password'] = "Password cannot be empty";
         }
         $userType = isset($_POST['userType']) ? $_POST['userType'] : 0;
 
@@ -27,12 +27,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $errors["password"] = "Invalid password. Try again.";
             } else {
                 session_start();
-                if ($userType == 0) {
-                    $_SESSION["loggedinuser"] = $row["username"];
+                if ($row['user_type'] == 0) {
+                    $_SESSION["loggedinuserId"] = $row["id"];
+                    $_SESSION['userImg']= $row['profileImg'];
                     header("location: ./index.php");
-                } else if ($userType == 1) {
-                    $_SESSION["loggedinadmin"] = $row["username"];
+                    exit();
+                } else if ($row['user_type'] == 1) {
+                    $_SESSION["loggedinadmin"] = $row["name"];
                     header("location: ../dashboard/pages/index.php");
+                    exit();
                 }
             }
         }

@@ -1,3 +1,9 @@
+<?php 
+require("../components/Navbar.php"); 
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +17,7 @@
 </head>
 
 <body>
-    <?php require("../components/Navbar.php"); ?>
+    
 
 
     <div class="header">

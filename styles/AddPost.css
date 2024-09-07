@@ -56,6 +56,14 @@ body {
     border: none;
 }
 
+.error{
+    font-size: small;
+    width: 100%;
+    text-align: left;
+    margin-top: 4px;
+    color: red;
+}
+
 .submit-btn {
     background-color: #ff5722;
     border: none;
