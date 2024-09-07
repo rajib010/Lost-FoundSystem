@@ -20,8 +20,7 @@
         }
 
         main {
-            width: 90%;
-            max-width: 600px;
+            width: 60%;
             margin: auto;
             background-color: white;
             padding: 20px;
@@ -37,6 +36,7 @@
 
         .myForm>h1 {
             margin-bottom: 3vw;
+            width: 100%;
         }
 
         .inputContainer {
@@ -55,7 +55,6 @@
         }
 
         .inputContainer>label {
-            display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
@@ -74,20 +73,20 @@
         .passwordContainer {
             display: flex;
             align-items: center;
+            position: relative;
         }
 
         .toggle-password {
             position: absolute;
             right: 10px;
-            top: 70%;
-            transform: translateY(-50%);
             cursor: pointer;
         }
 
         .error {
+            width: 100%;
             font-size: smaller;
             color: red;
-            display: none;
+            margin-top: 5px;
         }
 
         .loginPoint {

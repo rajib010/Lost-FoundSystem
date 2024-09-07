@@ -65,15 +65,12 @@ body {
 
 .input-container{
     position: relative;
-    margin-bottom: 1vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 2vw;
 }
 
-.userType-container {
-    width: 100%;
-    display: flex;
-    gap: 1vw;
-    margin: 1vw auto;
-}
 .input-container::before {
     content: attr(data-icon);
     position: absolute;
@@ -98,6 +95,21 @@ body {
     transform: translateY(-50%);
     cursor: pointer;
     font-size: 1.2rem;
+}
+
+.error {
+    width: 100%;
+    font-size: smaller;
+    color: red;
+    margin-top: 3vw;
+    position: absolute;
+}
+
+.userType-container {
+    width: 100%;
+    display: flex;
+    gap: 1vw;
+    margin: 1vw auto;
 }
 
 .loginBtn {
@@ -172,6 +184,9 @@ p>span>a {
     .toggle-password {
         bottom: -2vw;
     }
+    .error{
+        margin-top: 6vw;
+    }
 
     .loginBtn {
         font-size: 1.2rem;
@@ -224,6 +239,10 @@ p>span>a {
 
     .toggle-password {
         bottom: -2vw;
+    }
+
+    .error{
+        margin-top: 9vw;
     }
 
     .loginBtn {

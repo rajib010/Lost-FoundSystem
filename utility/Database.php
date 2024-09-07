@@ -5,7 +5,7 @@ class Database
     private $user = 'root';
     private $password = '';
     private $db_name = 'lost&foundsystem';
-    private $conn;
+    public $conn;
 
     // Make the connection directly...
     public function __construct()
@@ -13,8 +13,6 @@ class Database
         $this->conn = new mysqli($this->host, $this->user, $this->password, $this->db_name);
         if ($this->conn->connect_error) {
             die("Connection failed: " . $this->conn->connect_error);
-        } else {
-            echo "Connected successfully...";
         }
     }
 
@@ -122,7 +120,7 @@ class Database
         }
     }
 
-    // Function to select values...
+    // Function to select from tables...
     public function select($table, $row = '*', $join = null, $where = null, $order = null, $limit = null)
     {
         $sql = "SELECT $row FROM $table";
@@ -145,61 +143,12 @@ class Database
             $sql .= " LIMIT $start, $limit";
         }
 
-        $result = $this->conn->query($sql);
-        if ($result) {
-            while ($row = $result->fetch_assoc()) {
-                print_r($row);
-            }
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt->execute()) {
+            return $stmt->get_result();
         } else {
             echo "Error fetching data: " . $this->conn->error;
         }
     }
-
-    // Function for pagination...
-    public function pagination($table, $join = null, $where = null, $limit = null)
-    {
-        if ($limit != null) {
-            $sql = "SELECT COUNT(*) FROM $table";
-            if ($join != null) {
-                $sql .= " JOIN $join";
-            }
-            if ($where != null) {
-                $sql .= " WHERE $where";
-            }
-
-            $query = $this->conn->query($sql);
-            if ($query) {
-                $total_records = $query->fetch_array()[0];
-            } else {
-                $total_records = 0;
-            }
-
-            $total_page = intval(ceil($total_records / $limit));
-            $url = basename($_SERVER['PHP_SELF']);
-
-            if (isset($_GET['page'])) {
-                $page = $_GET['page'];
-            } else {
-                $page = 1;
-            }
-
-            $output = "<ul class='pagination'>";
-            if ($total_records > $limit) {
-                for ($i = 1; $i <= $total_page; $i++) {
-                    $cls = ($i == $page) ? "class='active'" : "";
-                    $output .= "<li><a $cls href='$url?page=$i'>$i</a></li>";
-                }
-            }
-            $output .= "</ul>";
-            echo $output;
-        }
-    }
-
-    // Close the connection...
-    public function __destruct()
-    {
-        if ($this->conn) {
-            $this->conn->close();
-        }
-    }
 }
+?>

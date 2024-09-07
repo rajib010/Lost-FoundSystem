@@ -1,3 +1,43 @@
+<?php
+include "../utility/Database.php";
+$db = new Database();
+
+$errors = [];
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["loginBtn"])) {
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+        $userType = isset($_POST['userType']) ? $_POST['userType'] : 0;
+
+        // Use prepared statements to prevent SQL injection
+        $stmt = $db->conn->prepare("SELECT * FROM user_info WHERE email = ? AND user_type = ?");
+        $stmt->bind_param("si", $email, $userType);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows == 0) {
+            $errors['email'] = "User does not exist.";
+        } else {
+            $row = $result->fetch_assoc();
+            if ($row["password"] != $password) {
+                $errors["password"] = "Invalid password. Try again.";
+            } else {
+                session_start();
+                if ($userType == 0) {
+                    $_SESSION["loggedinuser"] = $row["username"];
+                    header("location: ./index.php");
+                } else if ($userType == 1) {
+                    $_SESSION["loggedinadmin"] = $row["username"];
+                    header("location: ../dashboard/pages/index.php");
+                }
+            }
+        }
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,26 +60,28 @@
                 <h1>Welcome back!!</h1>
             </div>
             <div class="input-fields">
-                <form action="../controllers/Login.php" method="post">
+                <form action="" method="post">
                     <div class="input-container" data-icon="👨">
-                        <input type="text" placeholder="Enter your email" class="inputField">
+                        <input type="text" placeholder="Enter your email" name="email" class="inputField">
+                        <p class="error"><?php echo $errors['email'] ?? ''; ?></p>
                     </div>
                     <div class="input-container" data-icon="🔒">
-                        <input type="password" placeholder="Enter your password" class="inputField" id="password">
+                        <input type="password" placeholder="Enter your password" class="inputField" name="password" id="password">
                         <span class="toggle-password" onclick="togglePasswordVisibility()"><i
                                 class="fa-solid fa-eye-slash"></i></span>
+                        <p class="error"><?php echo $errors['password'] ?? '' ?></p>
                     </div>
                     <div class="userType-container">
                         <label for="">Log in as</label>
                         <label for="user">User
-                            <input type="radio" name="userType" value="user" id="user">
+                            <input type="radio" name="userType" value="0" id="user">
                         </label>
                         <label for="admin">Admin
-                            <input type="radio" name="userType" value="admin" id="admin">
+                            <input type="radio" name="userType" value="1" id="admin">
                         </label>
                     </div>
                     <p><a href="#">Forgot Password?</a></p>
-                    <button type="submit" class="loginBtn">Login</button>
+                    <button type="submit" name="loginBtn" class="loginBtn">Login</button>
                     <p>Don't have an account?
                         <span>
                             <a href="../pages/Signup.php">Sign up now.</a>
