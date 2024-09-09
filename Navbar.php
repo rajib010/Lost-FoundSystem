@@ -79,12 +79,6 @@ if (empty($_SESSION['loggedinuserId'])) {
                 color: white;
                 font-size: 1.3vw;
             }
-
-            .list-items>li>a:hover {
-                font-size: 1.4vw;
-                color: gold;
-            }
-
             .loginButton {
                 width: 7vw;
                 height: 3rem;
@@ -129,15 +123,15 @@ if (empty($_SESSION['loggedinuserId'])) {
                 line-height: 3vw;
                 display: none;
                 flex-direction: column;
+                list-style: none;
                 gap: 0.5vw;
 
             }
 
             .dropdown-menu li {
                 width: 100%;
-                border-bottom: 1px solid white;
                 box-shadow: #C5BBBB;
-                border-radius: 10px;
+                border-bottom: 1px solid #C5BBBB;
                 cursor: pointer;
             }
 
@@ -235,7 +229,8 @@ if (empty($_SESSION['loggedinuserId'])) {
                     border-bottom: 1px solid white;
                 }
 
-                .list-items li a {
+                .list-items li a,
+                .logoutItem {
                     font-size: 3.5vw;
                 }
 
@@ -266,16 +261,20 @@ if (empty($_SESSION['loggedinuserId'])) {
                 .user-info>.dropdown-menu {
                     position: relative;
                     width: 20vw;
-                    height: 17vw;
+                    height: 25vw;
                     top: -1.5vw;
-                    gap: 2.3vw;
+                    gap: 4vw;
+                    justify-content: space-evenly;
+                    background-color: #ff5722;
                     border-radius: 0.5vw;
                     left: 15%;
+                    padding: 2vw;
                     transform: translateX(-50%);
                 }
 
                 .dropdown-menu>li {
                     list-style: none;
+                    cursor: pointer;
                 }
 
                 .dropdown-menu>li>a {

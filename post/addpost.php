@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $location = $_POST['location'];
         $category = $_POST['category'];
         $authorId = $_SESSION["loggedinuserId"];
+        $currentDateTime = date('Y-m-d H:i:s');
 
         //validate form
         if (empty($title)) {
@@ -54,12 +55,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 'description' => $description,
                 'location' => $location,
                 'image' => $fileName,
-                'category' => $category
+                'category' => $category,
+                'time' => $currentDateTime
             ]);
             if ($result) {
                 echo "<script>
                         if (confirm('Post added successfully. Click yes to redirect to ViewPosts.')) {
-                            window.location.href = './ViewPosts.php';
+                            window.location.href = './viewpost.php';
                         }
                       </script>";
                 exit();

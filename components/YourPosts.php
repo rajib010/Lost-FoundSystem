@@ -57,7 +57,7 @@
 
         .edit-posts {
             width: 90%;
-            margin: auto;
+            margin: 0.5vw auto;
             display: flex;
             gap: 1vw;
             justify-content: right;
