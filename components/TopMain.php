@@ -91,7 +91,7 @@
         <div class="top-contents">
             <h1> Welcome to Finderz !!</h1>
             <p>"Discover the hidden gems waiting to be claimed by their owners..."</p>
-            <button class="getStartBtn"><a href="../pages/ViewPosts.php">Get Started</a></button>
+            <button class="getStartBtn"><a href="../post/viewpost.php">Get Started</a></button>
         </div>
     </main>
 </body>

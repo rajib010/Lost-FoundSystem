@@ -1,9 +1,9 @@
 <?php
+include "utility/Database.php";
 session_start();
-include "../utility/Database.php";
 $db = new Database();
 if (empty($_SESSION['loggedinuserId'])) {
-    header('location: ./Login.php');
+    header('location: ./index.php');
 } else {
 
 ?>
@@ -141,7 +141,8 @@ if (empty($_SESSION['loggedinuserId'])) {
                 cursor: pointer;
             }
 
-            .dropdown-menu>li>a, .logoutItem {
+            .dropdown-menu>li>a,
+            .logoutItem {
                 text-decoration: none;
                 width: 100%;
                 color: white;
@@ -304,13 +305,13 @@ if (empty($_SESSION['loggedinuserId'])) {
         <nav class="nav-bar">
             <div class="logo-div">
                 <div class="img-div"><img src="../public/logo.svg" alt="logo"></div>
-                <h1><a href="../pages/index.php">Home</a></h1>
+                <h1><a href="../pages/home.php">Home</a></h1>
             </div>
             <ul class="list-items">
-                <li><a href="../pages/ViewPosts.php">Post</a></li>
-                <li><a href="../pages/About.php">About</a></li>
-                <li><a href="../pages/Contact.php">Contact</a></li>
-                <li><a href="../pages/CreateReview.php">Reviews</a></li>
+                <li><a href="../post/viewpost.php">Post</a></li>
+                <li><a href="../pages/about.php">About</a></li>
+                <li><a href="../pages/contact.php">Contact</a></li>
+                <li><a href="../reviews/createreview.php">Reviews</a></li>
                 <!-- <li><button class="loginButton"><a href="../pages/Signup.php">Join now</a></button></li> -->
                 <li>
                     <div class="user-info">
@@ -339,7 +340,7 @@ if (empty($_SESSION['loggedinuserId'])) {
             document.querySelector(".logoutItem").addEventListener('click', function() {
                 let userResponse = confirm("Do you want to logout?");
                 if (userResponse) {
-                    window.location.href('../logout.php');
+                    window.location.href = '../logout.php';
                 }
             })
         </script>

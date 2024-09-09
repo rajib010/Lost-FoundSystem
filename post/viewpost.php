@@ -1,5 +1,5 @@
 <?php 
-require("../components/Navbar.php"); 
+require("../Navbar.php"); 
 
 ?>
 
@@ -23,7 +23,7 @@ require("../components/Navbar.php");
     <div class="header">
         <div class="found-item">
             <span>Click here if you have found an item!!!</span>
-            <button class="here-btn"><a href="./AddPost.php" id="here">Here!</a></button>
+            <button class="here-btn"><a href="./addpost.php" id="here">Here!</a></button>
         </div>
     </div>
 

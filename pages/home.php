@@ -13,7 +13,7 @@
 
 <body>
     <?php 
-        require("../components/Navbar.php");
+        require("../Navbar.php");
 
         require("../components/TopMain.php");
 

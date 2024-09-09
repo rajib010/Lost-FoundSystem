@@ -1,7 +1,6 @@
 <?php
-require("../components/Navbar.php");
+require("../Navbar.php");
 
-include "../utility/Database.php";
 $db = new Database();
 
 $errors = [];

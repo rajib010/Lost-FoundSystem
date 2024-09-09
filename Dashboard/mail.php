@@ -5,16 +5,21 @@
 
 <head>
     <title>Send Mail</title>
-    <link rel="stylesheet" href="./index.css">
     <style>
         .admin-panel {
-            padding: 5px 20px;
+            padding: 15px 20px;
             width: 80vw;
             margin: 0 auto;
         }
 
         .admin-dashboard {
             display: flex;
+        }
+
+        .title{
+            width: 100%;
+            text-align: center;
+            margin: 1vw auto;
         }
 
         /* Form Styles */
@@ -58,7 +63,8 @@
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            width: 50%;
+            width: 100%;
+            font-size: 1.2vw;
             margin: auto;
         }
 
@@ -66,6 +72,8 @@
             background-color: #e64a19;
         }
     </style>
+    <link rel="stylesheet" href="./index.css">
+
 </head>
 
 <body>
@@ -73,7 +81,7 @@
     <main class="admin-dashboard">
         <?php require("./components/Nav.php"); ?>
         <div class="admin-panel">
-            <h1>Send Mail</h1>
+            <h1 class="title">Send Mail</h1>
             <div class="mail-form">
                 <form>
                     <div class="form-group">

@@ -12,8 +12,8 @@
 
 <body>
     <?php
-    if (file_exists("../components/Navbar.php")) {
-        require("../components/Navbar.php");
+    if (file_exists("../Navbar.php")) {
+        require("../Navbar.php");
     } else {
         echo "<div> Navbar cannot be loaded </div>";
     }
