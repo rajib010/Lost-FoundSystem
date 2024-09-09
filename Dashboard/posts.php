@@ -1,16 +1,11 @@
-<?php
-include "../../utility/Database.php";
-session_start();
-if(empty($_SESSION['loggedinadmin'])){
-    header('location: ../../pages/Login.php');
-}
-?>
+<?php require("./components/Header.php") ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <title>Manage Posts</title>
-    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="./index.css">
     <style>
         .admin-dashboard {
             display: flex;
@@ -69,11 +64,8 @@ if(empty($_SESSION['loggedinadmin'])){
 </head>
 
 <body>
-<?php require("../components/Header.php") ?>
-
-
     <main class="admin-dashboard">
-        <?php require("../components/Nav.php") ?>
+        <?php require("./components/Nav.php") ?>
 
         <div class="container">
             <h1>Manage Posts</h1>

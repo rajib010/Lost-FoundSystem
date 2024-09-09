@@ -1,10 +1,4 @@
-<?php
-include "../../utility/Database.php";
-session_start();
-if (empty($_SESSION['loggedinadmin'])) {
-    header('location: ../../pages/Login.php');
-}
-?>
+<?php require("./components/Header.php") ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,10 +40,8 @@ if (empty($_SESSION['loggedinadmin'])) {
 </head>
 
 <body>
-
-    <?php require("../components/Header.php") ?>
     <main class="admin-dashboard">
-        <?php require("../components/Nav.php") ?>
+        <?php require("./components/Nav.php") ?>
 
         <section class="admin-stats">
             <div class="stat-item">

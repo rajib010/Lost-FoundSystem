@@ -1,5 +1,5 @@
 <?php
-include "../utility/Database.php";
+include "./utility/Database.php";
 $db = new Database();
 
 $errors = [];
@@ -14,9 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (empty($password)) {
             $errors['password'] = "Password cannot be empty";
         }
-        $userType = isset($_POST['userType']) ? $_POST['userType'] : 0;
-
-        $where = "email='$email' and user_type='$userType'";
+        $where = "email='$email'";
         $result = $db->select("user_info", "*", null, $where, null, null);
 
         if ($result->num_rows == 0) {
@@ -30,11 +28,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if ($row['user_type'] == 0) {
                     $_SESSION["loggedinuserId"] = $row["id"];
                     $_SESSION['userImg']= $row['profileImg'];
-                    header("location: ./index.php");
+                    header("location: ./pages/home.php");
                     exit();
                 } else if ($row['user_type'] == 1) {
                     $_SESSION["loggedinadmin"] = $row["name"];
-                    header("location: ../dashboard/pages/index.php");
+                    header("location: ./dashboard/index.php");
                     exit();
                 }
             }
@@ -54,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="../styles/Login.css" />
+    <link rel="stylesheet" href="./styles/Login.css" />
 
 </head>
 
@@ -62,12 +60,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <main class="main-content">
         <div class="left-side">
             <div class="header">
-                <img src="../public/logo.svg" alt="logo">
+                <img src="./public/logo.svg" alt="logo">
                 <h1>Welcome back!!</h1>
             </div>
             <div class="input-fields">
                 <form action="" method="post">
-                    <div class="input-container" data-icon="👨">
+                    <div class="input-container" data-icon="✉">
                         <input type="text" placeholder="Enter your email" name="email" class="inputField">
                         <p class="error"><?php echo $errors['email'] ?? ''; ?></p>
                     </div>
@@ -77,20 +75,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 class="fa-solid fa-eye-slash"></i></span>
                         <p class="error"><?php echo $errors['password'] ?? '' ?></p>
                     </div>
-                    <div class="userType-container">
-                        <label for="">Log in as</label>
-                        <label for="user">User
-                            <input type="radio" name="userType" value="0" id="user">
-                        </label>
-                        <label for="admin">Admin
-                            <input type="radio" name="userType" value="1" id="admin">
-                        </label>
-                    </div>
                     <p><a href="#">Forgot Password?</a></p>
                     <button type="submit" name="loginBtn" class="loginBtn">Login</button>
                     <p>Don't have an account?
                         <span>
-                            <a href="../pages/Signup.php">Sign up now.</a>
+                            <a href="./pages/signup.php">Sign up now.</a>
                         </span>
                     </p>
                 </form>

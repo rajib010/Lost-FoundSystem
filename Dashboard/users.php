@@ -1,24 +1,18 @@
-<?php
-include "../../utility/Database.php";
-session_start();
-if(empty($_SESSION['loggedinadmin'])){
-    header('location: ../../pages/Login.php');
-}
-?>
+<?php require("./components/Header.php") ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../styles/index.css">
+    <title>View Users</title>
     <style>
         .admin-dashboard {
+            padding: 0px;
             display: flex;
         }
 
         .container {
             width: 90%;
-            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
             background: #fff;
@@ -70,22 +64,19 @@ if(empty($_SESSION['loggedinadmin'])){
 </head>
 
 <body>
-    <?php require("../components/Header.php") ?>
-
     <main class="admin-dashboard">
-        <?php require("../components/Nav.php") ?>
+        <?php require("./components/Nav.php") ?>
 
         <div class="container">
             <h1>Manage Users</h1>
             <table>
                 <thead>
                     <tr>
-                        <th>Sn</th>
-                        <th>Name of Sender</th>
-                        <th>Message</th>
-                        <th>Satisfaction level</th>
-                        <th>found?</th>
-                        <th>Will recommend?</th>
+                        <th>Id</th>
+                        <th>Name </th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Image</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -94,12 +85,13 @@ if(empty($_SESSION['loggedinadmin'])){
                     <tr>
                         <td>001</td>
                         <td>Rajib</td>
-                        <td>this is the message</td>
-                        <td>8</td>
+                        <td>rajib@gmail.com</td>
+                        <td>Kirtipur</td>
                         <td>Yes</td>
-                        <td>Yes</td>
-
-                        <td><button class="delete-btn">Delete</button></td>
+                        <td>
+                            <button class="delete-btn">Delete</button>
+                            <button class="edit-btn">Edit</button>
+                        </td>
                     </tr>
 
                 </tbody>

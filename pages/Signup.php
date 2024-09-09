@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($result) {
                 echo "<script>
                         if (confirm('You have been registered successfully. Click OK to redirect to the login page')) {
-                            window.location.href = './Login.php';
+                            window.location.href = '../index.php';
                         }
                       </script>";
                 exit();
@@ -144,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="inputContainer profileContainer">
-                <label for="profile">Profile Image</label>
+                <label for="profile" class="profileSelect">Select Profile</label>
                 <input type="file" name="profileImg" id="profile">
                 <p class="error"><?php echo $errors['profileImg'] ?? ''; ?></p>
             </div>

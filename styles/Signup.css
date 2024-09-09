@@ -101,6 +101,18 @@
             margin-top: 10px;
         }
 
+        #profile{
+            display: none;
+        }
+
+        .profileSelect{
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            padding: 10px 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
         .signup button {
             background-color: #4CAF50;
             color: white;

@@ -5,7 +5,7 @@ $db = new Database();
 if (empty($_SESSION['loggedinuserId'])) {
     header('location: ./Login.php');
 } else {
-    // echo $_SERVER['userImg'];
+
 ?>
 
 
@@ -122,7 +122,7 @@ if (empty($_SESSION['loggedinuserId'])) {
                 width: 10vw;
                 top: 110%;
                 right: -2vw;
-                background-color: darkcyan;
+                background-color: #ff5722;
                 text-align: center;
                 padding: 1vw;
                 border-radius: 5px;
@@ -138,10 +138,12 @@ if (empty($_SESSION['loggedinuserId'])) {
                 border-bottom: 1px solid white;
                 box-shadow: #C5BBBB;
                 border-radius: 10px;
+                cursor: pointer;
             }
 
-            .dropdown-menu>li>a {
+            .dropdown-menu>li>a, .logoutItem {
                 text-decoration: none;
+                width: 100%;
                 color: white;
                 font-size: 1.3vw;
             }
@@ -312,11 +314,11 @@ if (empty($_SESSION['loggedinuserId'])) {
                 <!-- <li><button class="loginButton"><a href="../pages/Signup.php">Join now</a></button></li> -->
                 <li>
                     <div class="user-info">
-                        <img src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png" class="user-image" alt="User Image">
+                        <img src="<?php echo 'http://localhost/finderz/uploads/user/' . $_SESSION['userImg'] ?>" class="user-image" alt="User Image">
                         <ul class="dropdown-menu">
                             <li><a href="">View <i class="fa-solid fa-user"></i></a></li>
                             <li><a href="">Edit<i class="fa-solid fa-pen"></i> </a></li>
-                            <li><a href="../pages/Logout.php">Logout<i class="fa-solid fa-right-from-bracket"></i></a></li>
+                            <li class="logoutItem">Logout<i class="fa-solid fa-right-from-bracket"></i></li>
                         </ul>
                     </div>
                 </li>
@@ -333,11 +335,18 @@ if (empty($_SESSION['loggedinuserId'])) {
             document.querySelector(".bar-button").addEventListener("click", function() {
                 document.querySelector("ul.list-items").classList.toggle("show-items");
             });
+
+            document.querySelector(".logoutItem").addEventListener('click', function() {
+                let userResponse = confirm("Do you want to logout?");
+                if (userResponse) {
+                    window.location.href('../logout.php');
+                }
+            })
         </script>
     </body>
 
     </html>
-    
+
 <?php
 }
 
