@@ -116,11 +116,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             <div class="form-group">
                 <label for="item-category">Category</label>
                 <select id="item-category" name="category">
-                    <option value="" disabled selected>Select Category</option>
+                    <option selected disabled>---Select Category---</option>
                     <option value="electronics">Electronics</option>
+                    <option value="animal">Animal</option>
+                    <option value="jwellery">Jwellery</option>
+                    <option value="document">Documents</option>
                     <option value="clothing">Clothing</option>
-                    <option value="jewelry">Jewelry</option>
-                    <option value="documents">Documents</option>
+                    <option value="vehicle">Vehicles</option>
                     <option value="other">Other</option>
                 </select>
                 <p class="error"><?php $errors['category'] ?? '' ?></p>

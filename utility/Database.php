@@ -21,14 +21,14 @@ class Database
     {
         $columns = implode(', ', array_keys($params));
         $placeholders = implode(', ', array_fill(0, count($params), '?'));
-    
+
         $sql = "INSERT INTO $table ($columns) VALUES ($placeholders)";
         $stmt = $this->conn->prepare($sql);
-    
+
         if ($stmt) {
             $types = '';
             $values = array();
-    
+
             foreach ($params as $key => $value) {
                 if ($key == 'profile') {
                     $types .= 'b';
@@ -44,9 +44,9 @@ class Database
                 }
                 $values[] = $value;
             }
-    
+
             $stmt->bind_param($types, ...$values);
-    
+
             if ($stmt->execute()) {
                 $stmt->close();
                 return true;
@@ -59,8 +59,8 @@ class Database
             echo "Error preparing statement: " . $this->conn->error;
             return false;
         }
-    } 
-    
+    }
+
     // Function to update tables...
     public function update($table, $params = array(), $where = null)
     {
@@ -126,6 +126,7 @@ class Database
     // Function to select from tables...
     public function select($table, $row = '*', $join = null, $where = null, $order = null, $limit = null)
     {
+        // Constructing the SQL query
         $sql = "SELECT $row FROM $table";
         if ($join != null) {
             $sql .= " JOIN $join";
@@ -146,11 +147,19 @@ class Database
             $sql .= " LIMIT $start, $limit";
         }
 
+        
         $stmt = $this->conn->prepare($sql);
+
+        if ($stmt === false) {
+            echo "SQL Error: " . $this->conn->error;
+            return false;
+        }
+
         if ($stmt->execute()) {
             return $stmt->get_result();
         } else {
-            echo "Error fetching data: " . $this->conn->error;
+            echo "Error executing query: " . $this->conn->error;
+            return false;
         }
     }
 }

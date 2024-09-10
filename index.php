@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 session_start();
                 if ($row['user_type'] == 0) {
                     $_SESSION["loggedinuserId"] = $row["id"];
-                    $_SESSION['userImg']= $row['profileImg'];
+                    $_SESSION['userImg'] = $row['profileImg'];
                     header("location: ./pages/home.php");
                     exit();
                 } else if ($row['user_type'] == 1) {
@@ -66,7 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="input-fields">
                 <form action="" method="post">
                     <div class="input-container" data-icon="✉">
-                        <input type="text" placeholder="Enter your email" name="email" class="inputField">
+                        <input type="text" placeholder="Enter your email" name="email"
+                            value="<?php $_POST['email'] ?? '' ?>" class="inputField">
                         <p class="error"><?php echo $errors['email'] ?? ''; ?></p>
                     </div>
                     <div class="input-container" data-icon="🔒">
