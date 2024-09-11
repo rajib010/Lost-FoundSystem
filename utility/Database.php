@@ -87,7 +87,7 @@ class Database
 
         $sql = "UPDATE $table SET " . implode(', ', $args);
         if ($where != null) {
-            $sql .= " WHERE $where";
+            $sql .= " WHERE " . $where;
         }
 
         $stmt = $this->conn->prepare($sql);
@@ -95,7 +95,7 @@ class Database
         if ($stmt) {
             $stmt->bind_param($types, ...$values);
             if ($stmt->execute()) {
-                echo $stmt->affected_rows . " rows updated";
+                return $stmt->affected_rows;
             } else {
                 echo "Update unsuccessful: " . $stmt->error;
             }
@@ -103,7 +103,10 @@ class Database
         } else {
             echo "Error preparing statement: " . $this->conn->error;
         }
+
+        return false;
     }
+
 
     // Function to delete from tables...
     public function delete($table, $where = null)
@@ -147,7 +150,7 @@ class Database
             $sql .= " LIMIT $start, $limit";
         }
 
-        
+
         $stmt = $this->conn->prepare($sql);
 
         if ($stmt === false) {

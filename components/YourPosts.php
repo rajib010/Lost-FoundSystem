@@ -6,7 +6,7 @@
         .posts-section {
             padding: 40px 20px;
             text-align: center;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
             margin: 40px auto;
             max-width: 1200px;
@@ -28,16 +28,24 @@
 
         .single-post {
             width: calc(25% - 20px);
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgb(215 211 211 / 50%);
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             text-align: left;
         }
 
+        .post-img {
+            display: flex;
+            justify-content: center;
+            border-radius: 10px;
+        }
+
         .post-img img {
-            width: 100%;
-            height: auto;
+            width: 250px;
+            height: 200px;
+            padding: 2vw 1vw 1vw 1vw ;
+            border-radius: 10px;
         }
 
         .post-desc {
@@ -48,6 +56,16 @@
             font-size: 1.2vw;
             color: #333;
             margin-bottom: 10px;
+        }
+
+        .post-desc>p,
+        .post-desc>h3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            /* Number of lines to show */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .post-desc>p {
@@ -114,7 +132,6 @@
 
         @media (max-width: 767px) {
 
-
             .posts-section>h1 {
                 font-size: 5vw;
             }
@@ -140,60 +157,50 @@
 
 <body>
     <section class="posts-section">
+
+        <script>
+            function viewPost(postId) {
+                window.location.href = `../post/post.php?id=${postId}`;
+            }
+
+            function editPost(postId) {
+                window.location.href = `../post/updatepost.php?id=${postId}`;
+            }
+
+            function deletePost(postId) {
+                if (confirm('Are you sure you want to delete this post?')) {
+                    window.location.href = `../post/deletepost.php?id=${postId}`;
+                }
+            }
+        </script>
         <h1>Your Posts</h1>
         <div class="all-posts">
-            <div class="single-post">
-                <div class="post-img">
-                    <img src="https://media.istockphoto.com/id/1420676204/photo/portrait-of-a-royal-bengal-tiger-alert-and-staring-at-the-camera-national-animal-of-bangladesh.jpg?s=1024x1024&w=is&k=20&c=WLyTdqemXbqIHvH_Jl8KUig8hnU1Hph76w5XmXaRitg=" alt="image">
-                </div>
-                <div class="edit-posts">
-                    <p class="edit"><i class="fa-solid fa-pen"></i></p>
-                    <p class="delete"><i class="fa-solid fa-trash"></i></p>
-                </div>
-                <div class="post-desc">
-                    <h3>This is the title</h3>
-                    <p>description</p>
-                </div>
-            </div>
-            <div class="single-post">
-                <div class="post-img">
-                    <img src="https://media.istockphoto.com/id/1420676204/photo/portrait-of-a-royal-bengal-tiger-alert-and-staring-at-the-camera-national-animal-of-bangladesh.jpg?s=1024x1024&w=is&k=20&c=WLyTdqemXbqIHvH_Jl8KUig8hnU1Hph76w5XmXaRitg=" alt="image">
-                </div>
-                <div class="edit-posts">
-                    <p class="edit"><i class="fa-solid fa-pen"></i></p>
-                    <p class="delete"><i class="fa-solid fa-trash"></i></p>
-                </div>
-                <div class="post-desc">
-                    <h3>This is the title</h3>
-                    <p>description</p>
-                </div>
-            </div>
-            <div class="single-post">
-                <div class="post-img">
-                    <img src="https://media.istockphoto.com/id/1420676204/photo/portrait-of-a-royal-bengal-tiger-alert-and-staring-at-the-camera-national-animal-of-bangladesh.jpg?s=1024x1024&w=is&k=20&c=WLyTdqemXbqIHvH_Jl8KUig8hnU1Hph76w5XmXaRitg=" alt="image">
-                </div>
-                <div class="edit-posts">
-                    <p class="edit"><i class="fa-solid fa-pen"></i></p>
-                    <p class="delete"><i class="fa-solid fa-trash"></i></p>
-                </div>
-                <div class="post-desc">
-                    <h3>This is the title</h3>
-                    <p>description</p>
-                </div>
-            </div>
-            <div class="single-post">
-                <div class="post-img">
-                    <img src="https://media.istockphoto.com/id/1420676204/photo/portrait-of-a-royal-bengal-tiger-alert-and-staring-at-the-camera-national-animal-of-bangladesh.jpg?s=1024x1024&w=is&k=20&c=WLyTdqemXbqIHvH_Jl8KUig8hnU1Hph76w5XmXaRitg=" alt="image">
-                </div>
-                <div class="edit-posts">
-                    <p class="edit"><i class="fa-solid fa-pen"></i></p>
-                    <p class="delete"><i class="fa-solid fa-trash"></i></p>
-                </div>
-                <div class="post-desc">
-                    <h3>This is the title</h3>
-                    <p>description</p>
-                </div>
-            </div>
+            <?php
+            $id = $_SESSION['loggedinuserId'];
+            $where = "author_id = '$id'";
+            $result = $db->select("posts", "*", null, $where, null, null);
+            if ($result->num_rows == 0) {
+                echo "<div>You haven't posted anything. <a href='../post/addpost.php'>Tap here to create a new post.</a></div>";
+            } else {
+                while ($row = $result->fetch_assoc()) {
+            ?>
+                    <div class="single-post" onclick="viewPost(<?php echo $row['id']; ?>)">
+                        <div class="post-img">
+                            <img class="image" src="<?php echo 'http://localhost/finderz/uploads/posts/' . htmlspecialchars($row['image']); ?>" alt="image">
+                        </div>
+                        <div class="edit-posts">
+                            <p class="edit" onclick="event.stopPropagation(); editPost(<?php echo $row['id']; ?>)"><i class="fa-solid fa-pen"></i></p>
+                            <p class="delete" onclick="event.stopPropagation(); deletePost(<?php echo $row['id']; ?>)"><i class="fa-solid fa-trash"></i></p>
+                        </div>
+                        <div class="post-desc">
+                            <h3><?php echo htmlspecialchars($row['title']); ?></h3>
+                            <p><?php echo htmlspecialchars($row['description']); ?></p>
+                        </div>
+                    </div>
+            <?php
+                }
+            }
+            ?>
         </div>
     </section>
 </body>

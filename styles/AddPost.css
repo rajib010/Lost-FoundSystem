@@ -56,6 +56,9 @@ body {
     border: none;
 }
 
+.displyedImage{
+    margin-top: 1vw ;
+}
 .error{
     font-size: small;
     width: 100%;
