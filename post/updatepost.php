@@ -1,5 +1,6 @@
 <?php
-require("../Navbar.php");
+
+include_once "../utility/Database.php";
 $db = new Database();
 $errors = [];
 
@@ -73,6 +74,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         }
     }
 }
+require("../Navbar.php");
+
+
 ?>
 
 <!DOCTYPE html>

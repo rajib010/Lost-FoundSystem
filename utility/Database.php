@@ -119,8 +119,8 @@ class Database
         $stmt = $this->conn->prepare($sql);
         if ($stmt) {
             $stmt->execute();
-            echo $stmt->affected_rows . " rows deleted successfully";
             $stmt->close();
+            return true;
         } else {
             echo "Delete unsuccessful: " . $this->conn->error;
         }

@@ -120,6 +120,10 @@
             .post-desc>h3 {
                 font-size: 2.5vw;
             }
+            .post-img img{
+                padding: 3vw 3vw 3vw 3vw ;
+                border-radius: 10px;
+            }
 
             .post-desc>p {
                 font-size: 2vw;
@@ -141,7 +145,7 @@
             }
 
             .post-desc>p {
-                font-size: 2.5vw;
+                font-size: 2.6vw;
             }
 
             .edit-posts {
