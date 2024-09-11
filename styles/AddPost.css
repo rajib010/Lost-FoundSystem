@@ -36,7 +36,7 @@ body {
     width: 100%;
 }
 
-.form-group {
+.form-group,.radio-group {
     margin-bottom: 20px;
     width: 100%;
 }
@@ -83,6 +83,9 @@ body {
     background-color: #e64a19;
 }
 
+input[type='radio'] {
+    margin: 0vw 1vw;
+}
 /* for mobiles*/
 @media (max-width: 767px) {
     .form-section h1 {

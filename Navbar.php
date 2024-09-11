@@ -267,7 +267,7 @@ ob_end_flush();
                 top: -1.5vw;
                 gap: 4vw;
                 justify-content: space-evenly;
-                background-color: #ff5722;
+                background-color: #ff8a50;
                 border-radius: 0.5vw;
                 left: 15%;
                 padding: 2vw;

@@ -52,6 +52,13 @@
             align-items: center;
         }
 
+        .selectBox {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.6vw;
+            background: #ff8a50;
+        }
+
         .content {
             text-align: center;
             padding: 20px;
@@ -72,6 +79,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             text-align: center;
             width: 18vw;
+            cursor: pointer;
         }
 
         .img-item{
@@ -82,6 +90,16 @@
         .post-title,
         .finder-name {
             margin: 10px 0;
+        }
+        .post-title{
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            font-size: 1.6vw;
+            /* Number of lines to show */
+            font-weight: bold;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .footer {
@@ -105,6 +123,21 @@
         .more-btn:hover {
             background-color: #e64a19;
         }
+
+        .no-items{
+            max-width: 100%;
+            margin: auto;
+            padding: 2vw;
+        }
+
+        .no-items>h1{
+            margin: 2vw auto;
+        }
+        
+        .notFoundImg{
+            width: 100%;
+        }
+
 
 
         @media (max-width: 767px) {

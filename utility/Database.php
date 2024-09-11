@@ -131,38 +131,60 @@ class Database
     {
         // Constructing the SQL query
         $sql = "SELECT $row FROM $table";
+        
+        // Adding JOIN clause
         if ($join != null) {
             $sql .= " JOIN $join";
         }
+    
+        // Adding WHERE clause
         if ($where != null) {
             $sql .= " WHERE $where";
         }
+    
+        // Adding ORDER BY clause
         if ($order != null) {
             $sql .= " ORDER BY $order";
         }
+    
+        // Adding LIMIT clause for pagination
         if ($limit != null) {
-            if (isset($_GET['page'])) {
-                $page = $_GET['page'];
+            if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+                $page = intval($_GET['page']);
             } else {
                 $page = 1;
             }
+    
+            // Ensure that limit is a positive integer
+            $limit = intval($limit);
+            if ($limit <= 0) {
+                $limit = 8; // Default limit if invalid value
+            }
+    
+            // Calculating the starting row for the LIMIT clause
             $start = ($page - 1) * $limit;
+    
+            // Debugging output    
             $sql .= " LIMIT $start, $limit";
         }
-
-
+    
+        // Prepare the SQL statement
         $stmt = $this->conn->prepare($sql);
-
+    
         if ($stmt === false) {
+            // Error in SQL syntax or preparation
             echo "SQL Error: " . $this->conn->error;
             return false;
         }
-
+    
+        // Execute the query and return the result
         if ($stmt->execute()) {
             return $stmt->get_result();
         } else {
+            // Error executing the query
             echo "Error executing query: " . $this->conn->error;
             return false;
         }
     }
+    
 }

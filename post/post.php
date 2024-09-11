@@ -1,4 +1,27 @@
-<?php require("../Navbar.php"); ?>
+<?php
+require("../Navbar.php");
+
+// Validate and sanitize the 'id' to prevent SQL injection
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    echo 'Invalid post ID';
+    die();
+}
+
+$id = intval($_GET['id']); // Ensure the id is an integer
+
+$db = new Database();
+$where = "posts.id='$id'";
+$join = "user_info ON posts.author_id = user_info.id";
+
+// Fetch post details from the database
+$result = $db->select('posts', 'posts.*, user_info.name', $join, $where, null, null);
+// if ($result->num_rows == 0) {
+//     echo 'Failed to display the post or post does not exist.';
+//     die();
+// }
+
+$row = $result->fetch_assoc();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,8 +33,8 @@
         * {
             box-sizing: border-box;
             font-family: Arial, sans-serif;
-            margin: 0px;
-            padding: 0px;
+            margin: 0;
+            padding: 0;
         }
 
         main {
@@ -23,7 +46,6 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-
 
         .imgDiv {
             width: 100%;
@@ -38,61 +60,76 @@
         }
 
         .title {
-            width: 100%;
             text-align: center;
             margin: 1vw auto;
             font-size: 1.8vw;
         }
 
-        .description{
+        .description {
             font-size: 1.5vw;
             line-height: 1.5;
+            text-align: left;
+            width: 90%;
+            margin: auto;
         }
 
-        .author, .date{
-            font-size: 1.4vw;
+        .author,
+        .date {
+            font-size: 1.2vw;
             margin: 1vw auto;
-            width: 95%;
+            width: 90%;
             text-align: right;
         }
 
-        .author{
-            font-weight: bolder;  
+        .author {
+            font-weight: bold;
         }
 
-        .backBtn{
-            
+        .backBtn {
             height: 3vw;
-            width: 5vw;
-            padding: 0px 10px;
+            width: 10vw;
+            padding: 0 10px;
             background-color: #ff5722;
             border: none;
-            color: white; 
+            color: white;
             font-size: 1.2vw;
             border-radius: 5px;
             cursor: pointer;
         }
-        a{
+
+        .backBtn a {
             text-decoration: none;
             color: white;
         }
-    </style>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+        a {
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
     <main>
         <div class="imgDiv">
-            <img src="../public/lost.svg" alt="">
+            <?php if (!empty($row['image'])) { ?>
+                <img src="<?php echo 'http://localhost/finderz/uploads/posts/' . htmlspecialchars($row['image']); ?>" class="displayImg" alt="post image">
+            <?php } else { ?>
+                <p>No image available</p>
+            <?php } ?>
         </div>
-        <h3 class="title">This is the title.</h3>
-        <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora iusto dolore numquam voluptas reiciendis maiores quod repellat explicabo officia harum ratione debitis, nesciunt accusamus ullam? Esse ad fuga omnis magni soluta autem accusamus quibusdam, sapiente rem ratione illo modi asperiores atque pariatur cupiditate ipsam velit. Dicta sed eaque eveniet repellat placeat ratione tenetur, error consequatur odio maiores cupiditate molestiae ducimus sit natus laudantium a vero nihil sequi. Praesentium odit cumque architecto expedita nostrum quidem, error quaerat libero, assumenda vitae ut in cupiditate voluptates. Nam vero, mollitia, doloremque sint asperiores et amet facilis consectetur, rerum voluptas vel delectus quasi. Nemo, ut!</p>
-        <p class="author">Author Name</p>
-        <p class="date">Date and time</p>
-        <button class="backBtn"><a href="./viewpost.php">Posts</a></button>
+        <h3 class="title"><?= !empty($row['title']) ? htmlspecialchars($row['title']) : 'No title available'; ?></h3>
+        <p class="description"><?= !empty($row['description']) ? htmlspecialchars($row['description']) : 'No description available'; ?></p>
+        <p class="author">Posted by: <?= !empty($row['name']) ? htmlspecialchars($row['name']) : 'Unknown'; ?></p>
+        <p class="date">
+        <p class="date">
+            <?= date('F j, Y', strtotime($row['time'])); ?><br>
+            <?= date('g:i a', strtotime($row['time'])); ?>
+        </p>
+        </p>
+        <button class="backBtn"><a href="./viewpost.php">Back to Posts</a></button>
     </main>
-    <?php require("../components/Footer.php");  ?>
+
+    <?php require("../components/Footer.php"); ?>
 </body>
 
 </html>

@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $location = $_POST['location'];
         $category = $_POST['category'];
         $id = $_GET['id']; //id of the post
+        $status = $_POST['status'];
 
         // Validate form
         if (empty($title)) {
@@ -33,6 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         }
         if (empty($category)) {
             $errors['category'] = "Category is required";
+        }
+        if (empty($status)) {
+            $errors['status'] = "Status of item is required";
         }
 
         $fileName = $row['image']; //use current image if no changes
@@ -63,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 "location" => $location,
                 "category" => $category,
                 "image" => $fileName,
+                "status" => $status
             ], $where);
 
             if ($result) {
@@ -111,6 +116,12 @@ require("../Navbar.php");
                 <label for="item-location">Location</label>
                 <input type="text" id="item-location" name="location" value="<?= htmlspecialchars($row['location']) ?>">
                 <p class="error"><?= $errors['location'] ?? '' ?></p>
+            </div>
+            <div class="radio-group">
+                <label for="item-status">Status</label>
+                Lost<input type="radio" name="status" value="0">
+                Found<input type="radio" name="status" value="1">
+                <p class="error"><?= $errors['status'] ?? '' ?></p>
             </div>
 
             <div class="form-group">
