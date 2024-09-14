@@ -17,7 +17,7 @@
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc()
     ?>
-        <main class="main-review">
+        <main class="main-view-review">
             <section class='view-review'>
                 <p class="line"><span class="label">Your satisfaction level</span> <?= $row['satisfaction'] ?></p>
                 <p class="line"><span class="label">Did you find your lost item?</span> <?= $row['found'] == 1 ? 'Yes' : 'No' ?></p>
