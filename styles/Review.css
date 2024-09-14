@@ -7,6 +7,10 @@ body {
     color: #333;
 }
 
+i{
+    color: white;
+}
+
 
 .review-form-section {
     padding: 40px 20px;
@@ -151,6 +155,17 @@ textarea {
 }
 
 /* Review Section Styles */
+
+.view-review>.top-class{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.view-edit-btn{
+    padding: 5px 10px;
+}
+
 .view-review {
     background-color: #fff;
     border-radius: 8px;
@@ -190,6 +205,16 @@ textarea {
     text-decoration: underline;
 }
 
+
+
+.cancelBtn{
+    background: red;
+}
+
+.cancelBtn:hover{
+    background-color: rgb(225, 19, 19);
+}
+
 /* Media Query for Responsive */
 @media only screen and (max-width: 768px) {
     .view-review {
@@ -202,4 +227,10 @@ textarea {
         width: 100%;
         display: block;
     }
+}
+
+
+/* update review */
+.top-class{
+    width: 100%;
 }
