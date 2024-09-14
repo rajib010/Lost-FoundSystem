@@ -121,11 +121,10 @@ $row = $result->fetch_assoc();
         <p class="description"><?= !empty($row['description']) ? htmlspecialchars($row['description']) : 'No description available'; ?></p>
         <p class="author">Posted by: <?= !empty($row['name']) ? htmlspecialchars($row['name']) : 'Unknown'; ?></p>
         <p class="date">
-        <p class="date">
             <?= date('F j, Y', strtotime($row['time'])); ?><br>
             <?= date('g:i a', strtotime($row['time'])); ?>
         </p>
-        </p>
+        
         <button class="backBtn"><a href="./viewpost.php">Back to Posts</a></button>
     </main>
 

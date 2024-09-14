@@ -1,16 +1,16 @@
 <?php
+ob_start();
 require("../Navbar.php");
-
 $db = new Database();
 
-$rev = $db->select('reviews','*',null,null,null,null);
-if($rev->num_rows>0){
+$rev = $db->select('reviews', '*', null, null, null, null);
+if ($rev->num_rows > 0) {
     header('location: viewreviews.php');
     exit();
 }
-
+ob_end_flush();
 $errors = [];
-$satisfaction='';
+$satisfaction = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submitBtn'])) {
@@ -81,10 +81,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="satisfaction">Your satisfaction</label>
             <div class="satisfaction-slider">
                 <span>0</span>
-                <input type="range" id="satisfaction" name="satisfaction" min="0" max="10" value="<?= htmlspecialchars($satisfaction)??''; ?>" oninput="updateSatisfactionValue(this.value)">
+                <input type="range" id="satisfaction" name="satisfaction" min="0" max="10" value="<?= htmlspecialchars($satisfaction) ?? ''; ?>" oninput="updateSatisfactionValue(this.value)">
                 <span>10</span>
             </div>
-            <p id="satisfactionValue"><?= htmlspecialchars($satisfaction)?? ''; ?></p>
+            <p id="satisfactionValue"><?= htmlspecialchars($satisfaction) ?? ''; ?></p>
             <p class="error"><?= htmlspecialchars($errors['satisfaction'] ?? ''); ?></p>
 
             <div class="form-group">

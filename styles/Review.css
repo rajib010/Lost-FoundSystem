@@ -107,6 +107,8 @@ textarea {
     background-color: #e64a19;
 }
 
+
+
 /* for mobile*/
 @media (max-width: 767px) {
     .review-form-section h1 {
@@ -129,5 +131,75 @@ textarea {
     .submit-btn {
         font-size: 1em;
         padding: 12px 20px;
+    }
+}
+
+
+
+/* view reviews css */
+
+.main-review {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   max-height: 100vh;
+}
+
+/* Review Section Styles */
+.view-review {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
+
+.view-review .line {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.view-review .label {
+    font-weight: bold;
+    color: #555;
+    display: inline-block;
+    width: 240px;
+}
+
+.view-review p {
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+.view-review .date {
+    font-size: 14px;
+    color: #777;
+    margin-top: 20px;
+    text-align: right;
+}
+
+/* Hover and Interaction */
+.view-review p span.label:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+/* Media Query for Responsive */
+@media only screen and (max-width: 768px) {
+    .view-review {
+        padding: 15px;
+        max-width: 100%;
+        margin: 10px;
+    }
+
+    .view-review .label {
+        width: 100%;
+        display: block;
     }
 }
