@@ -94,7 +94,7 @@
         .post-title{
             display: -webkit-box;
             -webkit-line-clamp: 2;
-            font-size: 1.6vw;
+            font-size: 1.4vw;
             /* Number of lines to show */
             font-weight: bold;
             -webkit-box-orient: vertical;
