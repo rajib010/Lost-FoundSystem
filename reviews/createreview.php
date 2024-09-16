@@ -2,10 +2,12 @@
 ob_start();
 require("../Navbar.php");
 $db = new Database();
+$userId= $_SESSION['loggedinuserId'];
 
-$rev = $db->select('reviews', '*', null, null, null, null);
+$where= " author_id= '$userId'";
+$rev = $db->select('reviews', '*', null, $where, null, null);
 if ($rev->num_rows > 0) {
-    header('location: viewreviews.php');
+    header('location: viewreview.php');
     exit();
 }
 ob_end_flush();
