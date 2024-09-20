@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,10 +11,31 @@
 
 <body>
     <?php
-    if (file_exists("../Navbar.php")) {
-        require("../Navbar.php");
-    } else {
-        echo "<div> Navbar cannot be loaded </div>";
+    require("../Navbar.php");
+    if (isset($_POST['sendBtn'])){
+        if($_SERVER['REQUEST_METHOD']=='POST'){
+            $name= $_POST['name'];
+            $email= $_POST['email'];
+            $message= $_POST['message'];
+
+            if(empty($name)||empty($email)||empty($message)){
+                echo "<script>alert('please fill in all the fields')</script>"; 
+                return;
+            }
+            $db = new Database();
+            $result = $db->insert("messages",[
+                'name'=>$name,
+                'email'=>$email,
+                'message'=>$message,
+            ]);
+            if($result){
+                echo "<script>
+                        alert('Thank you for contacting us.')
+                        window.location.href='contact.php'
+                    </script>
+                        ";
+            }
+        }
     }
     ?>
 
@@ -33,8 +53,8 @@
             </div>
 
             <div class="sub-content contact-form-div">
-                <h3>Send Us a Message</h3>
-                <form class="contact-form" action="#" method="post">
+                <h3 class="send">Send Us a Message</h3>
+                <form class="contact-form" action="" method="post">
                     <div class="form-group">
                         <label for="name">Name:</label>
                         <input type="text" id="name" name="name" required>
@@ -47,7 +67,7 @@
                         <label for="message">Message:</label>
                         <textarea id="message" name="message" rows="5" required></textarea>
                     </div>
-                    <button type="submit" class="submit-btn">Send Message</button>
+                    <button type="submit" class="submit-btn" name="sendBtn">Send Message</button>
                 </form>
             </div>
 
