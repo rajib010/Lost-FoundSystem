@@ -5,22 +5,28 @@ if(empty($_SESSION['loggedinadmin'])){
 }
 ?>
 
-
 <html>
-
 <head>
     <style>
+
+        *{
+            box-sizing: border-box;
+            margin: 0px;
+            padding: 0px;
+        }
          .admin-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px;
+            height: 7vw;
             background-color: #ff5722;
             color: white;
         }
 
         .admin-header h1 {
             font-size: 1.8em;
+            
         }
 
         .logout-btn {

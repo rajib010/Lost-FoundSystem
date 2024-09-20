@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     exit();
                 } else if ($row['user_type'] == 1) {
                     $_SESSION["loggedinadmin"] = $row["name"];
-                    header("location: ./dashboard/index.php");
+                    header("location: ./dashboard/users.php");
                     exit();
                 }
             }

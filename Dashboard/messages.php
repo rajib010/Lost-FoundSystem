@@ -50,14 +50,6 @@
             cursor: pointer;
         }
 
-        button.edit-btn {
-            background-color: rgb(56, 56, 182);
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-
         button.delete-btn:hover {
             background-color: #c0392b;
         }
@@ -67,7 +59,9 @@
 <body>
 
     <main class="admin-dashboard">
-        <?php require("./components/Nav.php") ?>
+        <?php require("./components/Nav.php");
+            require("./utility/navigate.php");
+        ?>
 
         <div class="container">
             <h1>Manage Messages</h1>
@@ -82,18 +76,34 @@
                     </tr>
                 </thead>
                 <tbody>
-
-                    <tr>
-                        <td>001</td>
-                        <td>rajib</td>
-                        <td>rajib@gmail.com</td>
-                        <td>This is message.</td>
-                        <td><button class="delete-btn">Delete</button></td>
-                    </tr>
-
+                    <?php
+                  
+                    $db = new Database();
+                    $table = 'messages';
+                    $result = $db->select($table, '*', null, null, null, null);
+                    if ($result && $result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                    ?>
+                            <tr>
+                                <td><?= htmlspecialchars($row['id']) ?></td>
+                                <td><?= htmlspecialchars($row['name']) ?></td>
+                                <td><?= htmlspecialchars($row['email']) ?></td>
+                                <td><?= htmlspecialchars($row['message']) ?></td>
+                                <td>
+                                    <button class="delete-btn" onclick="navigate(<?= htmlspecialchars($row['id']) ?>, '<?= htmlspecialchars($table) ?>')">Delete</button>
+                                </td>
+                            </tr>
+                    <?php
+                        }
+                    } else {
+                        echo "<tr><td colspan='5'>No messages found.</td></tr>";
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
+
+        
 </body>
 
 </html>

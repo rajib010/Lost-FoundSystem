@@ -17,6 +17,7 @@
             $name= $_POST['name'];
             $email= $_POST['email'];
             $message= $_POST['message'];
+            $time = date('H:i:s Y:m:d');
 
             if(empty($name)||empty($email)||empty($message)){
                 echo "<script>alert('please fill in all the fields')</script>"; 
@@ -27,6 +28,7 @@
                 'name'=>$name,
                 'email'=>$email,
                 'message'=>$message,
+                'time'=>$time
             ]);
             if($result){
                 echo "<script>

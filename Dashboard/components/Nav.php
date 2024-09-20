@@ -1,5 +1,7 @@
+<?php
+    require("../utility/Database.php");
+?>
 <html>
-
 <head>
     <style>
         * {
@@ -52,9 +54,9 @@
         <ul>
             <li><button class="nav-btn"><a href="./users.php">Show all users</a></button></li>
             <li><button class="nav-btn"><a href="./posts.php">View all posts</a></button></li>
-            <li><button class="nav-btn"><a href="./mail.php">Send Mail</a></button></li>
             <li><button class="nav-btn"><a href="./reviews.php">View Reviews</a></button></li>
             <li><button class="nav-btn"><a href="./messages.php">View Messages</a></button></li>
+            <li><button class="nav-btn"><a href="./mail.php">Send Mail</a></button></li>
         </ul>
     </nav>
 </body>

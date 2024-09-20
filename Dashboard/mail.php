@@ -6,17 +6,29 @@
 <head>
     <title>Send Mail</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0px;
+            padding: 0px;
+        }
+
         .admin-panel {
             padding: 15px 20px;
-            width: 80vw;
+            width: 90%;
+            max-width: 1200px;
             margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         .admin-dashboard {
             display: flex;
         }
 
-        .title{
+        .title {
             width: 100%;
             text-align: center;
             margin: 1vw auto;
@@ -77,7 +89,6 @@
 </head>
 
 <body>
-
     <main class="admin-dashboard">
         <?php require("./components/Nav.php"); ?>
         <div class="admin-panel">
