@@ -31,7 +31,7 @@ ob_end_flush();
         .nav-bar {
             max-width: 100%;
             height: 7vw;
-            background-color: #ff5722;
+            background: linear-gradient(90deg, #3a7bd5, #00d2ff);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -81,17 +81,6 @@ ob_end_flush();
             font-size: 1.3vw;
         }
 
-        .loginButton {
-            width: 7vw;
-            height: 3rem;
-            margin: 2vw auto;
-            border-radius: 1vw;
-            background-color: #F38402;
-            cursor: pointer;
-            color: white;
-            display: block;
-            margin-top: 3vw;
-        }
 
         .user-info {
             width: 6vw;
@@ -118,7 +107,7 @@ ob_end_flush();
             width: 10vw;
             top: 110%;
             right: -2vw;
-            background-color: #ff5722;
+            background: linear-gradient(90deg, #81b3e8, #99ecff);
             text-align: center;
             padding: 1vw;
             border-radius: 5px;
@@ -215,7 +204,7 @@ ob_end_flush();
                 display: none;
                 flex-direction: column;
                 text-align: center;
-                background-color: #ff8a50;
+                background: linear-gradient(90deg, #81b3e8, #99ecff);
                 position: absolute;
                 top: 14.2vw;
                 right: 0.5vw;
@@ -266,6 +255,7 @@ ob_end_flush();
                 height: 25vw;
                 top: -1.5vw;
                 gap: 4vw;
+                
                 justify-content: space-evenly;
                 background-color: #ff8a50;
                 border-radius: 0.5vw;
@@ -277,10 +267,11 @@ ob_end_flush();
             .dropdown-menu>li {
                 list-style: none;
                 cursor: pointer;
+                color: black;
             }
 
             .dropdown-menu>li>a {
-
+                color: black;
                 list-style: none;
             }
 
@@ -290,7 +281,7 @@ ob_end_flush();
 
             .bar-button {
                 height: 3rem;
-                background-color: #ff8a50;
+                background :linear-gradient(90deg, #81b3e8, #99ecff);
                 border-radius: 0.4rem;
                 cursor: pointer;
             }

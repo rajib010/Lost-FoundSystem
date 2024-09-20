@@ -10,16 +10,18 @@
         }
 
         .faq-section {
-            padding: 4vw 10vw 2vw 10vw;
+            padding: 4vw 10vw 4vw 10vw;
             width: 90%;
             margin: auto;
             margin-bottom: 5vw;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .faq-section>h1 {
             text-align: center;
-            font-size: 2.4vw;
-            color: #ff5722;
+            font-size: 2.5vw;
             margin-bottom: 3vw;
         }
 
@@ -28,6 +30,11 @@
             margin-bottom: 1vw;
             overflow: hidden;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+        }
+
+        .faq-item:hover{
+            transform: translateX(15px);
         }
 
         .faq-question {

@@ -4,6 +4,19 @@
 <head>
     <style>
         /* General styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
         .posts-section {
             padding: 40px 20px;
             text-align: center;
@@ -16,7 +29,6 @@
 
         .posts-section>h1 {
             font-size: 2.5vw;
-            color: #ff5722;
             margin-bottom: 30px;
         }
 
@@ -30,7 +42,7 @@
 
         .single-post {
             width: calc(25% - 20px);
-            background-color: rgb(215 211 211 / 50%);
+            background-color: #f9f9f9;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
@@ -68,8 +80,8 @@
             color: #333;
             margin-bottom: 10px;
         }
-    
-        .post-desc>h3{
+
+        .post-desc>h3 {
             display: -webkit-box;
             -webkit-line-clamp: 1;
             /* Number of lines to show */
@@ -169,7 +181,8 @@
             .post-desc>h3 {
                 font-size: 3vw;
             }
-            .post-img img{
+
+            .post-img img {
                 padding: 5vw 1vw 1vw 1vw;
             }
 

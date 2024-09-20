@@ -2,6 +2,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f4f4f4;
         }
 
         .header {
@@ -14,7 +15,7 @@
         .found-item {
             display: flex;
             align-items: center;
-            background-color: #ff5722;
+            background: linear-gradient(90deg, #81b3e8, #99ecff);
             padding: 10px 20px;
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -27,7 +28,7 @@
         }
 
         .here-btn {
-            background-color: #ffc107;
+            background: linear-gradient(90deg, #3a7bd5, #00d2ff);
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
@@ -56,7 +57,11 @@
             padding: 10px 20px;
             border-radius: 5px;
             font-size: 1.6vw;
-            background: #ff8a50;
+            background: linear-gradient(90deg, #81b3e8, #99ecff);
+            color: white;
+        }
+        .selectBox, option{
+            cursor: pointer;
         }
 
         .content {
@@ -93,7 +98,7 @@
         }
         .post-title{
             display: -webkit-box;
-            -webkit-line-clamp: 2;
+            -webkit-line-clamp: 1;
             font-size: 1.4vw;
             /* Number of lines to show */
             font-weight: bold;
@@ -181,6 +186,13 @@
             .post-item {
                 width: 80%;
                 padding: 15px;
+            }
+
+            .post-title{
+                font-size: 3vw;
+            }
+            .finder-name{
+                font-size: 1.5vw;
             }
 
             .footer {

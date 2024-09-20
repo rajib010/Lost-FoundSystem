@@ -16,7 +16,6 @@
 
         .review-section h1 {
             font-size: 2.5em;
-            color: #ff5722;
             margin-bottom: 30px;
         }
 
@@ -36,7 +35,7 @@
         }
 
         .sliderBtn {
-            background-color: #ff5722;
+            background: linear-gradient(90deg, #3a7bd5, #00d2ff);
             border: none;
             width: 5vw;
             height: 5vw;

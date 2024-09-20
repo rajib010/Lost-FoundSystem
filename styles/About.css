@@ -4,13 +4,14 @@ body {
     padding: 0;
     color: #333;
     box-sizing: border-box;
+    background-color: #f4f4f4;
     width: 100%;
 }
 
 main {
     padding: 40px 20px;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 1.5vw auto;
     text-align: center;
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
@@ -20,7 +21,7 @@ main {
 .top-text {
     font-size: 2.5em;
     margin-bottom: 20px;
-    color: #ff5722; 
+    
 }
 
 .allContent-div {
@@ -39,7 +40,7 @@ main {
 
 .sub-content h3 {
     color: #333;
-    font-size: 1.8em;
+    font-size: 1.9vw;
     margin-bottom: 10px;
 }
 

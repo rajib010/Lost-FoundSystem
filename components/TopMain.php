@@ -7,6 +7,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f4f4f4;
         }
 
         .top-main {
@@ -21,7 +22,7 @@
 
         .top-contents>h1 {
             font-size: 2.5em;
-            color: #ff5722;
+            
             margin-bottom: 20px;
         }
 
@@ -29,10 +30,11 @@
             font-size: 1.2vw;
             margin-bottom: 20px;
             color: #555;
+            font-style: italic;
         }
 
         .getStartBtn {
-            background-color: #ff5722;
+            background: linear-gradient(90deg, #3a7bd5, #00d2ff);
             border: none;
             padding: 15px 30px;
             border-radius: 5px;
@@ -49,7 +51,7 @@
         }
 
         .getStartBtn:hover {
-            background-color: #e64a19;
+            background: linear-gradient(90deg, #245c8e, #276d7f);
         }
 
 

@@ -10,8 +10,6 @@ body {
 i{
     color: white;
 }
-
-
 .review-form-section {
     padding: 40px 20px;
     text-align: center;
@@ -86,7 +84,6 @@ p.error {
     font-size: small;
 }
 
-
 textarea {
     width: 100%;
     padding: 10px;
@@ -151,7 +148,8 @@ textarea {
     display: flex;
     justify-content: center;
     align-items: center;
-   max-height: 100vh;
+    max-height: 100vh;
+   
 }
 
 /* Review Section Styles */
@@ -170,21 +168,31 @@ textarea {
     background-color: #fff;
     border-radius: 8px;
     padding: 20px;
-    max-width: 600px;
+    width: 1250px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin: 20px;
 }
 
 .view-review .line {
+    display: flex; 
+    justify-content: space-between;
+    align-items: flex-start;
     margin-bottom: 15px;
     font-size: 16px;
+    
 }
 
 .view-review .label {
     font-weight: bold;
     color: #555;
-    display: inline-block;
-    width: 240px;
+    width: 40%; 
+    text-align: left;
+}
+
+.view-review .answer {
+    width: 50%; 
+    text-align: left; 
+    color: #333;
 }
 
 .view-review p {
@@ -223,9 +231,16 @@ textarea {
         margin: 10px;
     }
 
-    .view-review .label {
-        width: 100%;
+    .view-review .line {
+        display: block; /* Stack the label and answer vertically */
+        margin-bottom: 20px; /* Add more space between each block */
+    }
+
+    .view-review .label, .view-review .answer {
+        width: 100%; /* Full width for both in mobile */
+        text-align: left; /* Align both to the left */
         display: block;
+        margin-bottom: 5px; /* Adds a small space between label and answer */
     }
 }
 

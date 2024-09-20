@@ -58,15 +58,6 @@ require("../Navbar.php");
                 <img class='notFoundImg' src='../public/noFound.jpg' alt='no posts found'>
                 </div>";
         } else { ?>
-            <h2>
-                <?php
-                if (isset($_GET['filterpost']) && $_GET['filterpost'] != 'time') {
-                    echo htmlspecialchars(ucwords($_GET['filterpost'])) . " Items";
-                } else {
-                    echo "Recently Posted";
-                }
-                ?>
-            </h2>
             <div id="posts-container" class="post-grid">
                 <?php
                 while ($row = $result->fetch_assoc()) { ?>

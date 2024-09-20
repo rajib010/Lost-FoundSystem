@@ -31,8 +31,8 @@ require("../Navbar.php"); ?>
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
         // Validation
         if (empty($satisfaction)) $errors['satisfaction'] = 'Please select satisfaction level';
-        if (empty($found)) $errors['found'] = 'Please indicate if you found your item';
-        if (empty($recommend)) $errors['recommend'] = 'Please indicate if you recommend us';
+        if (!isset($found) || $found === '') $errors['found'] = 'Please indicate if you found your item';
+        if (!isset($recommend) || $recommend === '') $errors['recommend'] = 'Please indicate if you recommend us';
         if (empty($message)) $errors['message'] = 'Please provide a message';
 
         // Update database if no errors
