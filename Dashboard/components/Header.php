@@ -15,7 +15,9 @@ if(empty($_SESSION['loggedinadmin'])){
             padding: 0px;
         }
          .admin-header {
+            width: 100%;
             display: flex;
+            position: fixed;
             justify-content: space-between;
             align-items: center;
             padding: 20px;

@@ -19,9 +19,10 @@
             width: 20%;
             min-height: 100vh;
             background-color: #1976d2;
+            margin-top: 7vw;
             border-radius: 0px;
             padding: 2vw;
-
+            position: fixed;
         }
 
         .admin-nav>ul {

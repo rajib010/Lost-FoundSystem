@@ -1,19 +1,123 @@
-*body{
-    margin: 0px;
-    padding: 0px;
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+.admin-dashboard {
+    display: flex;
+}
+
+.container,.admin-panel {
+    width: 90%;
+    max-width: 1200px;
+    margin: 7vw 0px 0px 20%;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+button.delete-btn, button.edit-btn {
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+button.delete-btn{
+    background-color: #e74c3c;
+}
+
+button.delete-btn:hover {
+    background-color: #c0392b;
+}
+button.edit-btn{
+    background-color: #30078e;
+}
+
+button.edit-btn:hover {
+    background-color: #230c6c;
+}
+
+
+
+
+/* mail */
+.title {
+    width: 100%;
+    text-align: center;
+    margin: 1vw auto;
+}
+
+/* Form Styles */
+.mail-form {
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group>label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
     box-sizing: border-box;
 }
-.admin-dashboard {
-    padding: 0px;
+
+.form-group>textarea {
+    resize: vertical;
 }
 
+.send-btn {
+    background-color: #ff5722;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    font-size: 1.2vw;
+    margin: auto;
+}
 
-
-
-
-
-
-
-
-
-
+.send-btn:hover {
+    background-color: #e64a19;
+}
