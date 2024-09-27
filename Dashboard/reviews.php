@@ -35,15 +35,15 @@
                     $db = new Database();
                     $i=0;
                     $table = 'reviews';
-                    $join ="join user_info on reviews.author_id=user_info.id";
-                    $result = $db->select($table, "*", null, null, null, null);
+                    $join ="join user_info on user_info.id=reviews.author_id";
+                    $result = $db->select($table, "*", $join, null, null, null);
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
 
                     ?>
                             <tr>
                                 <td><?= ++$i ?></td>
-                                <td><?= ?></td>
+                                <td><?= $row['name'] ?></td>
                                 <td><?= $row['message']?></td>
                                 
 

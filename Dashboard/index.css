@@ -62,6 +62,11 @@ button.edit-btn:hover {
     background-color: #230c6c;
 }
 
+.image-item{
+    max-width: 10vw;
+    height: auto;
+}
+
 
 
 
@@ -121,3 +126,4 @@ button.edit-btn:hover {
 .send-btn:hover {
     background-color: #e64a19;
 }
+

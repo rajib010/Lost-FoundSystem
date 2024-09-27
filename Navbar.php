@@ -7,27 +7,15 @@ if (empty($_SESSION['loggedinuserId'])) {
     exit();
 }
 $db = new Database();
-
 ob_end_flush();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./styles/index.css"/>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        h1>a {
-            text-decoration: none;
-            color: white;
-        }
-
         .nav-bar {
             max-width: 100%;
             height: 7vw;
@@ -46,54 +34,44 @@ ob_end_flush();
             display: flex;
             align-items: center;
             gap: 1vw;
-            margin-left: 1%;
+            margin-left: 5%;
         }
 
-        .img-div {
-            width: 5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 1rem;
-            padding: 0.5rem;
-        }
-
-        .img-div img {
-            max-width: 100%;
-            height: auto;
+        .logo-img {
+            width: 80%;
         }
 
         .list-items {
             display: flex;
-            width: 55%;
+            gap: 6vw;
             line-height: 10vw;
+            left: 0px;
             justify-content: space-between;
-            margin-left: auto;
             list-style: none;
             font-size: 1.4rem;
-            padding-right: 2vw;
         }
 
-        .list-items>li>a {
+        .nav-text {
             font-family: Georgia, 'Times New Roman', Times, serif;
             text-decoration: none;
             color: white;
             font-size: 1.3vw;
         }
 
-
         .user-info {
-            width: 6vw;
-            height: 7vw;
+            max-width: 100px;
+            height: 5vw;
             padding-top: 2vw;
             display: block;
             position: relative;
+
         }
 
-        .user-info>img {
-            border-radius: 100%;
-            width: 100%;
-            height: fit-content;
+        .user-image {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            object-fit: cover;
             cursor: pointer;
         }
 
@@ -102,41 +80,48 @@ ob_end_flush();
         }
 
         .dropdown-menu {
+            display: none;
             position: absolute;
             min-height: 5vw;
-            width: 10vw;
-            top: 110%;
-            right: -2vw;
-            background: linear-gradient(90deg, #81b3e8, #99ecff);
-            text-align: center;
+            min-width: 9vw;
+            right: -20px;
+            top: 150%;
+            background: linear-gradient(90deg, #3a7bd5, #00d2ff);
             padding: 1vw;
-            border-radius: 5px;
-            line-height: 3vw;
-            display: none;
-            flex-direction: column;
+            border-radius: 0.5vw;
+            line-height: 2.5vw;
             list-style: none;
-            gap: 0.5vw;
-
+            flex-direction: column;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+            transition: box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
         }
 
-        .dropdown-menu li {
+        .dropdown-menu>li {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
             width: 100%;
-            box-shadow: #C5BBBB;
-            border-bottom: 1px solid #C5BBBB;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            text-align: center;
+            border-radius: 0.4vw;
+            border: none;
+            box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
             cursor: pointer;
         }
 
-        .dropdown-menu>li>a,
-        .logoutItem {
-            text-decoration: none;
-            width: 100%;
-            color: white;
-            font-size: 1.3vw;
+        .dropdown-menu>li:hover {
+            background: linear-gradient(90deg, #3a7bd5, #00d2ff);
+            box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.2);
         }
 
         .dropdown-menu>li>a>i {
             margin-left: 0.5vw;
+            color: #555;
+            /* Consistent icon color */
         }
+
 
         .bar-icons {
             display: none;
@@ -154,29 +139,21 @@ ob_end_flush();
                 height: 9vw;
             }
 
-            .img-div {
-                height: 7vw;
+            .logo-img {
+                width: 75%;
             }
 
-            .img-div img {
-                width: 80%;
+            .nav-text {
+                font-size: 2vw;
             }
 
-            .logo-div h1 {
-                font-size: 2.4vw;
-            }
-
-            .list-items li {
-                font-size: 1.1rem;
-            }
-
-            .loginButton {
-                width: 9vw;
-                height: 2rem;
+            .user-image {
+                width: 50px;
+                height: 50px;
             }
 
             .dropdown-menu {
-                min-width: 12vw;
+                right: -15px;
             }
         }
 
@@ -188,16 +165,8 @@ ob_end_flush();
                 z-index: 10;
             }
 
-            .img-div {
-                height: 9vw;
-            }
-
-            .img-div img {
-                width: 70%;
-            }
-
-            .logo-div h1 {
-                font-size: 1.4rem;
+            .logo-img {
+                width: 65%;
             }
 
             .list-items {
@@ -207,32 +176,26 @@ ob_end_flush();
                 background: linear-gradient(90deg, #81b3e8, #99ecff);
                 position: absolute;
                 top: 14.2vw;
-                right: 0.5vw;
-                width: 100vw;
-                padding: 1vw;
-                border-bottom-left-radius: 5vw;
-                border-bottom-right-radius: 5vw;
+                width: 100%;
+                margin-bottom: 15px;
+                cursor: pointer;
+                border-radius: 5px;
                 gap: 4vw;
                 z-index: 9;
+                transition: background-color 0.3s ease;
             }
 
-            .list-items li {
-                border-bottom: 1px solid white;
+            .list-items>li:hover {
+                background-color: #3a7bd5;
             }
 
-            .list-items li a,
-            .logoutItem {
-                font-size: 3.5vw;
+            .nav-text {
+                font-size: 3.6vw;
             }
+
 
             .show-items {
                 display: flex;
-            }
-
-            .loginButton {
-                display: block;
-                margin: -3.5vw auto 0px;
-                width: 19vw;
             }
 
             .user-info {
@@ -243,37 +206,50 @@ ob_end_flush();
                 width: 100%;
             }
 
-            .user-info>img {
-                width: 10vw;
-                margin-left: 44vw;
-                margin-top: -2vw;
+            .user-image {
+                margin-left: 43vw;
+                width: 55px;
+                height: 55px;
             }
 
-            .user-info>.dropdown-menu {
-                position: relative;
-                width: 20vw;
-                height: 25vw;
-                top: -1.5vw;
-                gap: 4vw;
-                
-                justify-content: space-evenly;
-                background-color: #ff8a50;
-                border-radius: 0.5vw;
-                left: 15%;
+            .dropdown-menu {
+                width: 25vw;
+                height: auto;
+                top: -10vw;
+                background-color: #81b3e8;
+                border-radius: 0.8vw;
+                left: 330%;
                 padding: 2vw;
                 transform: translateX(-50%);
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+                transition: box-shadow 0.3s ease-in-out;
             }
 
             .dropdown-menu>li {
-                list-style: none;
-                cursor: pointer;
-                color: black;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                width: 100%;
+                padding: 8px 10px;
+                margin-bottom: 6px;
+                text-align: center;
+                border-radius: 0.5vw;
+                border: none;
+                background-color: #3a7bd5;
+                box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.1);
+                transition: background-color 0.3s ease-in-out;
             }
 
-            .dropdown-menu>li>a {
-                color: black;
-                list-style: none;
+            .dropdown-menu>li:hover {
+                background-color: #3a7bd8;
+                box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.2);
             }
+
+            .dropdown-menu>li>a>i {
+                margin-left: 0.5vw;
+                color: #555;
+            }
+
 
             .bar-icons {
                 display: block;
@@ -281,12 +257,12 @@ ob_end_flush();
 
             .bar-button {
                 height: 3rem;
-                background :linear-gradient(90deg, #81b3e8, #99ecff);
+                background: linear-gradient(90deg, #81b3e8, #99ecff);
                 border-radius: 0.4rem;
                 cursor: pointer;
             }
 
-            .bar-button i {
+            .bar-button>i {
                 font-size: xx-large;
             }
         }
@@ -296,22 +272,20 @@ ob_end_flush();
 <body>
     <nav class="nav-bar">
         <div class="logo-div">
-            <div class="img-div"><img src="../public/logo.svg" alt="logo"></div>
-            <h1><a href="../pages/home.php">Home</a></h1>
+            <a href="../pages/home.php"><img src="../public/logo.svg" alt="logo" class="logo-img"></a>
         </div>
         <ul class="list-items">
-            <li><a href="../post/viewpost.php">Post</a></li>
-            <li><a href="../pages/about.php">About</a></li>
-            <li><a href="../pages/contact.php">Contact</a></li>
-            <li><a href="../reviews/createreview.php">Reviews</a></li>
-            <!-- <li><button class="loginButton"><a href="../pages/Signup.php">Join now</a></button></li> -->
+            <li><a href="../post/viewpost.php" class='nav-text'>Post</a></li>
+            <li><a href="../pages/about.php" class='nav-text'>About</a></li>
+            <li><a href="../pages/contact.php" class='nav-text'>Contact</a></li>
+            <li><a href="../reviews/createreview.php" class='nav-text'>Reviews</a></li>
             <li>
                 <div class="user-info">
                     <img src="<?php echo 'http://localhost/finderz/uploads/user/' . $_SESSION['userImg'] ?>" class="user-image" alt="User Image">
                     <ul class="dropdown-menu">
-                        <li><a href="">View <i class="fa-solid fa-user"></i></a></li>
-                        <li><a href="">Edit<i class="fa-solid fa-pen"></i> </a></li>
-                        <li class="logoutItem">Logout<i class="fa-solid fa-right-from-bracket"></i></li>
+                        <li><a href="" class="nav-text nav-nav-text">View</a></li>
+                        <li><a href="" class="nav-text nav-nav-text">Edit </a></li>
+                        <li class="logoutItem nav-text nav-nav-text">Logout</li>
                     </ul>
                 </div>
             </li>
@@ -332,9 +306,9 @@ ob_end_flush();
         document.querySelector(".logoutItem").addEventListener('click', function() {
             let userResponse = confirm("Do you want to logout?");
             if (userResponse) {
-                window.location.href = '../logout.php';
+                window.location.replace("../controllers/logout.php");
             }
-        })
+        });
     </script>
 </body>
 

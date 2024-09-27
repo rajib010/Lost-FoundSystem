@@ -20,7 +20,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>Sn</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Address</th>
@@ -32,13 +32,14 @@
                 <tbody>
                     <?php
                     $db = new Database();
+                    $i = 0;
                     $table = 'user_info';
                     $result = $db->select($table, '*', null, null, null, null);
                     if ($result && $result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                     ?>
                             <tr>
-                                <td><?= htmlspecialchars($row['id']) ?></td>
+                                <td><?= ++$i; ?></td>
                                 <td><?= htmlspecialchars($row['name']) ?></td>
                                 <td><?= htmlspecialchars($row['email']) ?></td>
                                 <td><?= htmlspecialchars($row['address']) ?></td>

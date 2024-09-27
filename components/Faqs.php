@@ -11,7 +11,7 @@
 
         .faq-section {
             padding: 4vw 10vw 4vw 10vw;
-            width: 90%;
+            width: 95%;
             margin: auto;
             margin-bottom: 5vw;
             background-color: rgba(255, 255, 255, 0.9);

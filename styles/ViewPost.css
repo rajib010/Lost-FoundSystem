@@ -60,7 +60,11 @@
             background: linear-gradient(90deg, #81b3e8, #99ecff);
             color: white;
         }
-        .selectBox, option{
+        .selectBox{
+            cursor: pointer;
+        }
+        option{
+            background-color: gray;
             cursor: pointer;
         }
 

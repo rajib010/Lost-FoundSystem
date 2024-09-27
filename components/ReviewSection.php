@@ -10,7 +10,7 @@
             border-radius: 10px;
             margin: 40px auto;
             overflow: hidden;
-            max-width: 1200px;
+            width: 95%;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 

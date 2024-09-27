@@ -10,7 +10,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 $id = intval($_GET['id']); // Ensure the id is an integer
 
 $db = new Database();
-$where = "posts.id='$id'";
+$where = "posts.pid='$id'";
 $join = "user_info ON posts.author_id = user_info.id";
 
 // Fetch post details from the database

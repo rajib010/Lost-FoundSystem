@@ -16,7 +16,7 @@
             background-color: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             margin: 40px auto;
-            max-width: 1200px;
+            width: 95%  ;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 

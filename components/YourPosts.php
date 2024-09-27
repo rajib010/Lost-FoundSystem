@@ -23,7 +23,7 @@
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
             margin: 40px auto;
-            max-width: 1200px;
+            width: 95%;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
@@ -215,13 +215,13 @@
             } else {
                 while ($row = $result->fetch_assoc()) {
             ?>
-                    <div class="single-post" onclick="viewPost(<?php echo $row['id']; ?>)">
+                    <div class="single-post" onclick="viewPost(<?php echo $row['pid']; ?>)">
                         <div class="post-img">
                             <img class="image" src="<?php echo 'http://localhost/finderz/uploads/posts/' . htmlspecialchars($row['image']); ?>" alt="image">
                         </div>
                         <div class="edit-posts">
-                            <p class="edit" onclick="event.stopPropagation(); editPost(<?php echo $row['id']; ?>)"><i class="fa-solid fa-pen"></i></p>
-                            <p class="delete" onclick="event.stopPropagation(); deletePost(<?php echo $row['id']; ?>)"><i class="fa-solid fa-trash"></i></p>
+                            <p class="edit" onclick="event.stopPropagation(); editPost(<?php echo $row['pid']; ?>)"><i class="fa-solid fa-pen"></i></p>
+                            <p class="delete" onclick="event.stopPropagation(); deletePost(<?php echo $row['pid']; ?>)"><i class="fa-solid fa-trash"></i></p>
                         </div>
                         <div class="post-desc">
                             <h3><?php echo htmlspecialchars($row['title']); ?></h3>

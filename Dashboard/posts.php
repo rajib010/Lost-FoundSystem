@@ -49,8 +49,9 @@
                                 <td><?= htmlspecialchars($row['title']) ?></td>
                                 <td><?= htmlspecialchars($row['description']) ?></td>
                                 <td><?= htmlspecialchars($row['location']) ?></td>
-                                <td><?= htmlspecialchars($row['image']) ?></td>
+                                <td><img src="<?= 'http://localhost/finderz/uploads/posts/'.htmlspecialchars($row['image']) ?>" alt="image" class="image-item" /></td>
                                 <td><?= htmlspecialchars($row['category']) ?></td>
+                                <td><?= htmlspecialchars($row['status']==0?'notfound':'found') ?></td>
                                 <td>
                                     <button class="delete-btn" onclick="navigate(<?= htmlspecialchars($row['id']) ?>, '<?= htmlspecialchars($table) ?>')">Delete</button>
                                 </td>

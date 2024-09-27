@@ -6,7 +6,7 @@ $errors = [];
 
 // Fetch the current post data
 $id = $_GET['id'];
-$where = "posts.id = $id";
+$where = "posts.pid = $id";
 $result = $db->select("posts", '*', null, $where, null, null);
 if ($result->num_rows !== 0) {
     $row = $result->fetch_assoc();

@@ -61,7 +61,7 @@ require("../Navbar.php");
             <div id="posts-container" class="post-grid">
                 <?php
                 while ($row = $result->fetch_assoc()) { ?>
-                    <div class="post-item" onclick="viewItem(<?php echo $row['id'] ?>)" title='view post'>
+                    <div class="post-item" onclick="viewItem(<?php echo $row['pid'] ?>)" title='view post'>
                         <img class="img-item" src="<?php echo 'http://localhost/finderz/uploads/posts/' . htmlspecialchars($row['image']); ?>" alt="Post Image">
                         <p class="post-title"><?php echo htmlspecialchars($row['title']); ?></p>
                         <p class="finder-name">Found by: <?php echo htmlspecialchars($row['name']); ?></p>
