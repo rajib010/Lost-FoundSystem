@@ -14,7 +14,7 @@ ob_end_flush();
 
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="./styles/index.css"/>
+    <link rel="stylesheet" href="./styles/index.css" />
     <style>
         .nav-bar {
             max-width: 100%;
@@ -51,12 +51,6 @@ ob_end_flush();
             font-size: 1.4rem;
         }
 
-        .nav-text {
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            text-decoration: none;
-            color: white;
-            font-size: 1.3vw;
-        }
 
         .user-info {
             max-width: 100px;
@@ -143,9 +137,7 @@ ob_end_flush();
                 width: 75%;
             }
 
-            .nav-text {
-                font-size: 2vw;
-            }
+            
 
             .user-image {
                 width: 50px;
@@ -188,11 +180,6 @@ ob_end_flush();
             .list-items>li:hover {
                 background-color: #3a7bd5;
             }
-
-            .nav-text {
-                font-size: 3.6vw;
-            }
-
 
             .show-items {
                 display: flex;
@@ -306,7 +293,7 @@ ob_end_flush();
         document.querySelector(".logoutItem").addEventListener('click', function() {
             let userResponse = confirm("Do you want to logout?");
             if (userResponse) {
-                window.location.replace("../controllers/logout.php");
+                window.location.replace("../logout.php");
             }
         });
     </script>

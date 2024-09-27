@@ -71,7 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         }
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,14 +80,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Learn more about our team and mission.">
     <title>Add Posts</title>
-    <link rel="stylesheet" href="../styles/AddPost.css" />
+    <link rel="stylesheet" href="../styles/index.css" />
+    <style>
+        #item-category{
+            width: 20%;
+        }
+        #section{
+            width: 90%;
+        }
+    </style>
 </head>
 
 <body>
-    <?php ?>
-    <section class="form-section">
-        <h1>Provide Information of the Found Item</h1>
-        <form class="found-item-form" method="post" action="" enctype="multipart/form-data">
+    <section class="add-post-section" id="section">
+        <h1 class="content-header">Provide Information of the Found Item</h1>
+        <form class="form-class" method="post" action="" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="item-title">Item Title</label>
                 <input type="text" id="item-title" name="title" value="<?php $_POST['title'] ?? ''; ?>">
@@ -128,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <p class="error"><?php $errors['category'] ?? '' ?></p>
             </div>
 
-            <button type="submit" name="submitBtn" class="submit-btn">Submit</button>
+            <button type="submit" name="submitBtn" class="btn">Submit</button>
         </form>
     </section>
 

@@ -3,3 +3,272 @@
     margin: 0;
     padding: 0;
 }
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.top-main,
+.review-section,
+.about-section,
+.posts-section,
+.contact-section,
+.faq-section,
+.review-form-section,
+.view-review,
+.update-review-section,
+.main-section,
+.add-post-section {
+    padding: 50px 20px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    margin: 20px auto;
+    width: 95%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.3vw;
+}
+
+i {
+    cursor: pointer;
+    color: white;
+}
+
+.content-header {
+    font-size: 2.5vw;
+    margin-bottom: 20px;
+}
+
+.content-p {
+    font-size: 1.2vw;
+    color: #555;
+}
+
+.bold {
+    font-weight: bolder;
+}
+
+.post-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2vw 1vw;
+    justify-items: center;
+    padding: 20px;
+}
+
+.post-card {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-card:hover{
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.post-img {
+    width: 200px;
+    height: 200px;
+}
+
+.post-title {
+    font-size: 1.5vw;
+    color: #333;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    font-weight: bold;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn,
+select {
+    cursor: pointer;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 15px 30px;
+    background: linear-gradient(90deg, #3a7bd5, #00d2ff);
+    font-size: 1.2em;
+    transition: background-color 0.3s ease;
+}
+
+select{
+    padding: 15px;
+}
+
+.btn:hover {
+    background: linear-gradient(90deg, #245c8e, #276d7f);
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-text {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-decoration: none;
+    color: white;
+    font-size: 1.3vw;
+}
+
+.allContent-div {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.sub-content {
+    text-align: left;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* for form components */
+
+.form-class {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: linear-gradient(90deg, #245c8e, #276d7f);
+    ;
+    box-shadow: 0 0 5px linear-gradient(90deg, #245c8e, #276d7f);
+    ;
+}
+
+.form-group input[type="radio"] {
+    margin-right: 5px;
+}
+
+input[type="range"] {
+    flex-grow: 1;
+    margin: 0 10px;
+}
+input[type="file"] {
+    padding: 10px;
+    border: none;
+}
+
+option {
+    background-color: gray;
+}
+
+option:hover {
+    cursor: pointer;
+}
+
+.error {
+    color: red;
+    margin: 0px 0px 5px 0px;
+    text-align: left;
+    width: 100%;
+    font-size: small;
+}
+
+
+
+
+/* for tablets   */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .content-header {
+        font-size: 3.5vw;
+    }
+
+    a {
+        font-size: 2.9vw;
+    }
+
+    .post-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3vw 2vw;
+    }
+
+    .post-title {
+        font-size: 2.9vw;
+    }
+
+    .content-p {
+        font-size: 2.6vw;
+    }
+
+    .nav-text {
+        font-size: 2vw;
+    }
+
+}
+
+
+
+
+/* for mobile devices */
+@media (max-width: 768px) {
+    .content-header {
+        font-size: 5.5vw;
+    }
+
+    a {
+        font-size: 3.4vw;
+    }
+
+    .post-grid {
+        grid-template-columns: 1fr;
+        gap: 4vw 3vw;
+    }
+
+    .content-p {
+        font-size: 3.1vw;
+    }
+
+    .post-title {
+        font-size: 3.5vw;
+    }
+
+    .nav-text {
+        font-size: 3.6vw;
+    }
+}

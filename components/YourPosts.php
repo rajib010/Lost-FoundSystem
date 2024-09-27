@@ -2,210 +2,80 @@
 <html lang="en">
 
 <head>
+    <link rel="stylesheet" href="../styles/index.css">
     <style>
-        /* General styles */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        .posts-section {
-            padding: 40px 20px;
-            text-align: center;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            margin: 40px auto;
-            width: 95%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .posts-section>h1 {
-            font-size: 2.5vw;
-            margin-bottom: 30px;
-        }
-
-        .all-posts {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-evenly;
-            gap: 20px;
-            cursor: pointer;
-        }
-
-        .single-post {
-            width: calc(25% - 20px);
-            background-color: #f9f9f9;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            text-align: left;
-            transition: transform 0.3s ease;
-        }
-
-        .single-post:hover {
-            transform: translateY(-10px);
-        }
-
-        .post-img {
-            display: flex;
-            justify-content: center;
-            height: 65%;
-            border-radius: 10px;
-        }
-
-        .post-img img {
-            width: 80%;
-            max-width: 250px;
-            height: auto;
-            max-height: 45vh;
-            padding: 2vw 1vw 1vw 1vw;
-            border-radius: 10px;
-            object-fit: cover;
-        }
-
-        .post-desc {
-            padding: 15px;
-        }
-
-        .post-desc>h3 {
-            font-size: 1.5vw;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .post-desc>h3 {
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            /* Number of lines to show */
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .post-desc>p {
+        .content-p {
+            margin-top: 4px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             /* Number of lines to show */
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
-        }
-
-        .post-desc>p {
-            font-size: 1.3vw;
-            color: #555;
-            margin-bottom: 1vw;
+            font-style: normal;
         }
 
         .edit-posts {
-            width: 90%;
-            margin: 0.5vw auto;
+            width: 97%;
+            margin: 10px 0 10px 0;
             display: flex;
-            gap: 1vw;
-            justify-content: right;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 0 1vw;
         }
 
-        .edit-posts>p>i {
+        .edit-posts p {
+            margin: 0;
+            line-height: 1;
+        }
+
+
+        .edit,
+        .delete {
             cursor: pointer;
-        }
-
-        .btndiv {
-            margin-top: 30px;
-        }
-
-        .viewMoreBtn {
-            background-color: #ff5722;
-            border: none;
-            padding: 10px 20px;
             border-radius: 5px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1.1em;
+            padding: 8px;
             transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .viewMoreBtn:hover {
-            background-color: #e64a19;
+        .edit i,
+        .delete i {
+            color: #ffff;
+            font-size: 1.2rem;
         }
 
-        .viewMoreBtn a {
-            color: white;
-            text-decoration: none;
+        .edit {
+            background: linear-gradient(90deg, #3a7bd5, #00d2ff);
         }
 
-        /* Tablet styles */
-        @media (min-width: 768px) and (max-width: 1024px) {
-            .single-post {
-                width: 45%;
-                margin-bottom: 20px;
-            }
+        .edit:hover {
+            background: linear-gradient(90deg, #245c8e, #276d7f);
 
-            .posts-section>h1 {
-                font-size: 3vw;
-            }
-
-            .post-desc>h3 {
-                font-size: 2.3vw;
-            }
-
-            .post-desc>p {
-                font-size: 1.9vw;
-            }
-
-            .post-img img {
-                width: 100%;
-                height: auto;
-                max-width: 200px;
-            }
-
-            .edit-posts {
-                gap: 2vw;
-            }
         }
 
-        /* Mobile styles */
-        @media (max-width: 767px) {
-            .posts-section>h1 {
-                font-size: 5vw;
-            }
+        .delete:hover {
+            background: linear-gradient(90deg, #8e2424, #7f2727);
 
-            .post-desc>h3 {
-                font-size: 3vw;
-            }
+        }
 
-            .post-img img {
-                padding: 5vw 1vw 1vw 1vw;
-            }
+        .delete {
+            background: linear-gradient(90deg, #d53a3a, #ff7b7b);
+        }
 
-            .post-desc>p {
-                font-size: 2.6vw;
-            }
-
-            .edit-posts {
-                gap: 3vw;
-            }
-
-            .single-post {
-                width: 90%;
-                margin-bottom: 10px;
-            }
+        .edit:hover,
+        .delete:hover {
+            background-color: rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
 
 <body>
     <section class="posts-section">
-        <h1>Your Posts</h1>
-        <div class="all-posts">
+        <h1 class="content-header">Your Posts</h1>
+        <div class="post-grid">
             <?php
             $id = $_SESSION['loggedinuserId'];
             $where = "author_id = '$id'";
@@ -215,18 +85,16 @@
             } else {
                 while ($row = $result->fetch_assoc()) {
             ?>
-                    <div class="single-post" onclick="viewPost(<?php echo $row['pid']; ?>)">
-                        <div class="post-img">
-                            <img class="image" src="<?php echo 'http://localhost/finderz/uploads/posts/' . htmlspecialchars($row['image']); ?>" alt="image">
-                        </div>
+                    <div class="post-card" onclick="viewPost(<?php echo $row['pid']; ?>)">
+                        <img class="post-img" src="<?php echo 'http://localhost/finderz/uploads/posts/' . htmlspecialchars($row['image']); ?>" alt="image">
                         <div class="edit-posts">
                             <p class="edit" onclick="event.stopPropagation(); editPost(<?php echo $row['pid']; ?>)"><i class="fa-solid fa-pen"></i></p>
                             <p class="delete" onclick="event.stopPropagation(); deletePost(<?php echo $row['pid']; ?>)"><i class="fa-solid fa-trash"></i></p>
                         </div>
-                        <div class="post-desc">
-                            <h3><?php echo htmlspecialchars($row['title']); ?></h3>
-                            <p><?php echo htmlspecialchars($row['description']); ?></p>
-                        </div>
+
+                        <h3 class="post-title"><?php echo htmlspecialchars($row['title']); ?></h3>
+                        <p class="content-p"><?php echo htmlspecialchars($row['description']); ?></p>
+
                     </div>
             <?php
                 }
