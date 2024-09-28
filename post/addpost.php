@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <link rel="stylesheet" href="../styles/index.css" />
     <style>
         #item-category{
-            width: 20%;
+            width: 250px;
         }
         #section{
             width: 90%;

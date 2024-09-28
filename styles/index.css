@@ -3,6 +3,11 @@
     margin: 0;
     padding: 0;
 }
+html,
+body {
+    min-height: 100%;
+    width: 100%;
+}
 
 body {
     font-family: Arial, sans-serif;
@@ -20,7 +25,10 @@ body {
 .view-review,
 .update-review-section,
 .main-section,
-.add-post-section {
+.add-post-section,
+.single-post,
+.login-section,
+.signup-section {
     padding: 50px 20px;
     text-align: center;
     background-color: rgba(255, 255, 255, 0.9);
