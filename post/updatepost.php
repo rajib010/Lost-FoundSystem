@@ -81,7 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 require("../Navbar.php");
 
-
 ?>
 
 <!DOCTYPE html>

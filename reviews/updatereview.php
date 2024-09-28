@@ -32,16 +32,6 @@ require("../Navbar.php"); ?>
             margin-bottom: 20px;
         }
 
-        #cancelBtn,
-        #deleteBtn {
-            background: linear-gradient(90deg, #d53a3a, #ff7b7b);
-        }
-
-        #cancelBtn,
-        #deleteBtn:hover {
-            background: linear-gradient(90deg, #8e2424, #7f2727);
-        }
-
         .form-group label {
             font-weight: none;
         }

@@ -101,24 +101,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 2vw 5vw;
         }
 
-
-        .content-header {
-            width: 100%;
-        }
-
         .form-class {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
         }
 
-        .toggle-password {
-            position: absolute;
-            right: 10px;
-            cursor: pointer;
-        }
-
-        .signup-section form {
+       .signup-section form {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
@@ -135,36 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .signup-section button {
             grid-column: 1 / -1;
         }
-
-        .passwordContainer {
-            position: relative;
-            width: 100%;
-        }
-
-        .passwordField {
-            width: 100%;
-            padding-right: 40px;
-        }
-
-        .fa-eye:before {
-            content: "\f06e";
-            color: black;
-        }
-
-        .fa-eye-slash:before {
-            content: "\f070";
-            color: black;
-        }
-
-        .toggle-password {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-
+        
         a {
             color: blue;
         }

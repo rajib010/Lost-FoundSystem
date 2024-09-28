@@ -271,7 +271,7 @@ ob_end_flush();
                     <img src="<?php echo 'http://localhost/finderz/uploads/user/' . $_SESSION['userImg'] ?>" class="user-image" alt="User Image">
                     <ul class="dropdown-menu">
                         <li><a href="" class="nav-text nav-nav-text">View</a></li>
-                        <li><a href="" class="nav-text nav-nav-text">Edit </a></li>
+                        <li><a href="./edituser.php" class="nav-text nav-nav-text">Edit </a></li>
                         <li class="logoutItem nav-text nav-nav-text">Logout</li>
                     </ul>
                 </div>
