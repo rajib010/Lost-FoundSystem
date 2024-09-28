@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../index.css">
     <style>
         .sliderImage {
             width: 100%;

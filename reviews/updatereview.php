@@ -7,7 +7,7 @@ require("../Navbar.php"); ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Review</title>
-    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../index.css">
     <style>
         .top-class {
             width: 100%;
@@ -130,11 +130,11 @@ require("../Navbar.php"); ?>
 
             <div class="buttons">
                 <button type="submit" class="btn" name="submitBtn">Update</button>
-                <button type="button" class="btn" id="cancelBtn" onclick="navigate()">Cancel</button>
+                <button type="button" class="btn" id="cancelBtn" onclick="back()">Cancel</button>
             </div>
 
             <script>
-                function navigate() {
+                function back() {
                     window.location.href = `viewreview.php`;
                 }
                 function navigate(id) {

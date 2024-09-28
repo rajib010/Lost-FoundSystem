@@ -14,7 +14,7 @@ ob_end_flush();
 
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="./styles/index.css" />
+    <link rel="stylesheet" href="./index.css" />
     <style>
         .nav-bar {
             max-width: 100%;
@@ -271,7 +271,7 @@ ob_end_flush();
                     <img src="<?php echo 'http://localhost/finderz/uploads/user/' . $_SESSION['userImg'] ?>" class="user-image" alt="User Image">
                     <ul class="dropdown-menu">
                         <li><a href="" class="nav-text nav-nav-text">View</a></li>
-                        <li><a href="./edituser.php" class="nav-text nav-nav-text">Edit </a></li>
+                        <li><a href="../user/edituser.php" class="nav-text nav-nav-text">Edit </a></li>
                         <li class="logoutItem nav-text nav-nav-text">Logout</li>
                     </ul>
                 </div>
@@ -293,7 +293,7 @@ ob_end_flush();
         document.querySelector(".logoutItem").addEventListener('click', function() {
             let userResponse = confirm("Do you want to logout?");
             if (userResponse) {
-                window.location.replace("../logout.php");
+                window.location.replace("../user/logout.php");
             }
         });
     </script>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta description="" content="Our contact information and links.">
     <title>Contact</title>
-    <link rel="stylesheet" href="../styles/Contact.css">
+    <link rel="stylesheet" href="../Contact.css">
 </head>
 
 <body>

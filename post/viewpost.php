@@ -9,7 +9,6 @@ require("../Navbar.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Learn more about our team and mission.">
     <title>ViewPosts</title>
-    <link rel="stylesheet" href="../styles/ViewPost.css" />
     <style>
         .header {
             width: 35%;
@@ -59,7 +58,7 @@ require("../Navbar.php");
             width: 100%;
         }
     </style>
-    <link rel="stylesheet" href="../styles/index.css" />
+    <link rel="stylesheet" href="../index.css" />
 
 </head>
 
@@ -92,7 +91,7 @@ require("../Navbar.php");
             $category_filter = isset($_GET['filterpost']) ? $_GET['filterpost'] : null;
             $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 8;
             $join = "user_info ON posts.author_id = user_info.id";
-            $where = "posts.status = 0";
+            
 
             if ($category_filter && $category_filter != 'time') {
                 $where .= " AND posts.category = '$category_filter'";
@@ -100,7 +99,7 @@ require("../Navbar.php");
 
             $order = "posts.time DESC";
 
-            $result = $db->select('posts', "posts.*, user_info.name", $join, $where, $order, $limit);
+            $result = $db->select('posts', "posts.*, user_info.name", $join, null, $order, $limit);
 
             if ($result->num_rows == 0) {
                 echo "<div class='no-items'>

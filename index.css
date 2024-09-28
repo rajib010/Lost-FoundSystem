@@ -30,7 +30,8 @@ body {
 .single-post,
 .login-section,
 .signup-section,
-.edituser-section {
+.edituser-section,
+.updatepost-section {
     padding: 50px 20px;
     text-align: center;
     background-color: rgba(255, 255, 255, 0.9);
@@ -289,6 +290,22 @@ option:hover {
     min-width: 150px;
 }
 
+.top-class {
+    width: 100%;
+    margin: -2vw 0px 0px 0px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.displayImg {
+    width: auto;
+    height: auto;
+    max-width: 40vw;
+    max-height: 40vh;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
 
 /* for tablets   */
 @media (min-width: 768px) and (max-width: 1024px) {
@@ -347,5 +364,9 @@ option:hover {
 
     .nav-text {
         font-size: 3.6vw;
+    }
+    .displayImg {
+        max-width: 60vw;
+        max-height: 30vh;
     }
 }

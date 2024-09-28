@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Learn more about our team and mission.">
     <title>About Us</title>
-    <link rel="stylesheet" href="../styles/index.css" />
+    <link rel="stylesheet" href="../index.css" />
 </head>
 
 <body>
