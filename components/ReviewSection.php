@@ -31,7 +31,10 @@
             justify-content: center;
         }
 
-
+        #userReview{
+            width: 80%;
+            margin: 8px auto;
+        }
 
         /* Fade-in and fade-out animation classes */
         .fade-out {

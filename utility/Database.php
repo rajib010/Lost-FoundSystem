@@ -167,6 +167,8 @@ class Database
             // Debugging output    
             $sql .= " LIMIT $start, $limit";
         }
+
+        // echo $sql;
     
         // Prepare the SQL statement
         $stmt = $this->conn->prepare($sql);

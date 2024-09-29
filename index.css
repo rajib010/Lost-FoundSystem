@@ -129,8 +129,8 @@ select {
 
 #cancelBtn,
 #deleteBtn {
-    background: linear-gradient(90deg,#ff7b7b, #d31f1f );
-    
+    background: linear-gradient(90deg, #ff7b7b, #d31f1f);
+
 }
 
 #cancelBtn:hover,
@@ -307,6 +307,43 @@ option:hover {
 }
 
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.pagination a,
+.pagination span {
+    margin: 0 5px;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #007bff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination .active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination .disabled {
+    color: #ccc;
+    pointer-events: none;
+    border-color: #ddd;
+}
+
+
 /* for tablets   */
 @media (min-width: 768px) and (max-width: 1024px) {
     .content-header {
@@ -365,6 +402,7 @@ option:hover {
     .nav-text {
         font-size: 3.6vw;
     }
+
     .displayImg {
         max-width: 60vw;
         max-height: 30vh;

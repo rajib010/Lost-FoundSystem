@@ -7,6 +7,11 @@
     <meta description="" content="Our contact information and links.">
     <title>Contact</title>
     <link rel="stylesheet" href="../Contact.css">
+    <style>
+        .post-title{
+            margin-bottom: 8px;
+        }
+    </style>
 </head>
 
 <body>

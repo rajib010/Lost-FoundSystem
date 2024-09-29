@@ -1,22 +1,67 @@
 <?php
 require("../Navbar.php");
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+$limit = 12;
+
+if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+    $current_page = (int) $_GET['page'];
+    if ($current_page < 1) {
+        $current_page = 1;
+    }
+} else {
+    $current_page = 1;
+}
+
+$offset = ($current_page - 1) * $limit;
+
+// Retrieve and sanitize the category filter
+$category_filter = isset($_GET['filterpost']) ? mysqli_real_escape_string($db->conn, $_GET['filterpost']) : null;
+
+// Define the JOIN condition
+$join = "user_info ON posts.author_id = user_info.id";
+
+// Initialize the WHERE clause
+$where = "1=1";
+if ($category_filter && $category_filter != 'time') {
+    $where .= " AND posts.category = '$category_filter'";
+}
+$order = "posts.time DESC";
+$count_sql = "SELECT COUNT(*) as total FROM posts $join WHERE $where";
+$count_result = $db->select('posts', "COUNT(*) as total", $join, $where,null,null);
+$total_posts = 0;
+if ($count_result && $count_result->num_rows > 0) {
+    $count_row = $count_result->fetch_assoc();
+    $total_posts = $count_row['total'];
+}
+
+$total_pages = ceil($total_posts / $limit);
+
+$result = $db->select('posts', "posts.*, user_info.name", $join, $where, $order, $limit);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <!-- (Head content remains the same) -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Learn more about our team and mission.">
     <title>ViewPosts</title>
     <style>
+        /* Existing Styles */
         .header {
-            width: 35%;
+            width: 40%;
             margin: auto;
             padding: 10px;
             background: linear-gradient(90deg, #81b3e8, #99ecff);
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .center{
+            justify-content: space-evenly;
         }
 
         .content {
@@ -37,38 +82,24 @@ require("../Navbar.php");
             align-items: center;
             margin-bottom: 15px;
         }
-
-        .post-title,
-        .finder-name {
-            margin: 10px 0;
-        }
-
-        .footer {
-            display: flex;
-            justify-content: center;
-        }
-
         .no-items {
             max-width: 100%;
             margin: auto;
             padding: 2vw;
         }
-
         .notFoundImg {
             width: 100%;
         }
+        
     </style>
     <link rel="stylesheet" href="../index.css" />
-
 </head>
 
 <body>
     <main class="main-section">
         <div class="header center">
-
             <span class="content-p" id="text">Click here if you have found an item!!!</span>
             <button class="btn"><a href="addpost.php" id="here">Here!</a></button>
-
         </div>
 
         <div class="content">
@@ -88,79 +119,79 @@ require("../Navbar.php");
             </div>
 
             <?php
-            $category_filter = isset($_GET['filterpost']) ? $_GET['filterpost'] : null;
-            $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 8;
-            $join = "user_info ON posts.author_id = user_info.id";
-            
-
-            if ($category_filter && $category_filter != 'time') {
-                $where .= " AND posts.category = '$category_filter'";
-            }
-
-            $order = "posts.time DESC";
-
-            $result = $db->select('posts', "posts.*, user_info.name", $join, null, $order, $limit);
-
-            if ($result->num_rows == 0) {
-                echo "<div class='no-items'>
-                <h1> Nothing posted till now.</h1>
-                <img class='notFoundImg' src='../public/noFound.jpg' alt='no posts found'>
-                </div>";
-            } else { ?>
+            if ($result && $result->num_rows > 0) { ?>
                 <div id="posts-container" class="post-grid">
                     <?php
                     while ($row = $result->fetch_assoc()) { ?>
-                        <div class="post-card" onclick="viewItem(<?php echo $row['pid'] ?>)" title='view post'>
+                        <div class="post-card" onclick="viewItem(<?php echo htmlspecialchars($row['pid']); ?>)" title='view post'>
                             <img class="post-img" src="<?php echo 'http://localhost/finderz/uploads/posts/' . htmlspecialchars($row['image']); ?>" alt="Post Image">
                             <p class="post-title"><?php echo htmlspecialchars($row['title']); ?></p>
                             <p class="content-p">Found by: <?php echo htmlspecialchars($row['name']); ?></p>
                         </div>
                     <?php } ?>
                 </div>
-            <?php
-                if ($result->num_rows >= $limit) {
-                    echo '<div class="footer">
-                        <button class="btn" onclick="loadMore()">More +</button>
-                      </div>';
+
+                <?php
+                // Generate Pagination Links
+                if ($total_pages > 1) {
+                    echo '<div class="pagination">';
+
+                    // Previous Link
+                    if ($current_page > 1) {
+                        echo '<a href="?page=' . ($current_page - 1) . '&filterpost=' . urlencode($category_filter) . '">&laquo; Previous</a>';
+                    } else {
+                        echo '<span class="disabled">&laquo; Previous</span>';
+                    }
+
+                    // Page Number Links
+                    // Display a maximum of 7 page links for better UX
+                    $max_links = 7;
+                    $start_page = max(1, $current_page - floor($max_links / 2));
+                    $end_page = min($total_pages, $start_page + $max_links - 1);
+
+                    // Adjust start_page if we're near the end
+                    if ($end_page - $start_page + 1 < $max_links) {
+                        $start_page = max(1, $end_page - $max_links + 1);
+                    }
+
+                    for ($i = $start_page; $i <= $end_page; $i++) {
+                        if ($i == $current_page) {
+                            echo '<span class="active">' . $i . '</span>';
+                        } else {
+                            echo '<a href="?page=' . $i . '&filterpost=' . urlencode($category_filter) . '">' . $i . '</a>';
+                        }
+                    }
+
+                    // Next Link
+                    if ($current_page < $total_pages) {
+                        echo '<a href="?page=' . ($current_page + 1) . '&filterpost=' . urlencode($category_filter) . '">Next &raquo;</a>';
+                    } else {
+                        echo '<span class="disabled">Next &raquo;</span>';
+                    }
+
+                    echo '</div>';
                 }
-            } ?>
+                ?>
+
+            <?php
+            } else {
+                echo "<div class='no-items'>
+                <h1> Nothing posted till now.</h1>
+                <img class='notFoundImg' src='../public/noFound.jpg' alt='no posts found'>
+                </div>";
+            }
+            ?>
         </div>
     </main>
 
     <?php require("../components/Footer.php"); ?>
 
     <script>
-        let limit = <?php echo $limit; ?>;
-
-        function loadMore() {
-            limit += 8; // Increase the limit by 8 (or any number you prefer)
-            const filter = "<?php echo $category_filter; ?>";
-
-            // AJAX request to fetch more posts
-            const xhr = new XMLHttpRequest();
-            xhr.open("GET", `ViewPosts.php?limit=${limit}&filterpost=${filter}`, true);
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.onload = function() {
-                if (this.status === 200) {
-                    // Append the new posts to the existing content
-                    const newPosts = document.createElement('div');
-                    newPosts.innerHTML = this.responseText;
-                    document.querySelector('#posts-container').append(...newPosts.querySelectorAll('.post-item'));
-
-                    // Focus on the newly added posts
-                    const newlyAddedPost = document.querySelectorAll('.post-item')[limit - 8];
-                    newlyAddedPost.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            };
-            xhr.send();
-        }
-
         function viewItem(id) {
             window.location.href = `post.php?id=${id}`;
         }
     </script>
+
 </body>
 
 </html>

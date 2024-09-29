@@ -7,6 +7,11 @@
     <meta name="description" content="Learn more about our team and mission.">
     <title>About Us</title>
     <link rel="stylesheet" href="../index.css" />
+    <style>
+        .post-title{
+            margin-bottom: 8px;
+        }
+    </style>
 </head>
 
 <body>

@@ -6,7 +6,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     die();
 }
 
-$id = intval($_GET['id']); 
+$id = intval($_GET['id']);
 
 $db = new Database();
 $where = "posts.pid='$id'";
@@ -62,7 +62,7 @@ $row = $result->fetch_assoc();
         <?php
         if ($_SESSION['loggedinuserId'] === $row['author_id']) {
             echo '<div class="top-class">
-                   <button class="btn" id="deleteBtn" onclick="deletePost(<?php echo $id; ?>)">
+                   <button class="btn" id="deleteBtn"">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                   </div>';
@@ -90,11 +90,11 @@ $row = $result->fetch_assoc();
     <?php require("../components/Footer.php"); ?>
 
     <script>
-        function deletePost(postId) {
-            if (confirm('Are you sure you want to delete this post?')) {
-                window.location.href = `deletepost.php?id=${postId}`;
+        document.getElementById("deleteBtn").addEventListener('click', () => {
+            if (confirm('Are you sure you want to delete?')) {
+                window.location.href = `./deletepost.php?id=${<?= $id; ?>}`;
             }
-        }
+        })
     </script>
 
 </body>
