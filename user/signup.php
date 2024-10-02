@@ -203,7 +203,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="file" name="profileImg" id="profile">
                 <p class="error"><?php echo $errors['profileImg'] ?? ''; ?></p>
             </div>
-            <p class="content-p">Already have an account? <span><a href="../index.php">Login</a></span></p>
+            <p class="content-p">Already have an account? <span><a href="./login.php">Login</a></span></p>
             <button class="btn" type="submit" name="submitBtn">Sign up</button>
 
         </form>

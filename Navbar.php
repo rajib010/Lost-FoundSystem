@@ -3,7 +3,7 @@ include_once "utility/Database.php";
 ob_start();
 session_start();
 if (empty($_SESSION['loggedinuserId'])) {
-    header('location: ./index.php');
+    header('location: ../user/login.php');
     exit();
 }
 $db = new Database();
@@ -270,7 +270,7 @@ ob_end_flush();
                 <div class="user-info">
                     <img src="<?php echo 'http://localhost/finderz/uploads/user/' . $_SESSION['userImg'] ?>" class="user-image" alt="User Image">
                     <ul class="dropdown-menu">
-                        <li><a href="" class="nav-text nav-nav-text">View</a></li>
+                        <li><a href="../user/viewprofile.php" class="nav-text nav-nav-text">View</a></li>
                         <li><a href="../user/edituser.php" class="nav-text nav-nav-text">Edit </a></li>
                         <li class="logoutItem nav-text nav-nav-text">Logout</li>
                     </ul>

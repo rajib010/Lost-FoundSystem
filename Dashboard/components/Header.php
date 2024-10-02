@@ -51,7 +51,7 @@ if(empty($_SESSION['loggedinadmin'])){
 
     <header class="admin-header">
         <h1>Welcome, Admin</h1>
-        <button class="logout-btn"><a href="../logout.php">Log out</a></button>
+        <button class="logout-btn"><a href="../user/logout.php">Log out</a></button>
     </header>
 
 </html>

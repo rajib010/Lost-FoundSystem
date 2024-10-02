@@ -51,14 +51,14 @@ $result = $db->select('posts', "posts.*, user_info.name", $join, $where, $order,
     <meta name="description" content="Learn more about our team and mission.">
     <title>ViewPosts</title>
     <style>
-        /* Existing Styles */
         .header {
-            width: 40%;
             margin: auto;
-            padding: 10px;
+            padding: 10px 30px;
+            max-width: 550px;
             background: linear-gradient(90deg, #81b3e8, #99ecff);
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
         }
         .center{
             justify-content: space-evenly;
@@ -83,13 +83,17 @@ $result = $db->select('posts', "posts.*, user_info.name", $join, $where, $order,
             margin-bottom: 15px;
         }
         .no-items {
-            max-width: 100%;
-            margin: auto;
-            padding: 2vw;
+            padding: 15px 30px;
         }
         .notFoundImg {
             width: 100%;
         }
+
+        .post-card>.post-title{
+            margin: 10px auto;
+        }
+
+        
         
     </style>
     <link rel="stylesheet" href="../index.css" />
@@ -176,7 +180,7 @@ $result = $db->select('posts', "posts.*, user_info.name", $join, $where, $order,
             <?php
             } else {
                 echo "<div class='no-items'>
-                <h1> Nothing posted till now.</h1>
+                <h1 class='content-header'> Nothing posted till now.</h1>
                 <img class='notFoundImg' src='../public/noFound.jpg' alt='no posts found'>
                 </div>";
             }

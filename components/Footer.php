@@ -4,160 +4,107 @@
 <head>
     <link rel="stylesheet" href="../index.css">
     <style>
-        footer {
-            width: 100%;
-            margin: auto;
-            min-height: 14vw;
+        /* Footer */
+        .footer {
             background-color: black;
-            color: white;
-            padding: 2vw;
+            color: #fff;
+            padding: 40px 10%;
             display: flex;
-            flex-direction: column;
-            gap: 1vw;
-        }
-
-        .main-div {
-            width: 95%;
-            margin: auto;
-            display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
-            gap: 2vw;
-            align-items: center;
         }
 
-        .right-div,
-        .left-div {
-            display: flex;
-            flex-direction: column;
-            gap: 2vw;
-        }
-
-        .right-div {
-            width: 40%;
-            font-size: 1.6rem;
-        }
-
-        .left-div {
-            width: 60%;
-            align-items: center;
-            padding: 1vw 0;
-        }
-
-        .social-div {
-            display: flex;
-            min-width: 40%;
-            margin-left: auto;
-            justify-content: space-between;
-            gap: 1vw;
-            padding: 0 1vw;
-            font-size: 1.6rem;
-        }
-
-        .links-div {
-            width: 100%;
-            padding: 0 2vw;
-            display: flex;
-            flex-direction: column;
-            gap: 2vw;
-        }
-
-        .sub-links {
-            display: flex;
-            justify-content: flex-start;
+        .footer-items {
             list-style: none;
-            gap: 10vw;
         }
 
-        .copyright {
+        .footer-section {
+            flex: 1 1 200px;
+            margin: 10px;
+        }
+
+        .footer-section>.post-title {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+
+        .footer-section>.footer-items {
+            flex-direction: column;
+            gap: 10px;
+            line-height: 2vw;
+        }
+
+        .footer-section .nav-text:hover {
+            color: transparent;
+            background: linear-gradient(90deg, #3a7bd5, #00d2ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .footer .footer-bottom {
             text-align: center;
-            font-size: smaller;
-            margin: auto;
+            width: 100%;
+            margin-top: 20px;
+            font-size: 14px;
+            border-top: 1px solid #444;
+            padding-top: 20px;
         }
 
-        /* Tablet view */
-        @media (max-width: 1024px) {
-            .main-div {
-                flex-direction: column;
-            }
-
-            .right-div,
-            .left-div {
-                width: 100%;
-                font-size: 1.2rem;
-            }
-
-            .social-div {
-                width: 60%;
-                margin: auto;
-                font-size: 1.2rem;
-            }
-
-            .sub-links {
-                justify-content: center;
-                width: 100%;
-                gap: 1.5vw;
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .footer-section>.footer-items {
+                line-height: 2vw;
             }
         }
 
-        /* Mobile view */
-        @media (max-width: 767px) {
-            .main-div {
-                flex-direction: column-reverse;
+        @media (max-width: 768px) {
+            .footer-section>.footer-items {
+                line-height: 5vw;
             }
 
-            .right-div {
-                width: 100%;
-                font-size: 1rem;
-                align-items: center;
-            }
-
-            .social-div {
-                width: 70%;
-                justify-content: space-between;
-                font-size: 1rem;
-            }
-            .links-div{
-                width: 100%;
-            }
-
-            .sub-links {
-                width: 100%;
-                justify-content: space-around;
-                margin-bottom: 3vw;
-            }
         }
     </style>
 </head>
-<footer>
-    <div class="main-div">
-        <div class="right-div">
-            <p class="nav-text">For more info</p>
-            <p class="nav-text">Send a mail at: finderz@gmail.com</p>
-            <p class="nav-text">Toll free number: +977 98xxxxxxxx</p>
-        </div>
-        <div class="left-div">
-            <div class="social-div">
-                <p class="nav-text">Connect Us</p>
-                <p><i class="fa-brands fa-github"></i></p>
-                <p><i class="fa-brands fa-linkedin"></i></p>
-                <p><i class="fa-brands fa-square-x-twitter"></i></p>
-                <p><i class="fa-brands fa-facebook"></i></p>
-            </div>
-            <div class="links-div">
-                <ul class="sub-links">
-                    <li class="nav-text"><a href="">Privacy</a></li>
-                    <li class="nav-text"><a href="">Help</a></li>
-                    <li class="nav-text"><a href="./about.php">About</a></li>
-                </ul>
-                <ul class="sub-links">
-                    <li class="nav-text"><a href="./contact.php">Contact</a></li>
-                    <li class="nav-text"><a href="">Profile</a></li>
-                    <li class="nav-text"><a href="../logout.php">Logout</a></li>
-                </ul>
-            </div>
-        </div>
+<footer class="footer">
+    <div class="footer-section">
+        <h3 class="post-title">Lost & Found</h3>
+        <p class="content-p">Your trusted platform to recover lost items or return found ones.</p>
     </div>
-    <p class="copyright">@2024 Lost & Found. All rights reserved.</p>
+    <div class="footer-section">
+        <h3 class="post-title">Quick Links</h3>
+        <ul class="footer-items">
+            <li><a href="../pages/home.php" class="nav-text">Home</a></li>
+            <li><a href="../pages/about.php" class="nav-text">About Us</a></li>
+            <li><a href="#faqs" class="nav-text">How It Works</a></li>
+            <li><a href="../pages/contact.php" class="nav-text">Contact Us</a></li>
+        </ul>
+    </div>
+    <div class="footer-section">
+        <h3 class="post-title">Legal</h3>
+        <ul class="footer-items">
+            <li><a href="#" class="nav-text">Terms of Service</a></li>
+            <li><a href="#" class="nav-text">Privacy Policy</a></li>
+        </ul>
+    </div>
+    <div class="footer-section">
+        <h3 class="post-title">Follow Us</h3>
+        <ul class="footer-items">
+            <li><a href="#" class="nav-text">
+                    Facebook
+                </a></li>
+            <li><a href="#" class="nav-text">
+                    Twitter
+                </a></li>
+            <li><a href="#" class="nav-text">
+                    Instagram
+                </a></li>
+        </ul>
+    </div>
+    <div class="footer-bottom">
+        © 2024 Lost & Found System. All rights reserved.
+    </div>
 </footer>
 
 

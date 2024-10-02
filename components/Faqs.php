@@ -67,7 +67,7 @@
 </head>
 
 <body>
-    <section class="faq-section">
+    <section class="faq-section" id='faqs'>
         <h1 class="content-header">Lost & Found FAQs</h1>
         <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(this)">

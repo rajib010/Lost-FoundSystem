@@ -1,262 +1,367 @@
-<?php
-include "./utility/Database.php";
-$db = new Database();
-
-$errors = [];
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["loginBtn"])) {
-        $email = $_POST["email"];
-        $password = $_POST["password"];
-        if (empty($email)) {
-            $errors['email'] = "Email cannot be empty";
-        }
-        if (empty($password)) {
-            $errors['password'] = "Password cannot be empty";
-        }
-        $where = "email='$email'";
-        $result = $db->select("user_info", "*", null, $where, null, null);
-
-        if ($result->num_rows == 0) {
-            $errors['email'] = "User does not exist.";
-        } else {
-            $row = $result->fetch_assoc();
-            if (!password_verify($password, $row["password"])) {
-                $errors["password"] = "Invalid password. Try again.";
-            } else {
-                session_start();
-                if ($row['user_type'] == 0) {
-                    $_SESSION["loggedinuserId"] = $row["id"];
-                    $_SESSION['userImg'] = $row['profileImg'];
-                    header("location: ./pages/home.php");
-                    exit();
-                } else if ($row['user_type'] == 1) {
-                    $_SESSION["loggedinadmin"] = $row["name"];
-                    header("location: ./dashboard/users.php");
-                    exit();
-                }
-            }
-        }
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="./index.css" />
+    <title>Lost & Found System</title>
     <style>
-
-        html,body{
-            height: 100%;
-        }
-        body {
-            overflow: hidden;
-        }
-
-        .login-section {
-            justify-content: space-between;
-            width: 60%;
+        /* Reset CSS */
+        * {
+            margin: 0;
             padding: 0;
-            height: 90%;
-            overflow: hidden;
+            box-sizing: border-box;
         }
 
-        .form-class {
-            gap: 7px;
-        }
-
-        .left-side {
-            width: 50%;
-            max-height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        a {
-            color: blue;
-            cursor: pointer;
-        }
-
-        .input-container {
-            position: relative;
-            margin-bottom: 0;
-        }
-
-        .form-group input {
-            padding-left: 40px;
-            padding-right: 40px;
-        }
-
-        .form-group {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 15px;
-        }
-
-        .form-group::before {
-            content: attr(data-icon);
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.2rem;
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
             color: #333;
         }
 
-        .fa-eye:before {
-            content: "\f06e";
-            color: black;
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10%;
+            background-color: #f4f4f4;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
         }
 
-        .fa-eye-slash:before {
-            content: "\f070";
-            color: black;
+        .header .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007BFF;
+            text-decoration: none;
         }
 
-        .toggle-password {
+        .header nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        .header nav ul li {
+            margin-left: 20px;
+        }
+
+        .header nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .header nav ul li a:hover {
+            color: #007BFF;
+        }
+
+        .header .login-btn {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .header .login-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: url('https://via.placeholder.com/1500x800') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-top: 80px; /* Height of header */
+        }
+
+        .hero::after {
+            content: '';
             position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-
-        .right-side {
-            width: 50%;
-            height: 100%;
-            background-image: url(./public/lost.svg);
-            background-size: cover;
-            background-position: center;
-        }
-
-        .error {
-            position: absolute;
-            top: 100%;
+            top: 0;
             left: 0;
-            color: red;
-            font-size: 0.8rem;
-            margin-top: 3px;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 123, 255, 0.5);
         }
 
-        .left {
-            text-align: left;
-        }
-       
-
-        /* Responsive Design for Tablets */
-        @media (min-width: 768px) and (max-width: 1024px) {
-
-            .login-section {
-                width: 90%;
-            }
-
-            .left-side,
-            .right-side {
-                width: 100%;
-                height: 100%;
-            }
-
-            .left-side {
-                padding: 5vw;
-            }
-
-            .content-p,
-            a {
-                font-size: 1.8vw;
-            }
-
-            .right-side {
-                background-image: url(./public/lost.svg);
-            }
-
-            .input-container::before {
-                top: 37%;
-            }
+        .hero-content {
+            position: relative;
+            color: #fff;
+            text-align: center;
+            max-width: 800px;
+            padding: 20px;
         }
 
-        /* Responsive Design for Mobiles */
-        @media (max-width: 767px) {
-            .login-section {
-                width: 90%;
-            }
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
 
-            .right-side {
+        .hero-content p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .hero-content .cta-btn {
+            padding: 15px 30px;
+            background-color: #fff;
+            color: #007BFF;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .hero-content .cta-btn:hover {
+            background-color: #007BFF;
+            color: #fff;
+        }
+
+        /* Sections */
+        .section {
+            padding: 60px 10%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 32px;
+            color: #007BFF;
+        }
+
+        .steps, .features, .testimonials, .contact {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .steps .step, .features .feature, .testimonials .testimonial {
+            background-color: #fff;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .steps .step img, .features .feature img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 15px;
+        }
+
+        .testimonials .testimonial {
+            max-width: 600px;
+        }
+
+        /* Contact Form */
+        .contact form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .contact form input, .contact form textarea {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .contact form button {
+            padding: 12px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact form button:hover {
+            background-color: #0056b3;
+        }
+
+      
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header nav ul {
+                flex-direction: column;
+                background-color: #f4f4f4;
+                position: absolute;
+                top: 70px;
+                right: 10%;
+                width: 200px;
                 display: none;
             }
 
-            .left-side {
-                width: 100%;
-                align-items: center;
-                padding: 1rem;
+            .header nav ul.active {
+                display: flex;
             }
 
-            .header {
-                width: 100%;
-                justify-content: center;
+            .header nav ul li {
+                margin: 10px 0;
             }
 
-            .input-container::before {
-                top: 37%;
+            .header .menu-toggle {
+                display: block;
+                cursor: pointer;
+                font-size: 24px;
             }
 
+            .hero-content h1 {
+                font-size: 32px;
+            }
+
+            .hero-content p {
+                font-size: 18px;
+            }
         }
     </style>
 </head>
-<body class="center">
-    <main class="login-section center">
-        <div class="left-side center">
-            <h1 class="content-header">Welcome back!!</h1>
-            <div class="input-fields">
-                <form class="form-class" action="" method="post">
-                    <div class="form-group" data-icon="✉">
-                        <input type="text" placeholder="Enter your email" name="email"
-                            value="<?php $_POST['email'] ?? '' ?>">
-                        <p class="error"><?php echo $errors['email'] ?? '' ?></p>
-                    </div>
-                    <div class="form-group" data-icon="🔒">
-                        <input type="password" placeholder="Enter your password" name="password" id="password">
-                        <span class="toggle-password" onclick="togglePasswordVisibility()"><i
-                                class="fa-solid fa-eye-slash"></i></span>
-                        <p class="error"><?php echo $errors['password'] ?? '' ?></p>
+<body>
 
-                    </div>
-                    <p class="content-p left"><a href="#">Forgot Password?</a></p>
-                    <button type="submit" name="loginBtn" class="btn">Login</button>
-                    <p class="content-p">Don't have an account?
-                        <span>
-                            <a href="./user/signup.php">Sign up now.</a>
-                        </span>
-                    </p>
-                </form>
+    <!-- Authentication Check (Server-Side) -->
+    <!-- 
+        Implement server-side logic here to check if the user is logged in.
+        If the user is logged in, redirect them to the dashboard or another appropriate page.
+        If not, render the landing page below.
+    -->
+
+    <!-- Header -->
+    <header class="header">
+        <a href="#" class="logo">Lost & Found</a>
+        <nav>
+            <ul id="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">How It Works</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+            <a href="login.html" class="login-btn">Login</a>
+        </nav>
+        <!-- Mobile Menu Toggle -->
+        <div class="menu-toggle" id="mobile-menu">
+            &#9776;
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Lost Something? Found Something? We’ve Got You Covered!</h1>
+            <p>Connect people with their lost or found items quickly and easily.</p>
+            <a href="login.html" class="cta-btn">Login to Report</a>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="section how-it-works">
+        <h2>How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <img src="https://via.placeholder.com/60" alt="Report an Item">
+                <h3>Report an Item</h3>
+                <p>Submit details about your lost or found item in just a few clicks.</p>
+            </div>
+            <div class="step">
+                <img src="https://via.placeholder.com/60" alt="Match with the Right Owner">
+                <h3>Match with the Right Owner</h3>
+                <p>Our system connects you with those who reported matching lost or found items.</p>
+            </div>
+            <div class="step">
+                <img src="https://via.placeholder.com/60" alt="Get Your Item Back">
+                <h3>Get Your Item Back</h3>
+                <p>Once matched, coordinate securely to return or claim the item.</p>
             </div>
         </div>
-        <div class="right-side center">
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features">
+        <h2>Why Use Our System?</h2>
+        <div class="features">
+            <div class="feature">
+                <img src="https://via.placeholder.com/60" alt="Fast and Easy">
+                <h3>Fast and Easy</h3>
+                <p>Report lost or found items with just a few details.</p>
+            </div>
+            <div class="feature">
+                <img src="https://via.placeholder.com/60" alt="Secure">
+                <h3>Secure</h3>
+                <p>Your information is kept safe while we help connect you with others.</p>
+            </div>
+            <div class="feature">
+                <img src="https://via.placeholder.com/60" alt="Reliable Matching">
+                <h3>Reliable Matching</h3>
+                <p>Our matching system ensures you find the right person.</p>
+            </div>
         </div>
-    </main>
+    </section>
 
+    <!-- Testimonials Section -->
+    <section class="section testimonials">
+        <h2>Success Stories</h2>
+        <div class="testimonials">
+            <div class="testimonial">
+                <p>"I lost my wallet during a trip, and thanks to this system, I got it back within a day! Highly recommend."</p>
+                <h4>- Jane Doe</h4>
+            </div>
+            <div class="testimonial">
+                <p>"Found a set of keys and used the platform to return them. The process was seamless."</p>
+                <h4>- John Smith</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section class="section contact">
+        <h2>Need Help?</h2>
+        <div class="contact">
+            <form action="submit_contact_form" method="POST">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    
+
+    <!-- JavaScript for Mobile Menu Toggle -->
     <script>
-        function togglePasswordVisibility() {
-            const passwordField = document.getElementById("password");
-            const toggleIcon = document.querySelector(".toggle-password");
+        const menuToggle = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
 
-            if (passwordField.type === "password") {
-                passwordField.type = "text";
-                toggleIcon.innerHTML = `<i class="fa-solid fa-eye"></i>`;
-            } else {
-                passwordField.type = "password";
-                toggleIcon.innerHTML = `<i class="fa-solid fa-eye-slash"> </i>`;
-            }
-        }
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
     </script>
-</body>
 
+</body>
 </html>
+
