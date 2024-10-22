@@ -1,246 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lost & Found System</title>
+    <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
-        /* Reset CSS */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .btn {
+            background: linear-gradient(90deg, #00d2ff, #3a7bd5);
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
+        .space {
+            margin-top: 15px;
         }
 
-        /* Header */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 10%;
-            background-color: #f4f4f4;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
+        .top {
+            width: 60%;
+            margin: auto;
+            margin-bottom: 15px;
         }
 
-        .header .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #007BFF;
-            text-decoration: none;
-        }
-
-        .header nav ul {
-            list-style: none;
-            display: flex;
-        }
-
-        .header nav ul li {
-            margin-left: 20px;
-        }
-
-        .header nav ul li a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .header nav ul li a:hover {
-            color: #007BFF;
-        }
-
-        .header .login-btn {
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .header .login-btn:hover {
-            background-color: #0056b3;
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            background: url('https://via.placeholder.com/1500x800') no-repeat center center/cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            margin-top: 80px; /* Height of header */
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 123, 255, 0.5);
-        }
-
-        .hero-content {
-            position: relative;
-            color: #fff;
-            text-align: center;
-            max-width: 800px;
-            padding: 20px;
-        }
-
-        .hero-content h1 {
-            font-size: 48px;
+        .post-title {
             margin-bottom: 20px;
         }
 
-        .hero-content p {
-            font-size: 20px;
-            margin-bottom: 30px;
+        .post-description {
+            line-height: 1.6;
         }
 
-        .hero-content .cta-btn {
-            padding: 15px 30px;
-            background-color: #fff;
-            color: #007BFF;
-            border: none;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: bold;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .hero-content .cta-btn:hover {
-            background-color: #007BFF;
+        footer {
+            background-color: #1e1e1e;
             color: #fff;
-        }
-
-        /* Sections */
-        .section {
-            padding: 60px 10%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        .section h2 {
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 32px;
-            color: #007BFF;
-        }
-
-        .steps, .features, .testimonials, .contact {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .steps .step, .features .feature, .testimonials .testimonial {
-            background-color: #fff;
             padding: 20px;
-            margin: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            width: 300px;
             text-align: center;
-        }
-
-        .steps .step img, .features .feature img {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 15px;
-        }
-
-        .testimonials .testimonial {
-            max-width: 600px;
-        }
-
-        /* Contact Form */
-        .contact form {
-            display: flex;
-            flex-direction: column;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            bottom: 0;
             width: 100%;
-            max-width: 600px;
+            font-family: 'Roboto', sans-serif;
         }
 
-        .contact form input, .contact form textarea {
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
+        footer div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
 
-        .contact form button {
-            padding: 12px;
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+        footer p {
+            margin: 0;
+            font-size: 14px;
+            color: #bbb;
+            letter-spacing: 0.5px;
 
-        .contact form button:hover {
-            background-color: #0056b3;
-        }
-
-      
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header nav ul {
-                flex-direction: column;
-                background-color: #f4f4f4;
-                position: absolute;
-                top: 70px;
-                right: 10%;
-                width: 200px;
-                display: none;
-            }
-
-            .header nav ul.active {
-                display: flex;
-            }
-
-            .header nav ul li {
-                margin: 10px 0;
-            }
-
-            .header .menu-toggle {
-                display: block;
-                cursor: pointer;
-                font-size: 24px;
-            }
-
-            .hero-content h1 {
-                font-size: 32px;
-            }
-
-            .hero-content p {
-                font-size: 18px;
+            &:hover {
+                color: #fff;
+                transition: color 0.3s ease;
             }
         }
     </style>
+
 </head>
+
 <body>
 
     <!-- Authentication Check (Server-Side) -->
@@ -250,118 +74,94 @@
         If not, render the landing page below.
     -->
 
-    <!-- Header -->
-    <header class="header">
-        <a href="#" class="logo">Lost & Found</a>
-        <nav>
-            <ul id="nav-links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">How It Works</a></li>
-                <li><a href="#">Contact Us</a></li>
-            </ul>
-            <a href="login.html" class="login-btn">Login</a>
-        </nav>
-        <!-- Mobile Menu Toggle -->
-        <div class="menu-toggle" id="mobile-menu">
-            &#9776;
+    <nav class="nav-bar">
+        <div class="logo-div">
+            <a href="../pages/home.php">
+                <img src="./public/logo.svg" alt="logo" class="logo-img">
+            </a>
         </div>
-    </header>
+        <a href="./user/login.php" class="btn">Login</a>
+    </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Lost Something? Found Something? We’ve Got You Covered!</h1>
-            <p>Connect people with their lost or found items quickly and easily.</p>
-            <a href="login.html" class="cta-btn">Login to Report</a>
-        </div>
+    <section class="home-section">
+        <h1 class="content-header top">Lost Something? Found Something? We’ve Got You Covered!</h1>
+        <p class=".content-p">Connect people with their lost or found items quickly and easily.</p>
+        <button class="btn space">
+            <a href="./user/signup.php">Get Started</a>
+        </button>
     </section>
 
     <!-- How It Works Section -->
-    <section class="section how-it-works">
-        <h2>How It Works</h2>
-        <div class="steps">
-            <div class="step">
-                <img src="https://via.placeholder.com/60" alt="Report an Item">
-                <h3>Report an Item</h3>
-                <p>Submit details about your lost or found item in just a few clicks.</p>
+    <section class="home-section">
+        <h2 class="content-header">How It Works</h2>
+        <div class="container">
+            <div class="card">
+            <img src="./public/report.avif" class='card-img' alt="Fast and Easy">
+                <h3 class='post-title'>Report an Item</h3>
+                <p class='card-description'>Submit details about your lost or found item in just a few clicks.</p>
             </div>
-            <div class="step">
-                <img src="https://via.placeholder.com/60" alt="Match with the Right Owner">
-                <h3>Match with the Right Owner</h3>
-                <p>Our system connects you with those who reported matching lost or found items.</p>
+            <div class="card">
+            <img src="./public/match.avif" class='card-img' alt="Fast and Easy">
+                <h3 class='post-title'>Match with the Right Owner</h3>
+                <p class='card-description'>Our system connects you with those who reported matching lost or found items.</p>
             </div>
-            <div class="step">
-                <img src="https://via.placeholder.com/60" alt="Get Your Item Back">
-                <h3>Get Your Item Back</h3>
-                <p>Once matched, coordinate securely to return or claim the item.</p>
+            <div class="card">
+            <img src="./public/give.avif" class='card-img' alt="Fast and Easy">
+                <h3 class='post-title'>Get/Give Item Back</h3>
+                <p class='card-description'>Once matched, coordinate securely to return or claim the item.</p>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="section features">
-        <h2>Why Use Our System?</h2>
-        <div class="features">
-            <div class="feature">
-                <img src="https://via.placeholder.com/60" alt="Fast and Easy">
-                <h3>Fast and Easy</h3>
-                <p>Report lost or found items with just a few details.</p>
+    <section class="home-section" id="requirement">
+        <h2 class="content-header">Why Use Our System?</h2>
+        <div class="container">
+            <div class="card">
+                <img src="./public/fast&easy.avif" class='card-img' alt="Fast and Easy">
+                <h3 class='post-title'>Fast and Easy</h3>
+                <p class='card-description'>Report lost or found items with just a few details.</p>
             </div>
-            <div class="feature">
-                <img src="https://via.placeholder.com/60" alt="Secure">
-                <h3>Secure</h3>
-                <p>Your information is kept safe while we help connect you with others.</p>
+            <div class="card">
+                <img src="./public/secure.avif" class='card-img' alt="Secure">
+                <h3 class='post-title'>Secure</h3>
+                <p class='card-description'>Your information is kept safe while we help connect you with others.</p>
             </div>
-            <div class="feature">
-                <img src="https://via.placeholder.com/60" alt="Reliable Matching">
-                <h3>Reliable Matching</h3>
-                <p>Our matching system ensures you find the right person.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="section testimonials">
-        <h2>Success Stories</h2>
-        <div class="testimonials">
-            <div class="testimonial">
-                <p>"I lost my wallet during a trip, and thanks to this system, I got it back within a day! Highly recommend."</p>
-                <h4>- Jane Doe</h4>
-            </div>
-            <div class="testimonial">
-                <p>"Found a set of keys and used the platform to return them. The process was seamless."</p>
-                <h4>- John Smith</h4>
+            <div class="card">
+                <img src="./public/reliable.avif" class='card-img' alt="Reliable Matching">
+                <h3 class='post-title'>Reliable Matching</h3>
+                <p class='card-description'>Our matching system ensures you find the right person.</p>
             </div>
         </div>
     </section>
 
     <!-- Contact Us Section -->
-    <section class="section contact">
-        <h2>Need Help?</h2>
-        <div class="contact">
-            <form action="submit_contact_form" method="POST">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-                <button type="submit">Send Message</button>
-            </form>
-        </div>
+    <section class="home-section" id="contact">
+        <h2 class="content-header">Need Help?</h2>
+
+        <form class="form-class" action="" method="post">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn" name="sendBtn">Send Message</button>
+        </form>
     </section>
 
-    <!-- Footer -->
-    
-
-    <!-- JavaScript for Mobile Menu Toggle -->
-    <script>
-        const menuToggle = document.getElementById('mobile-menu');
-        const navLinks = document.getElementById('nav-links');
-
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-    </script>
-
+    <footer>
+        <div>
+            <p>&copy; 2024 Lost & Found System. All Rights Reserved.</p>
+        </div>
+    </footer>
 </body>
-</html>
 
+</html>
