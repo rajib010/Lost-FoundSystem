@@ -97,17 +97,17 @@
         <h2 class="content-header">How It Works</h2>
         <div class="container">
             <div class="card">
-            <img src="./public/report.avif" class='card-img' alt="Fast and Easy">
+                <img src="./public/report.avif" class='card-img' alt="Fast and Easy">
                 <h3 class='post-title'>Report an Item</h3>
                 <p class='card-description'>Submit details about your lost or found item in just a few clicks.</p>
             </div>
             <div class="card">
-            <img src="./public/match.avif" class='card-img' alt="Fast and Easy">
+                <img src="./public/match.avif" class='card-img' alt="Fast and Easy">
                 <h3 class='post-title'>Match with the Right Owner</h3>
                 <p class='card-description'>Our system connects you with those who reported matching lost or found items.</p>
             </div>
             <div class="card">
-            <img src="./public/give.avif" class='card-img' alt="Fast and Easy">
+                <img src="./public/give.avif" class='card-img' alt="Fast and Easy">
                 <h3 class='post-title'>Get/Give Item Back</h3>
                 <p class='card-description'>Once matched, coordinate securely to return or claim the item.</p>
             </div>
@@ -140,7 +140,7 @@
     <section class="home-section" id="contact">
         <h2 class="content-header">Need Help?</h2>
 
-        <form class="form-class" action="" method="post">
+        <form class="form-class" id='contactForm' method="post">
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
@@ -155,6 +155,31 @@
             </div>
             <button type="submit" class="btn" name="sendBtn">Send Message</button>
         </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('contactForm').addEventListener('submit', function(event) {
+                    event.preventDefault();
+
+                    let formData = new FormData(this);
+                    fetch('./utility/SendMessage.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                alert(data.message);
+                                window.location.reload();
+                            } else {
+                                alert(data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                });
+            });
+        </script>
     </section>
 
     <footer>
