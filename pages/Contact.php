@@ -8,7 +8,7 @@
     <title>Contact</title>
     <link rel="stylesheet" href="../Contact.css">
     <style>
-        .post-title{
+        .post-title {
             margin-bottom: 8px;
         }
     </style>
@@ -17,33 +17,6 @@
 <body>
     <?php
     require("../Navbar.php");
-    if (isset($_POST['sendBtn'])) {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $name = $_POST['name'];
-            $email = $_POST['email'];
-            $message = $_POST['message'];
-            $time = date('H:i:s Y:m:d');
-
-            if (empty($name) || empty($email) || empty($message)) {
-                echo "<script>alert('please fill in all the fields')</script>";
-                return;
-            }
-            $db = new Database();
-            $result = $db->insert("messages", [
-                'name' => $name,
-                'email' => $email,
-                'message' => $message,
-                'time' => $time
-            ]);
-            if ($result) {
-                echo "<script>
-                        alert('Thank you for contacting us.')
-                        window.location.href='contact.php'
-                    </script>
-                        ";
-            }
-        }
-    }
     ?>
 
     <section class="contact-section">
@@ -61,7 +34,7 @@
 
             <div class="sub-content">
                 <h3 class="post-title">Send Us a Message</h3>
-                <form class="form-class" action="" method="post">
+                <form class="form-class" method="post" id="contactForm" action="../utility/SendMessage.php">
                     <div class="form-group">
                         <label for="name">Name:</label>
                         <input type="text" id="name" name="name" required>
@@ -76,6 +49,29 @@
                     </div>
                     <button type="submit" class="btn" name="sendBtn">Send Message</button>
                 </form>
+                <script>
+                    document.getElementById('contactForm').addEventListener('submit', async function(event) {
+                        event.preventDefault();
+
+                        let formData = new FormData(this);
+                        await fetch('../utility/SendMessage.php', {
+                                method: 'POST',
+                                body: formData
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status === 'success') {
+                                    alert(data.message);
+                                    window.location.reload();
+                                } else {
+                                    alert(data.message);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                    });
+                </script>
             </div>
 
             <div class="sub-content map-div">

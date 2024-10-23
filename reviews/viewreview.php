@@ -1,7 +1,9 @@
 <?php
 require("../Navbar.php");
 $db = new Database();
-$result = $db->select('reviews', "*", null, null, null, null);
+$id = $_SESSION['loggedinuserId'];
+$where = "author_id='$id'";
+$result = $db->select('reviews', "*", null, $where, null, null);
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $id = $row['rid'];

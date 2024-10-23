@@ -140,7 +140,7 @@
     <section class="home-section" id="contact">
         <h2 class="content-header">Need Help?</h2>
 
-        <form class="form-class" id='contactForm' method="post">
+        <form class="form-class" id="contactForm" method="post">
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
@@ -155,13 +155,13 @@
             </div>
             <button type="submit" class="btn" name="sendBtn">Send Message</button>
         </form>
+
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                document.getElementById('contactForm').addEventListener('submit', function(event) {
+                document.getElementById('contactForm').addEventListener('submit', async function(event) {
                     event.preventDefault();
-
                     let formData = new FormData(this);
-                    fetch('./utility/SendMessage.php', {
+                    await fetch('./utility/SendMessage.php', {
                             method: 'POST',
                             body: formData
                         })
@@ -169,18 +169,20 @@
                         .then(data => {
                             if (data.status === 'success') {
                                 alert(data.message);
-                                window.location.reload();
+                                document.getElementById('contactForm').reset();
                             } else {
                                 alert(data.message);
                             }
                         })
                         .catch(error => {
                             console.error('Error:', error);
+                            alert('There was an error submitting your message. Please try again.');
                         });
                 });
             });
         </script>
     </section>
+
 
     <footer>
         <div>
