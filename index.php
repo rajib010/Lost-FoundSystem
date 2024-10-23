@@ -170,6 +170,8 @@
                             if (data.status === 'success') {
                                 alert(data.message);
                                 document.getElementById('contactForm').reset();
+                                window.location.reload();
+                                window.scrollTo(0, 0);
                             } else {
                                 alert(data.message);
                             }

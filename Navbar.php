@@ -23,7 +23,7 @@ ob_end_flush();
             <a href="../pages/home.php"><img src="../public/logo.svg" alt="logo" class="logo-img"></a>
         </div>
         <ul class="list-items">
-            <li><a href="../post/viewpost.php" class='nav-text'>Post</a></li>
+            <li><a href="../post/viewposts.php" class='nav-text'>Post</a></li>
             <li><a href="../pages/about.php" class='nav-text'>About</a></li>
             <li><a href="../pages/contact.php" class='nav-text'>Contact</a></li>
             <li><a href="../reviews/createreview.php" class='nav-text'>Reviews</a></li>

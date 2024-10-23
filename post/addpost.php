@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             if ($result) {
                 echo "<script>
                         if (confirm('Post added successfully. Click yes to redirect to ViewPosts.')) {
-                            window.location.href = './viewpost.php';
+                            window.location.href = './viewposts.php';
                         }
                       </script>";
                 exit();
