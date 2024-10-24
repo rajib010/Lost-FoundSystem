@@ -3,10 +3,10 @@ require("../Navbar.php");
 
 $db = new Database();
 $id = $_SESSION['loggedinuserId'];
-$where = "id='$id'";
+$where = "user_info.id='$id'";
 $join = 'posts on posts.author_id=user_info.id';
 
-$result = $db->select('user_info', 'user_info.*,', $join, $where, null, null);
+$result = $db->select('user_info', '*', $join, $where, null, null);
 
 $row = $result->fetch_assoc();
 ?>
@@ -32,7 +32,7 @@ $row = $result->fetch_assoc();
 
         @media (max-width: 767px) {
             .content-p {
-                width: 60% ;
+                width: 60%;
             }
         }
     </style>

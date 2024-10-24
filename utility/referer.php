@@ -5,7 +5,6 @@ function referer()
         header("Location: " . $_SERVER['HTTP_REFERER']);
         exit;
     } else {
-
         header("Location: users.php");
         exit;
     }

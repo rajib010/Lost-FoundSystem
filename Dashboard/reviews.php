@@ -1,23 +1,41 @@
-<?php require("./components/Header.php") ?>
+<?php
+require('./components/Header.php');
+require('./components/Nav.php');
+// require('../utility/Database.php');
+
+$db = new Database();
+$limit = 8;
+
+if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+    $current_page = (int) $_GET['page'];
+    if ($current_page < 1) {
+        $current_page = 1;
+    }
+} else {
+    $current_page = 1;
+}
+
+$total_reviews = 0;
+$count_result = $db->select('reviews', "COUNT(*) as total", null, null, null);
+if ($count_result && $count_result->num_rows > 0) {
+    $count_row = $count_result->fetch_assoc();
+    $total_reviews = $count_row['total'];
+}
+$total_pages = ceil($total_reviews / $limit);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <title>View Reviews</title>
-    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="../index.css">
 </head>
 
 <body>
-
     <main class="admin-dashboard">
-        <?php
-        require("./components/Nav.php");
-        require("./utility/navigate.php");
-        ?>
-
         <div class="container">
-            <h1>Manage Users</h1>
+            <h1 class="content-header admin-title">Manage Reviews</h1>
             <table>
                 <thead>
                     <tr>
@@ -30,33 +48,76 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php
-                    $db = new Database();
-                    $i=0;
-                    $table = 'reviews';
-                    $join ="join user_info on user_info.id=reviews.author_id";
-                    $result = $db->select($table, "*", $join, null, null, null);
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-
-                    ?>
-                            <tr>
-                                <td><?= ++$i ?></td>
-                                <td><?= $row['name'] ?></td>
-                                <td><?= $row['message']?></td>
-                                
-
-                                <td><button class="delete-btn">Delete</button></td>
-                            </tr>
-                    <?php
-                        }
-                    }
-                    ?>
-
+                <tbody id="reviews-container">
+                    <!-- reviews will be dynamically here -->
                 </tbody>
             </table>
+            <div id="pagination" class="pagination">
+                <!-- pagination code here  -->
+            </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                async function loadReviews(page = 1) {
+                    await fetch(`api/GetReviews.php?page=${page}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const reviewsContainer = document.getElementById('reviews-container');
+                            const paginationContainer = document.getElementById('pagination');
+                            reviewsContainer.innerHTML = '';
+                            paginationContainer.innerHTML = '';
+
+                            if (data.status === 'success') {
+                                data.reviews.forEach((review, index) => {
+                                    const reviewRow = document.createElement('tr');
+                                    //image to be loaded
+                                    reviewRow.innerHTML = `
+                                    <td>${(page - 1) * 12 + (index + 1)}</td>
+                                    <td>${review.name}</td>
+                                    <td>${review.message}</td>
+                                    <td>${review.satisfaction}</td>
+                                    <td>${review.found===1?'Found':'Not Found'}</td>
+                                    <td>${review.recommend===1?'Yes':'No'}</td>
+                                    <td>
+                                        <button class="delete-btn" onclick="navigate(${review.rid}, 'reviews')">Delete</button>
+                                        <button class="edit-btn">Edit</button>
+                                    </td>
+                                `;
+                                    reviewsContainer.appendChild(reviewRow);
+                                });
+
+                                //for pagination
+                                const totalPages = <?php echo $total_pages; ?>;
+                                // console.log(totalPages);
+
+                                for (let i = 1; i <= totalPages; i++) {
+                                    const pageLink = document.createElement('a');
+                                    pageLink.href = '#';
+                                    pageLink.textContent = i;
+
+                                    if (i === page) {
+                                        pageLink.classList.add('active');
+                                    }
+
+                                    pageLink.onclick = (e) => {
+                                        e.preventDefault();
+                                        loadReviews(i);
+                                    };
+
+                                    paginationContainer.appendChild(pageLink);
+                                }
+                            } else {
+                                reviewsContainer.innerHTML = `<tr><td colspan='5'>${data.message}</td></tr>`;
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                }
+
+                // Load initial reviews
+                const currentPage = new URLSearchParams(window.location.search).get('page') || 1;
+                loadReviews(parseInt(currentPage));
+            });
+        </script>
 </body>
 
 </html>

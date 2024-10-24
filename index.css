@@ -671,3 +671,72 @@ option:hover {
     }
 
 }
+
+
+
+/* for admin dashboard */
+.admin-dashboard {
+    display: flex;
+}
+
+.container,
+.admin-panel {
+    width: 90%;
+    max-width: 1200px;
+    margin: 7vw 0px 0px 20%;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+button.delete-btn,
+button.edit-btn {
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+button.delete-btn {
+    background-color: #e74c3c;
+}
+
+button.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+button.edit-btn {
+    background-color: #30078e;
+}
+
+button.edit-btn:hover {
+    background-color: #230c6c;
+}
+
+.image-item {
+    max-width: 10vw;
+    height: auto;
+}
+
+.admin-title{
+    margin: 0;
+    width: 100%;
+    text-align: center;
+}

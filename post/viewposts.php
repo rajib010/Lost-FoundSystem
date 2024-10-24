@@ -177,89 +177,12 @@ $total_pages = ceil($total_posts / $limit);
                                 pageLink.textContent = i;
 
                                 if (i === page) {
-                                    pageLink.classList.add('active'); // Highlight current page
+                                    pageLink.classList.add('active');
                                 }
 
                                 pageLink.onclick = (e) => {
                                     e.preventDefault();
-                                    loadPosts(i); // Load posts for the clicked page
-                                };
-
-                                paginationContainer.appendChild(pageLink);
-                            }
-                        } else {
-                            postsContainer.innerHTML = `<div class='no-items'><h1 class='content-header'>${data.message}</h1></div>`;
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
-            }
-
-            // Function to view an individual post
-            function viewItem(id) {
-                window.location.href = `post.php?id=${id}`;
-            }
-
-            // Load initial posts
-            const currentPage = new URLSearchParams(window.location.search).get('page') || 1;
-            loadPosts(parseInt(currentPage));
-        });
-        document.addEventListener('DOMContentLoaded', function() {
-            // Function to load posts
-            async function loadPosts(page = 1) {
-                const filterpost = new URLSearchParams(window.location.search).get('filterpost') || 'time';
-
-                // Fetch posts based on the current page and filter
-                await fetch(`../utility/LoadmorePosts.php?page=${page}&filterpost=${filterpost}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const postsContainer = document.getElementById('posts-container');
-                        const paginationContainer = document.getElementById('pagination');
-
-                        // Clear existing posts and pagination
-                        postsContainer.innerHTML = '';
-                        paginationContainer.innerHTML = '';
-
-                        if (data.status === 'success') {
-                            // Populate posts
-                            data.posts.forEach(post => {
-                                const postCard = document.createElement('div');
-                                postCard.className = 'post-card';
-                                postCard.onclick = () => viewItem(post.pid);
-                                postCard.title = 'View Post';
-
-                                const postImg = document.createElement('img');
-                                postImg.className = 'post-img';
-                                postImg.src = `http://localhost/finderz/uploads/posts/${post.image}`;
-                                postImg.alt = 'Post Image';
-
-                                const postTitle = document.createElement('p');
-                                postTitle.className = 'post-title';
-                                postTitle.textContent = post.title;
-
-                                const postAuthor = document.createElement('p');
-                                postAuthor.className = 'content-p';
-                                postAuthor.textContent = `Found by: ${post.name}`;
-
-                                postCard.appendChild(postImg);
-                                postCard.appendChild(postTitle);
-                                postCard.appendChild(postAuthor);
-                                postsContainer.appendChild(postCard);
-                            });
-
-                            // Generate pagination links
-                            const totalPages = <?php echo $total_pages; ?>;
-                            for (let i = 1; i <= totalPages; i++) {
-                                const pageLink = document.createElement('a');
-                                pageLink.href = '#';
-                                pageLink.textContent = i;
-
-                                if (i === page) {
-                                    pageLink.classList.add('active'); // Highlight current page
-                                }
-
-                                pageLink.onclick = (e) => {
-                                    e.preventDefault();
-                                    loadPosts(i); // Load posts for the clicked page
+                                    loadPosts(i); 
                                 };
 
                                 paginationContainer.appendChild(pageLink);

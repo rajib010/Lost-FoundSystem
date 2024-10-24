@@ -84,7 +84,7 @@ $row = $result->fetch_assoc();
             <?= date('g:i a', strtotime($row['time'])); ?>
         </p>
 
-        <button class="btn"><a href="./viewpost.php">Back to Posts</a></button>
+        <button class="btn"><a href="./viewposts.php">Back to Posts</a></button>
     </main>
 
     <?php require("../components/Footer.php"); ?>

@@ -1,20 +1,15 @@
 <?php
 session_start();
-if(empty($_SESSION['loggedinadmin'])){
+if (empty($_SESSION['loggedinadmin'])) {
     header('location: ../index.php');
 }
 ?>
 
 <html>
 <head>
+    <link rel="stylesheet" href="../index.css" />
     <style>
-
-        *{
-            box-sizing: border-box;
-            margin: 0px;
-            padding: 0px;
-        }
-         .admin-header {
+        .admin-header {
             width: 100%;
             display: flex;
             position: fixed;
@@ -25,33 +20,28 @@ if(empty($_SESSION['loggedinadmin'])){
             background-color: #ff5722;
             color: white;
         }
-
-        .admin-header h1 {
-            font-size: 1.8em;
-            
-        }
-
-        .logout-btn {
-            background-color: #ffc107;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1em;
-            color: #333;
-            transition: background-color 0.3s ease;
-        }
-
-        .logout-btn:hover {
-            background-color: #ff9800;
+        h1{
+            font-size: 2.1vw;
         }
     </style>
 </head>
 
-    <header class="admin-header">
-        <h1>Welcome, Admin</h1>
-        <button class="logout-btn"><a href="../user/logout.php">Log out</a></button>
-    </header>
+<header class="admin-header">
+    <h1>Welcome, Admin</h1>
+    <button class="btn logoutItem" id="cancelBtn">
+        Log Out
+    </button>
+</header>
+
+<body>
+    <script>
+        document.querySelector(".logoutItem").addEventListener('click', function() {
+            let userResponse = confirm("Do you want to logout?");
+            if (userResponse) {
+                window.location.replace("../user/logout.php");
+            }
+        });
+    </script>
+</body>
 
 </html>

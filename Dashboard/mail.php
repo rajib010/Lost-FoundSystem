@@ -2,10 +2,9 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>Send Mail</title>
-    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="../index.css">
 
 </head>
 
@@ -13,9 +12,9 @@
     <main class="admin-dashboard">
         <?php require("./components/Nav.php"); ?>
         <div class="admin-panel">
-            <h1 class="title">Send Mail</h1>
+            <h1 class="content-header admin-title">Send Mail</h1>
             <div class="mail-form">
-                <form>
+                <form class="form-class">
                     <div class="form-group">
                         <label for="receiver-email">Receiver Email:</label>
                         <input type="email" id="receiver-email" name="receiver-email" required>
@@ -28,7 +27,7 @@
                         <label for="content">Content:</label>
                         <textarea id="content" name="content" rows="5" required></textarea>
                     </div>
-                    <button type="submit" class="send-btn">Send</button>
+                    <button type="submit" class="btn">Send</button>
                 </form>
             </div>
         </div>
