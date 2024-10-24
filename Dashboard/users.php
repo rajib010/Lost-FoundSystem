@@ -31,6 +31,7 @@ $total_pages = ceil($total_posts / $limit);
 <head>
     <title>View Users</title>
     <link rel="stylesheet" href="../index.css">
+    <script src="../utility/CreatePagination.js"></script>
 </head>
 
 <body>
@@ -88,27 +89,9 @@ $total_pages = ceil($total_posts / $limit);
                                 usersContainer.appendChild(userRow);
                             });
 
-                            // Generate pagination links
-
                             const totalPages = <?php echo $total_pages; ?>;
-                            console.log(totalPages);
-                            
-                            for (let i = 1; i <= totalPages; i++) {
-                                const pageLink = document.createElement('a');
-                                pageLink.href = '#';
-                                pageLink.textContent = i;
-
-                                if (i === page) {
-                                    pageLink.classList.add('active');
-                                }
-
-                                pageLink.onclick = (e) => {
-                                    e.preventDefault();
-                                    loadUsers(i);
-                                };
-
-                                paginationContainer.appendChild(pageLink);
-                            }
+                            // custom pagination
+                            createPagination(totalPages, page, paginationContainer, loadUsers);
                         } else {
                             usersContainer.innerHTML = `<tr><td colspan='7'>${data.message}</td></tr>`;
                         }

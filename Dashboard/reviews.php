@@ -30,6 +30,7 @@ $total_pages = ceil($total_reviews / $limit);
 <head>
     <title>View Reviews</title>
     <link rel="stylesheet" href="../index.css">
+    <script src="../utility/CreatePagination.js"></script>
 </head>
 
 <body>
@@ -88,24 +89,7 @@ $total_pages = ceil($total_reviews / $limit);
 
                                 //for pagination
                                 const totalPages = <?php echo $total_pages; ?>;
-                                // console.log(totalPages);
-
-                                for (let i = 1; i <= totalPages; i++) {
-                                    const pageLink = document.createElement('a');
-                                    pageLink.href = '#';
-                                    pageLink.textContent = i;
-
-                                    if (i === page) {
-                                        pageLink.classList.add('active');
-                                    }
-
-                                    pageLink.onclick = (e) => {
-                                        e.preventDefault();
-                                        loadReviews(i);
-                                    };
-
-                                    paginationContainer.appendChild(pageLink);
-                                }
+                                createPagination(totalPages, page, paginationContainer, loadReviews)
                             } else {
                                 reviewsContainer.innerHTML = `<tr><td colspan='5'>${data.message}</td></tr>`;
                             }

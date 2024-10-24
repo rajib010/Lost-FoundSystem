@@ -88,6 +88,7 @@ $total_pages = ceil($total_posts / $limit);
         }
     </style>
     <link rel="stylesheet" href="../index.css" />
+    <script src="../utility/CreatePagination.js"></script>
 </head>
 
 <body>
@@ -171,22 +172,7 @@ $total_pages = ceil($total_posts / $limit);
 
                             // Generate pagination links
                             const totalPages = <?php echo $total_pages; ?>;
-                            for (let i = 1; i <= totalPages; i++) {
-                                const pageLink = document.createElement('a');
-                                pageLink.href = '#';
-                                pageLink.textContent = i;
-
-                                if (i === page) {
-                                    pageLink.classList.add('active');
-                                }
-
-                                pageLink.onclick = (e) => {
-                                    e.preventDefault();
-                                    loadPosts(i); 
-                                };
-
-                                paginationContainer.appendChild(pageLink);
-                            }
+                            createPagination(totalPages,page,paginationContainer,loadPosts);
                         } else {
                             postsContainer.innerHTML = `<div class='no-items'><h1 class='content-header'>${data.message}</h1></div>`;
                         }

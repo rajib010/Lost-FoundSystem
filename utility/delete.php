@@ -1,6 +1,5 @@
 <?php
-require("../utility/Database.php");
-require("../utility/referer.php");
+require("./Database.php");
 
 $db = new Database();
 $table = $_GET['table'];

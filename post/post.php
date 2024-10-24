@@ -1,5 +1,6 @@
 <?php
 require("../Navbar.php");
+require("../utility/navigate.php");
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     echo 'Invalid post ID';
@@ -7,12 +8,13 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 
 $id = intval($_GET['id']);
+$table='posts';
 
 $db = new Database();
 $where = "posts.pid='$id'";
 $join = "user_info ON posts.author_id = user_info.id";
 
-$result = $db->select('posts', 'posts.*, user_info.name', $join, $where, null, null);
+$result = $db->select($table, 'posts.*, user_info.name', $join, $where, null, null);
 
 
 $row = $result->fetch_assoc();
@@ -62,7 +64,7 @@ $row = $result->fetch_assoc();
         <?php
         if ($_SESSION['loggedinuserId'] === $row['author_id']) {
             echo '<div class="top-class">
-                   <button class="btn" id="deleteBtn"">
+                   <button class="btn" onClick=<?= navigate($id,'posts') ?>>
                         <i class="fa-solid fa-trash"></i>
                     </button>
                   </div>';
@@ -88,14 +90,6 @@ $row = $result->fetch_assoc();
     </main>
 
     <?php require("../components/Footer.php"); ?>
-
-    <script>
-        document.getElementById("deleteBtn").addEventListener('click', () => {
-            if (confirm('Are you sure you want to delete?')) {
-                window.location.href = `./deletepost.php?id=${<?= $id; ?>}`;
-            }
-        })
-    </script>
 
 </body>
 

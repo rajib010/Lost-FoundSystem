@@ -30,6 +30,7 @@ $total_pages = ceil($total_messages / $limit);
 <head>
     <title>View Messages</title>
     <link rel="stylesheet" href="../index.css">
+    <script src="../utility/CreatePagination.js"></script>
 </head>
 
 <body>
@@ -82,26 +83,11 @@ $total_pages = ceil($total_messages / $limit);
                                     messagesContainer.appendChild(messageRow);
                                 });
 
-                                //for pagination
+                                //for pagination using custom pagination
                                 const totalPages = <?php echo $total_pages; ?>;
-                                // console.log(totalPages);
-
-                                for (let i = 1; i <= totalPages; i++) {
-                                    const pageLink = document.createElement('a');
-                                    pageLink.href = '#';
-                                    pageLink.textContent = i;
-
-                                    if (i === page) {
-                                        pageLink.classList.add('active');
-                                    }
-
-                                    pageLink.onclick = (e) => {
-                                        e.preventDefault();
-                                        loadMessages(i);
-                                    };
-
-                                    paginationContainer.appendChild(pageLink);
-                                }
+                                createPagination(totalPages,page,paginationContainer,loadMessages)
+                                
+                                
                             } else {
                                 messagesContainer.innerHTML = `<tr><td colspan='5'>${data.message}</td></tr>`;
                             }

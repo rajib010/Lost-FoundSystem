@@ -315,6 +315,7 @@ option:hover {
     align-items: center;
     margin: 20px 0;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .pagination a,

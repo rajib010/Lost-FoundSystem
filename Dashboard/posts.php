@@ -31,6 +31,7 @@ $total_pages = ceil($total_posts / $limit);
 <head>
     <title>Manage Posts</title>
     <link rel="stylesheet" href="../index.css">
+    <script src="../utility/CreatePagination.js"></script>
 </head>
 
 <body>
@@ -65,7 +66,7 @@ $total_pages = ceil($total_posts / $limit);
                         .then(data => {
                             const postsContainer = document.getElementById('posts-container');
                             const paginationContainer = document.getElementById('pagination');
-                           console.log(data);
+                            console.log(data);
                             postsContainer.innerHTML = '';
                             paginationContainer.innerHTML = '';
 
@@ -74,7 +75,7 @@ $total_pages = ceil($total_posts / $limit);
                                     const postRow = document.createElement('tr');
                                     //image to be loaded
                                     postRow.innerHTML = `
-                                    <td>${(page - 1) * 12 + (index + 1)}</td>
+                                    <td>${(page - 1) * 8 + (index + 1)}</td>
                                     <td>${post.name}</td>
                                     <td>${post.title}</td>
                                     <td>${post.description}</td>
@@ -92,24 +93,7 @@ $total_pages = ceil($total_posts / $limit);
                                 // Generate pagination links
 
                                 const totalPages = <?php echo $total_pages; ?>;
-                                console.log(totalPages);
-
-                                for (let i = 1; i <= totalPages; i++) {
-                                    const pageLink = document.createElement('a');
-                                    pageLink.href = '#';
-                                    pageLink.textContent = i;
-
-                                    if (i === page) {
-                                        pageLink.classList.add('active');
-                                    }
-
-                                    pageLink.onclick = (e) => {
-                                        e.preventDefault();
-                                        loadPosts(i);
-                                    };
-
-                                    paginationContainer.appendChild(pageLink);
-                                }
+                                createPagination(totalPages, page, paginationContainer, loadPosts);
                             } else {
                                 postsContainer.innerHTML = `<tr><td colspan='9'>${data.message}</td></tr>`;
                             }
