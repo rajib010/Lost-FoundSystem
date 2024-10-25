@@ -1,8 +1,6 @@
 <?php
 require("components/Header.php");
 require("components/Nav.php");
-require("../utility/navigate.php");
-
 $db = new Database();
 $limit = 8;
 
@@ -32,6 +30,8 @@ $total_pages = ceil($total_posts / $limit);
     <title>Manage Posts</title>
     <link rel="stylesheet" href="../index.css">
     <script src="../utility/CreatePagination.js"></script>
+    <script src='../utility/navigate.js'></script>
+
 </head>
 
 <body>
@@ -84,7 +84,7 @@ $total_pages = ceil($total_posts / $limit);
                                     <td>${post.category==1?'Lost':'Found'}</td>
                                     <td>
                                         <button class="delete-btn" onclick="navigate(${post.id}, 'posts')">Delete</button>
-                                        <button class="edit-btn">Edit</button>
+                                        <button class="edit-btn">Block</button>
                                     </td>
                                 `;
                                     postsContainer.appendChild(postRow);

@@ -1,7 +1,6 @@
 <?php
 require("components/Header.php");
 require("components/Nav.php");
-require("../utility/navigate.php");
 
 $db = new Database();
 $limit = 8;
@@ -31,6 +30,7 @@ $total_pages = ceil($total_messages / $limit);
     <title>View Messages</title>
     <link rel="stylesheet" href="../index.css">
     <script src="../utility/CreatePagination.js"></script>
+    <script src='../utility/navigate.js'></script>
 </head>
 
 <body>
@@ -69,15 +69,13 @@ $total_pages = ceil($total_messages / $limit);
                             if (data.status === 'success') {
                                 data.messages.forEach((message, index) => {
                                     const messageRow = document.createElement('tr');
-                                    //image to be loaded
                                     messageRow.innerHTML = `
                                     <td>${(page - 1) * 12 + (index + 1)}</td>
                                     <td>${message.name}</td>
                                     <td>${message.email}</td>
                                     <td>${message.message}</td>
                                     <td>
-                                        <button class="delete-btn" onclick="navigate(${message.mid}, 'messages')">Delete</button>
-                                        <button class="edit-btn">Edit</button>
+                                        <button class="delete-btn" onClick="navigate(${message.id}, 'messages')">Delete</button>
                                     </td>
                                 `;
                                     messagesContainer.appendChild(messageRow);
@@ -85,9 +83,9 @@ $total_pages = ceil($total_messages / $limit);
 
                                 //for pagination using custom pagination
                                 const totalPages = <?php echo $total_pages; ?>;
-                                createPagination(totalPages,page,paginationContainer,loadMessages)
-                                
-                                
+                                createPagination(totalPages, page, paginationContainer, loadMessages)
+
+
                             } else {
                                 messagesContainer.innerHTML = `<tr><td colspan='5'>${data.message}</td></tr>`;
                             }

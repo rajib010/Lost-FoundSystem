@@ -6,7 +6,7 @@ $where = "author_id='$id'";
 $result = $db->select('reviews', "*", null, $where, null, null);
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $id = $row['rid'];
+    $id = $row['id'];
 ?>
     <!DOCTYPE html>
     <html lang="en">

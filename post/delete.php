@@ -2,7 +2,7 @@
 include "../utility/Database.php";
 $db = new Database();
 $id = $_GET["id"];
-$where = "pid=$id";
+$where = "id=$id";
 $result = $db->delete("posts", $where);
 
 if ($result) {

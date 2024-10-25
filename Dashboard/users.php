@@ -1,7 +1,6 @@
 <?php
 require("components/Header.php");
 require("./components/Nav.php");
-require("../utility/navigate.php");
 
 $db = new Database();
 $limit = 8;
@@ -32,6 +31,8 @@ $total_pages = ceil($total_posts / $limit);
     <title>View Users</title>
     <link rel="stylesheet" href="../index.css">
     <script src="../utility/CreatePagination.js"></script>
+    <script src='../utility/navigate.js'></script>
+
 </head>
 
 <body>

@@ -81,7 +81,6 @@ $total_pages = ceil($total_reviews / $limit);
                                     <td>${review.recommend===1?'Yes':'No'}</td>
                                     <td>
                                         <button class="delete-btn" onclick="navigate(${review.rid}, 'reviews')">Delete</button>
-                                        <button class="edit-btn">Edit</button>
                                     </td>
                                 `;
                                     reviewsContainer.appendChild(reviewRow);

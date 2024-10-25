@@ -1,6 +1,5 @@
 <?php
 require_once './Database.php';
-require_once './referer.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];

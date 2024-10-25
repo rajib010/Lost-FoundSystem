@@ -25,7 +25,7 @@
 
     <section class="about-section">
         <h1 class="content-header">Welcome to Lost & Found</h1>
-        <div class="container">
+        <div class="about-container">
 
             <div class="sub-content">
                 <h3 class="post-title">About us</h3>
@@ -51,7 +51,7 @@
         </div>
             <section class="home-section">
                 <h2 class="content-header">How It Works</h2>
-                <div class="container">
+                <div class="about-container">
                     <div class="card">
                         <img src="../public/report.avif" class='card-img' alt="Fast and Easy">
                         <h3 class='post-title'>Report an Item</h3>
@@ -73,7 +73,7 @@
             <!-- Features Section -->
             <section class="home-section" id="requirement">
                 <h2 class="content-header">Why Use Our System?</h2>
-                <div class="container">
+                <div class="about-container">
                     <div class="card">
                         <img src="../public/fast&easy.avif" class='card-img' alt="Fast and Easy">
                         <h3 class='post-title'>Fast and Easy</h3>

@@ -43,7 +43,7 @@ require("../Navbar.php"); ?>
     <?php
     $db = new Database();
     $id = $_GET['id'];
-    $where = "rid = '$id'";
+    $where = "id = '$id'";
     $result = $db->select('reviews', "*", null, $where, null, null);
 
     if ($result->num_rows > 0) {
@@ -105,9 +105,7 @@ require("../Navbar.php"); ?>
                 <label class="content-p">
                     <input type="radio" name="found" value="0" <?= $found == '0' ? 'checked' : ''; ?>> No
                 </label>
-                <label class="content-p">
-                    <input type="radio" name="found" value="2" <?= $found == '2' ? 'checked' : ''; ?>> On the way
-                </label>
+                
             </div>
             <p class="error"><?= htmlspecialchars($errors['found'] ?? ''); ?></p>
 

@@ -2,7 +2,7 @@
 include "../utility/Database.php";
 $db = new Database();
 $id = $_GET["id"];
-$where = "rid=$id";
+$where = "id=$id";
 $result = $db->delete("reviews", $where);
 
 if ($result) {

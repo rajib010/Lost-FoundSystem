@@ -34,7 +34,7 @@
 
             <div class="sub-content">
                 <h3 class="post-title">Send Us a Message</h3>
-                <form class="form-class" method="post" id="contactForm" action="../utility/SendMessage.php">
+                <form class="form-class" id="contactForm" method="post">
                     <div class="form-group">
                         <label for="name">Name:</label>
                         <input type="text" id="name" name="name" required>
@@ -50,27 +50,30 @@
                     <button type="submit" class="btn" name="sendBtn">Send Message</button>
                 </form>
                 <script>
-                    document.getElementById('contactForm').addEventListener('submit', async function(event) {
-                        event.preventDefault();
-
-                        let formData = new FormData(this);
-                        await fetch('../utility/SendMessage.php', {
-                                method: 'POST',
-                                body: formData
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.status === 'success') {
-                                    alert(data.message);
-                                    window.location.reload();
-                                    window.scrollTo(0, 0);
-                                } else {
-                                    alert(data.message);
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
-                            });
+                    document.addEventListener('DOMContentLoaded', function() {
+                        document.getElementById('contactForm').addEventListener('submit', async function(event) {
+                            event.preventDefault();
+                            let formData = new FormData(this);
+                            await fetch('../utility/SendMessage.php', {
+                                    method: 'POST',
+                                    body: formData
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.status === 'success') {
+                                        alert(data.message);
+                                        document.getElementById('contactForm').reset();
+                                        window.location.reload();
+                                        window.scrollTo(0, 0);
+                                    } else {
+                                        alert(data.message);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    alert('There was an error submitting your message. Please try again.');
+                                });
+                        });
                     });
                 </script>
             </div>

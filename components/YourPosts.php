@@ -85,11 +85,11 @@
             } else {
                 while ($row = $result->fetch_assoc()) {
             ?>
-                    <div class="post-card" onclick="viewPost(<?php echo $row['pid']; ?>)">
+                    <div class="post-card" onclick="viewPost(<?php echo $row['id']; ?>)">
                         <img class="post-img" src="<?php echo 'http://localhost/finderz/uploads/posts/' . htmlspecialchars($row['image']); ?>" alt="image">
                         <div class="edit-posts">
-                            <p class="edit" onclick="event.stopPropagation(); editPost(<?php echo $row['pid']; ?>)"><i class="fa-solid fa-pen"></i></p>
-                            <p class="delete" onclick="event.stopPropagation(); deletePost(<?php echo $row['pid']; ?>)"><i class="fa-solid fa-trash"></i></p>
+                            <p class="edit" onclick="event.stopPropagation(); editPost(<?php echo $row['id']; ?>)"><i class="fa-solid fa-pen"></i></p>
+                            <p class="delete" onclick="event.stopPropagation(); deletePost(<?php echo $row['id']; ?>)"><i class="fa-solid fa-trash"></i></p>
                         </div>
 
                         <h3 class="post-title"><?php echo htmlspecialchars($row['title']); ?></h3>
@@ -114,7 +114,7 @@
 
         function deletePost(postId) {
             if (confirm('Are you sure you want to delete this post?')) {
-                window.location.href = `../post/deletepost.php?id=${postId}`;
+                window.location.href = `../post/delete.php?id=${postId}`;
             }
         }
     </script>

@@ -1,6 +1,5 @@
 <?php
 require("../Navbar.php");
-require("../utility/navigate.php");
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     echo 'Invalid post ID';
@@ -8,14 +7,13 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 
 $id = intval($_GET['id']);
-$table='posts';
+$table = 'posts';
 
 $db = new Database();
-$where = "posts.pid='$id'";
+$where = "posts.id='$id'";
 $join = "user_info ON posts.author_id = user_info.id";
 
 $result = $db->select($table, 'posts.*, user_info.name', $join, $where, null, null);
-
 
 $row = $result->fetch_assoc();
 ?>
@@ -64,14 +62,13 @@ $row = $result->fetch_assoc();
         <?php
         if ($_SESSION['loggedinuserId'] === $row['author_id']) {
             echo '<div class="top-class">
-                   <button class="btn" onClick=<?= navigate($id,'posts') ?>>
+                   <button class="btn" id="deleteBtn">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                   </div>';
         }
         ?>
         <div class="imgDiv">
-
             <?php if (!empty($row['image'])) { ?>
                 <img src="<?php echo 'http://localhost/finderz/uploads/posts/' . htmlspecialchars($row['image']); ?>" class="displayImg" alt="post image">
             <?php } else { ?>
@@ -90,6 +87,13 @@ $row = $result->fetch_assoc();
     </main>
 
     <?php require("../components/Footer.php"); ?>
+    <script>
+        document.querySelector("#deleteBtn").addEventListener('click', () => {
+            if(confirm('Are you sure you want to delete?')){
+                return window.location.href = `delete.php?id=${<?php echo $row['id']; ?>}`;
+            }
+        })
+    </script>
 
 </body>
 

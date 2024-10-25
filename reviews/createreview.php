@@ -114,9 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label class="content-p">
                     <input type="radio" name="found" value="0" <?= isset($found) && $found == '0' ? 'checked' : ''; ?>> No
                 </label>
-                <label class="content-p">
-                    <input type="radio" name="found" value="2" <?= isset($found) && $found == '2' ? 'checked' : ''; ?>> On the way
-                </label>
+
             </div>
             <p class="error"><?= htmlspecialchars($errors['found'] ?? ''); ?></p>
 

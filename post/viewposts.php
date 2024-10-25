@@ -17,7 +17,7 @@ if (isset($_GET['page']) && is_numeric($_GET['page'])) {
 $category_filter = isset($_GET['filterpost']) ? mysqli_real_escape_string($db->conn, $_GET['filterpost']) : null;
 $join = "user_info ON posts.author_id = user_info.id";
 
-$where = "1=1";
+$where = "status=1";
 if ($category_filter && $category_filter != 'time') {
     $where .= " AND posts.category = '$category_filter'";
 }
@@ -148,7 +148,7 @@ $total_pages = ceil($total_posts / $limit);
                             data.posts.forEach(post => {
                                 const postCard = document.createElement('div');
                                 postCard.className = 'post-card';
-                                postCard.onclick = () => viewItem(post.pid);
+                                postCard.onclick = () => viewItem(post.id);
                                 postCard.title = 'View Post';
 
                                 const postImg = document.createElement('img');
@@ -172,7 +172,7 @@ $total_pages = ceil($total_posts / $limit);
 
                             // Generate pagination links
                             const totalPages = <?php echo $total_pages; ?>;
-                            createPagination(totalPages,page,paginationContainer,loadPosts);
+                            createPagination(totalPages, page, paginationContainer, loadPosts);
                         } else {
                             postsContainer.innerHTML = `<div class='no-items'><h1 class='content-header'>${data.message}</h1></div>`;
                         }

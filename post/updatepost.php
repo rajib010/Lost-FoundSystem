@@ -5,7 +5,7 @@ $db = new Database();
 $errors = [];
 
 $id = $_GET['id'];
-$where = "posts.pid = $id";
+$where = "posts.id = $id";
 $result = $db->select("posts", '*', null, $where, null, null);
 if ($result->num_rows !== 0) {
     $row = $result->fetch_assoc();
@@ -19,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $location = $_POST['location'];
         $category = $_POST['category'];
         $id = $_GET['id']; //id of the post
-        $status = $_POST['status'];
 
         // Validate form
         if (empty($title)) {
@@ -33,9 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         }
         if (empty($category)) {
             $errors['category'] = "Category is required";
-        }
-        if (empty($status)) {
-            $errors['status'] = "Status of item is required";
         }
 
         $fileName = $row['image']; //use current image if no changes
@@ -59,14 +55,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         // Proceed to database entry if no errors
         if (empty($errors)) {
-            $where = "pid = $id";
+            $where = "posts.id = $id";
             $result = $db->update('posts', [
                 "title" => $title,
                 "description" => $description,
                 "location" => $location,
                 "category" => $category,
-                "image" => $fileName,
-                "status" => $status
+                "image" => $fileName
             ], $where);
 
             if ($result) {
@@ -234,23 +229,6 @@ require("../Navbar.php");
                 <label for="item-location">Location</label>
                 <input type="text" id="item-location" name="location" value="<?= htmlspecialchars($row['location']) ?>">
                 <p class="error"><?= $errors['location'] ?? '' ?></p>
-            </div>
-
-            <div class="form-group radio-group">
-                <label for="item-status">Status</label>
-                <div class="radio-options">
-                    <label class="radio-option" for="status-lost">
-                        Lost
-                        <input type="radio" id="status-lost" name="status" value="2" <?= $row['status'] == '2' ? 'checked' : '' ?>>
-                        <span class="custom-radio"></span>
-                    </label>
-                    <label class="radio-option" for="status-found">
-                        Found
-                        <input type="radio" id="status-found" name="status" value="1" <?= $row['status'] == '1' ? 'checked' : '' ?>>
-                        <span class="custom-radio"></span>
-                    </label>
-                </div>
-                <p class="error"><?= $errors['status'] ?? '' ?></p>
             </div>
 
             <div class="form-group">
