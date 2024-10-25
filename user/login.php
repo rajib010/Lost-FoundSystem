@@ -237,9 +237,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <span class="toggle-password" onclick="togglePasswordVisibility()"><i
                                 class="fa-solid fa-eye-slash"></i></span>
                         <p class="error"><?php echo $errors['password'] ?? '' ?></p>
-
                     </div>
-                    <p class="content-p left"><a href="#">Forgot Password?</a></p>
+                    <p class="content-p left"><a href="./forgot/forgotPassword.php">Forgot Password?</a></p>
                     <button type="submit" name="loginBtn" class="btn">Login</button>
                     <p class="content-p">Don't have an account?
                         <span>

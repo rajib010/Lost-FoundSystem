@@ -1,13 +1,15 @@
 <?php
-if(file_exists('../../vendor/autoload.php')){
-    require_once('../../vendor/autoload.php');  
+if (file_exists('../../vendor/autoload.php')) {
+    require_once('../../vendor/autoload.php');
+} else if(file_exists('../../../vendor/autoload.php')) {
+    require_once('../../../vendor/autoload.php');
 }else{
-    require_once('../vendor/autoload.php');  
+    require_once('../vendor/autoload.php');
 }
 
 use Dotenv\Dotenv;
 
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../'); 
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 class Database
 {
@@ -171,7 +173,7 @@ class Database
 
             $limit = intval($limit);
             if ($limit <= 0) {
-                $limit = 8; 
+                $limit = 8;
             }
 
             $start = ($page - 1) * $limit;
