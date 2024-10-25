@@ -26,6 +26,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 session_start();
                 if ($row['user_type'] == 0) {
+                    if ($row['status'] == 'deactivated') {
+                        echo "<script>
+                            alert('User is suspened.Please contact the admin');
+                            window.location.href='../index.php#contact';
+                        </script>";
+                        exit();
+                    }
                     $_SESSION["loggedinuserId"] = $row["id"];
                     $_SESSION['userImg'] = $row['profileImg'];
                     header("location: ../pages/home.php");
@@ -42,6 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,10 +59,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../index.css" />
     <style>
-
-        html,body{
+        html,
+        body {
             height: 100%;
         }
+
         body {
             overflow: hidden;
         }
@@ -150,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .left {
             text-align: left;
         }
-       
+
 
         /* Responsive Design for Tablets */
         @media (min-width: 768px) and (max-width: 1024px) {
@@ -211,6 +220,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </style>
 </head>
+
 <body class="center">
     <main class="login-section center">
         <div class="left-side center">

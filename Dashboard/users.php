@@ -48,6 +48,7 @@ $total_pages = ceil($total_posts / $limit);
                         <th>Address</th>
                         <th>Contact</th>
                         <th>Type</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -82,10 +83,14 @@ $total_pages = ceil($total_posts / $limit);
                                     <td>${user.address}</td>
                                     <td>${user.phone_number}</td>
                                     <td>${user.user_type == 0 ? 'User' : 'Admin'}</td>
+                                    <td>${user.status}</td>
                                     <td>
-                                        <button class="delete-btn" onclick="navigate(${user.id}, 'user_info')">Delete</button>
-                                        <button class="edit-btn">Edit</button>
+                                        ${user.status === 'active' ? 
+                                            `<button class="delete-btn" onClick='suspend(${user.id})'>Suspend</button>` : 
+                                            `<button class="edit-btn" onClick='unsuspend(${user.id})'>Unsuspend</button>`
+                                        }
                                     </td>
+
                                 `;
                                 usersContainer.appendChild(userRow);
                             });
@@ -104,6 +109,18 @@ $total_pages = ceil($total_posts / $limit);
             const currentPage = new URLSearchParams(window.location.search).get('page') || 1;
             loadUsers(parseInt(currentPage));
         });
+
+        const suspend = (id) => {
+            if (confirm('Are you sure you want to suspend the user?')) {
+                window.location.href = `./api/ChangeStatus.php?id=${id}&action=suspend`;
+            }
+        };
+
+        const unsuspend = (id) => {
+            if (confirm('Are you sure you want to unsuspend the user?')) {
+                window.location.href = `./api/ChangeStatus.php?id=${id}&action=unsuspend`;
+            }
+        };
     </script>
 </body>
 

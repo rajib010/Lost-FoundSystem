@@ -95,7 +95,7 @@ class Database
         if ($stmt) {
             $stmt->bind_param($types, ...$values);
             if ($stmt->execute()) {
-                return $stmt->affected_rows;
+                return true;
             } else {
                 echo "Update unsuccessful: " . $stmt->error;
             }
