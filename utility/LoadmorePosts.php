@@ -5,7 +5,7 @@ $db = new Database();
 $category_filter = isset($_GET['filterpost']) ? mysqli_real_escape_string($db->conn, $_GET['filterpost']) : null;
 $join = "user_info ON posts.author_id = user_info.id";
 
-$where = "1=1";
+$where = "posts.status=1";
 if ($category_filter && $category_filter !== 'time') {
     $where .= " AND posts.category = '$category_filter'";
 }

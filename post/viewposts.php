@@ -2,7 +2,7 @@
 require("../Navbar.php");
 
 $db = new Database();
-$limit = 12; // Number of posts per page
+$limit = 12;
 
 // Get the current page or set to 1 if not set
 if (isset($_GET['page']) && is_numeric($_GET['page'])) {
@@ -17,14 +17,15 @@ if (isset($_GET['page']) && is_numeric($_GET['page'])) {
 $category_filter = isset($_GET['filterpost']) ? mysqli_real_escape_string($db->conn, $_GET['filterpost']) : null;
 $join = "user_info ON posts.author_id = user_info.id";
 
-$where = "status=1";
+$where = "posts.status=1";
 if ($category_filter && $category_filter != 'time') {
     $where .= " AND posts.category = '$category_filter'";
 }
 
+
 $order = "posts.time DESC";
 
-$count_result = $db->select('posts', "COUNT(*) as total", $join, $where);
+$count_result = $db->select('posts', "COUNT(*) as total", $join, $where, $order, $limit);
 $total_posts = 0;
 if ($count_result && $count_result->num_rows > 0) {
     $count_row = $count_result->fetch_assoc();

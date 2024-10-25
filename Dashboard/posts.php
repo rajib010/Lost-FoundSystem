@@ -30,8 +30,11 @@ $total_pages = ceil($total_posts / $limit);
     <title>Manage Posts</title>
     <link rel="stylesheet" href="../index.css">
     <script src="../utility/CreatePagination.js"></script>
-    <script src='../utility/navigate.js'></script>
-
+<style>
+    .delete-btn{
+        margin: 5px;
+    }
+</style>
 </head>
 
 <body>
@@ -75,18 +78,22 @@ $total_pages = ceil($total_posts / $limit);
                                     const postRow = document.createElement('tr');
                                     //image to be loaded
                                     postRow.innerHTML = `
-                                    <td>${(page - 1) * 8 + (index + 1)}</td>
-                                    <td>${post.name}</td>
-                                    <td>${post.title}</td>
-                                    <td>${post.description}</td>
-                                    <td>${post.location}</td>
-                                    <td>${post.category}</td>
-                                    <td>${post.category==1?'Lost':'Found'}</td>
-                                    <td>
-                                        <button class="delete-btn" onclick="navigate(${post.id}, 'posts')">Delete</button>
-                                        <button class="edit-btn">Block</button>
-                                    </td>
-                                `;
+                                        <td>${(page - 1) * 8 + (index + 1)}</td>
+                                        <td>${post.name}</td>
+                                        <td>${post.title}</td>
+                                        <td>${post.description}</td>
+                                        <td>${post.location}</td>
+                                        <td><img src="${post.image_url}" alt="Post Image" /></td>
+                                        <td>${post.category}</td>
+                                        <td>${post.pstatus==1?'active':'blocked'}</td>
+                                        <td>
+                                            ${post.pstatus == 1 ? 
+                                                `<button class="delete-btn" onClick='block(${post.pid})'>Block</button>` : 
+                                                `<button class="edit-btn" onClick='unBlock(${post.pid})'>UnBlock</button>`
+                                            }
+                                        </td>
+                                    `;
+
                                     postsContainer.appendChild(postRow);
                                 });
 
@@ -105,6 +112,17 @@ $total_pages = ceil($total_posts / $limit);
                 const currentPage = new URLSearchParams(window.location.search).get('page') || 1;
                 loadPosts(parseInt(currentPage));
             });
+            const block = (id) => {
+                if (confirm('Are you sure you want to block the post?')) {
+                    window.location.href = `./api/BlockPosts.php?id=${id}&action=block`;
+                }
+            };
+
+            const unBlock = (id) => {
+                if (confirm('Are you sure you want to unblock the post?')) {
+                    window.location.href = `./api/BlockPosts.php?id=${id}&action=unblock`;
+                }
+            };
         </script>
 </body>
 

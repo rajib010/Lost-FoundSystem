@@ -5,7 +5,8 @@ $where = "1=1";
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = 8;
 $join = "user_info on user_info.id = posts.author_id";
-$result = $db->select('posts', "*", $join, null, null, $limit);
+$where ='1=1';
+$result = $db->select('posts', "*, posts.status as pstatus, posts.id as pid", $join, $where, null, $limit);
 
 if ($result && $result->num_rows > 0) {
     $posts = [];
