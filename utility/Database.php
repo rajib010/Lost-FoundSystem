@@ -1,21 +1,35 @@
 <?php
+if(file_exists('../../vendor/autoload.php')){
+    require_once('../../vendor/autoload.php');  
+}else{
+    require_once('../vendor/autoload.php');  
+}
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../'); 
+$dotenv->load();
 class Database
 {
-    private $host = 'localhost';
-    private $user = 'root';
-    private $password = '';
-    private $db_name = 'lost&foundsystem';
+    private $host;
+    private $user;
+    private $password;
+    private $db_name;
     public $conn;
 
-    // Make the connection directly...
     public function __construct()
     {
+        $this->host = $_ENV['DB_HOST'];
+        $this->user = $_ENV['DB_USER'];
+        $this->password = $_ENV['DB_PASS'];
+        $this->db_name = $_ENV['DB_NAME'];
+
+        // Establish the database connection
         $this->conn = new mysqli($this->host, $this->user, $this->password, $this->db_name);
         if ($this->conn->connect_error) {
             die("Connection failed: " . $this->conn->connect_error);
         }
     }
-
     // Function for inserting into tables...
     public function insert($table, $params)
     {
@@ -131,22 +145,22 @@ class Database
     {
         // Constructing the SQL query
         $sql = "SELECT $row FROM $table";
-        
+
         // Adding JOIN clause
         if ($join != null) {
             $sql .= " JOIN $join";
         }
-    
+
         // Adding WHERE clause
         if ($where != null) {
             $sql .= " WHERE $where";
         }
-    
+
         // Adding ORDER BY clause
         if ($order != null) {
             $sql .= " ORDER BY $order";
         }
-    
+
         // Adding LIMIT clause for pagination
         if ($limit != null) {
             if (isset($_GET['page']) && is_numeric($_GET['page'])) {
@@ -154,39 +168,31 @@ class Database
             } else {
                 $page = 1;
             }
-    
-            // Ensure that limit is a positive integer
+
             $limit = intval($limit);
             if ($limit <= 0) {
-                $limit = 8; // Default limit if invalid value
+                $limit = 8; 
             }
-    
-            // Calculating the starting row for the LIMIT clause
+
             $start = ($page - 1) * $limit;
-    
-            // Debugging output    
+
             $sql .= " LIMIT $start, $limit";
         }
 
         // echo $sql;
-    
-        // Prepare the SQL statement
+
         $stmt = $this->conn->prepare($sql);
-    
+
         if ($stmt === false) {
-            // Error in SQL syntax or preparation
             echo "SQL Error: " . $this->conn->error;
             return false;
         }
-    
-        // Execute the query and return the result
+
         if ($stmt->execute()) {
             return $stmt->get_result();
         } else {
-            // Error executing the query
             echo "Error executing query: " . $this->conn->error;
             return false;
         }
     }
-    
 }

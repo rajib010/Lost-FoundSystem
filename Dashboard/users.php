@@ -16,7 +16,7 @@ if (isset($_GET['page']) && is_numeric($_GET['page'])) {
 }
 
 $total_posts = 0;
-$count_result = $db->select('user_info', "COUNT(*) as total", null, null, null);
+$count_result = $db->select('user_info', "COUNT(*) as total", null, null, null,null);
 if ($count_result && $count_result->num_rows > 0) {
     $count_row = $count_result->fetch_assoc();
     $total_posts = $count_row['total'];
@@ -31,8 +31,6 @@ $total_pages = ceil($total_posts / $limit);
     <title>View Users</title>
     <link rel="stylesheet" href="../index.css">
     <script src="../utility/CreatePagination.js"></script>
-    <script src='../utility/navigate.js'></script>
-
 </head>
 
 <body>
@@ -64,7 +62,7 @@ $total_pages = ceil($total_posts / $limit);
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             async function loadUsers(page = 1) {
-                await fetch(`./api/GetUsers.php?page=${page}`)
+                await fetch(`api/GetUsers.php?page=${page}`)
                     .then(response => response.json())
                     .then(data => {
                         const usersContainer = document.getElementById('users-container');
@@ -102,7 +100,7 @@ $total_pages = ceil($total_posts / $limit);
                             usersContainer.innerHTML = `<tr><td colspan='7'>${data.message}</td></tr>`;
                         }
                     })
-                    .catch(error => console.error('Error:', error));
+                    .catch(error => console.error('Error in fetching user info:', error));
             }
 
             // Load initial users

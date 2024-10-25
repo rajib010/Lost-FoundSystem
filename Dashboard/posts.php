@@ -34,6 +34,10 @@ $total_pages = ceil($total_posts / $limit);
     .delete-btn{
         margin: 5px;
     }
+    img{
+        width: 100px;
+        height: 100px;
+    }
 </style>
 </head>
 
@@ -83,7 +87,7 @@ $total_pages = ceil($total_posts / $limit);
                                         <td>${post.title}</td>
                                         <td>${post.description}</td>
                                         <td>${post.location}</td>
-                                        <td><img src="${post.image_url}" alt="Post Image" /></td>
+                                        <td><img src="http://localhost/finderz/uploads/posts/${post.image}" alt="Post Image" /></td>
                                         <td>${post.category}</td>
                                         <td>${post.pstatus==1?'active':'blocked'}</td>
                                         <td>
