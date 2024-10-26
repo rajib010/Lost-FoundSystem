@@ -1,6 +1,10 @@
 <?php
 
-require '../vendor/autoload.php';
+if(file_exists('../vendor/autoload.php')){
+    require_once '../vendor/autoload.php';
+}else if(file_exists('../../vendor/autoload.php')){
+    require_once '../../vendor/autoload.php';    
+}
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -28,11 +32,7 @@ function sendMail($receiver, $subject, $content)
         $mail->Subject = $subject;
         $mail->Body = $content;
 
-        $mail->send();
-        echo "<script>
-            alert('Email sent successfully!')
-            window.location.href = document.referrer;        
-        </script>";
+        return $mail->send();
     } catch (Exception $e) {
         echo "<script>alert('Message could not be sent. Mailer Error: {$mail->ErrorInfo}')</script>";
     }

@@ -35,7 +35,12 @@ if (isset($_GET['receiver'])) {
                     $receiverEmail = $_POST['receiver-email'];
                     $subject = $_POST['subject'];
                     $content = $_POST['content'];
-                    sendMail($receiverEmail, $subject, $content);
+                    if(sendMail($receiverEmail, $subject, $content)){
+                        echo "<script>
+                            alert('Mail sent successfully.');
+                            </script>
+                        ";
+                    }
                 }
                 ?>
 

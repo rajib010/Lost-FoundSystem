@@ -1,6 +1,6 @@
 <?php
 require_once('../../utility/Database.php');
-$db = new Database();
+require_once('../../utility/SendMail.php');
 
 session_start();
 if (isset($_SESSION['loggedinuserId'])) {
@@ -8,38 +8,31 @@ if (isset($_SESSION['loggedinuserId'])) {
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['submitBtn'])) {
-        $email = $_POST['email'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
+    $email = htmlspecialchars($_POST['email']);
+    $db = new Database();
 
-        // Sanitize email input
-        $email = htmlspecialchars($email);
-        $where = "email='$email'";
+    $where = "email='$email'";
+    $result = $db->select('user_info', 'email', null, $where);
 
-        $result = $db->select('user_info', 'email', null, $where, null, null);
-        if (!$result) {
-            echo "<script>
-                    alert('No user found with the email');
-                    window.location.reload();
-                  </script>";
-        } else {
-            $code = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
-            $where = "email=$email";
-            $updateParams = ['verify_code' => $code];
-            $result = $db->update('user_info', $updateParams, $where);
-            if ($result) {
-                header('location: requestCode.php');
-                exit();
-            } else {
-                echo "<script>alert('Internal Server Error');
-                    window.location.href= '../login.php';
-                    </script>
-                    ";
-            }
+    if ($result && $result->num_rows > 0) {
+        $code = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
+        $subject = 'Password Reset OTP Code';
+        $content = "Here is your OTP code for password reset: $code";
+
+        $updateParams = ['verify_code' => $code];
+        $db->update('user_info', $updateParams, $where);
+
+        if (sendMail($email, $subject, $content)) {
+            echo "<script>alert('OTP sent.'); window.location.href='./enterCode.php?email=$email';</script>";
+            exit();
         }
+    } else {
+        echo "<script>alert('Email not found');</script>";
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -71,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <section class="forgot-section">
+        <h1 class="content-header">Password Recovery</h1>
         <form class="form-class" method="post" action="">
             <div class="form-group">
                 <input type="email" placeholder="Enter your email" name="email" id="email" required>

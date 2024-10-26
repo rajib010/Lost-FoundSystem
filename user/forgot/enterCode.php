@@ -1,7 +1,5 @@
 <?php
-
 require_once('../../utility/Database.php');
-$db = new Database();
 
 session_start();
 if (isset($_SESSION['loggedinuserId'])) {
@@ -9,35 +7,27 @@ if (isset($_SESSION['loggedinuserId'])) {
     exit();
 }
 
+$db = new Database();
 $email = isset($_GET['email']) ? htmlspecialchars($_GET['email']) : null;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['submitBtn'])) {
-        $otp = $_POST['otp'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
+    $otp = htmlspecialchars($_POST['otp']);
+    $where = "email='$email'";
 
-        // Sanitize input
-        $otp = htmlspecialchars($otp);
-        $where = "verify_code='$otp'";
-
-        $result = $db->select('user_info', 'email', null, $where, null, null);
-        if (!$result) {
-            echo "<script>
-                    alert('Invalid OTP code.');
-                    window.location.reload();
-                  </script>";
+    $result = $db->select('user_info', 'verify_code', null, $where);
+    if ($result && $row = $result->fetch_assoc()) {
+        if ($otp == $row['verify_code']) {
+            $db->update('user_info', ['verify_code' => null], $where);
+            echo "<script>alert('OTP verified.'); window.location.href='./resetPassword.php?email=$email';</script>";
         } else {
-            $where = "email=$email";
-            $reset = $db->update('user_info', ['verify_code' => null], $where);
-            if ($reset) {
-                echo `<script>
-                    alert('OTP verified successfully. You can reset your password now.');
-                    window.location.href = "resetPassword.php?email=${$email}";
-                 </script>`;
-            }
+            echo "<script>alert('Invalid OTP.');</script>";
         }
+    } else {
+        echo "<script>alert('Invalid action.'); window.location.href='../login.php';</script>";
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -68,15 +58,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <section class="forgot-section">
+        <h1 class="content-header">Enter Code</h1>
         <form class="form-class" method="post" action="">
             <div class="form-group">
                 <input type="text" placeholder="Enter OTP code" name="otp" id="otp" required>
             </div>
-            <p class="content-p">Didn't get the code?
-                <span>
-                    <a href="./requestCode.php<?php echo $email ? '?email=' . urlencode($email) : ''; ?>">Request Again</a>
-                </span>
-            </p>
             <button type="submit" class="btn" name="submitBtn">Submit</button>
         </form>
     </section>
