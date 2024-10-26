@@ -6,7 +6,8 @@ $page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']
 $limit = 8;
 $join = "user_info on user_info.id = posts.author_id";
 $where ='1=1';
-$result = $db->select('posts', "*, posts.status as pstatus, posts.id as pid", $join, $where, null, $limit);
+$orderBy="time DESC";
+$result = $db->select('posts', "*, posts.status as pstatus, posts.id as pid", $join, $where, $orderBy, $limit);
 
 if ($result && $result->num_rows > 0) {
     $posts = [];

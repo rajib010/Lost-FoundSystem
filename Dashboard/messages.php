@@ -70,14 +70,16 @@ $total_pages = ceil($total_messages / $limit);
                                 data.messages.forEach((message, index) => {
                                     const messageRow = document.createElement('tr');
                                     messageRow.innerHTML = `
-                                    <td>${(page - 1) * 12 + (index + 1)}</td>
-                                    <td>${message.name}</td>
-                                    <td>${message.email}</td>
-                                    <td>${message.message}</td>
-                                    <td>
-                                        <button class="delete-btn" onClick="navigate(${message.id}, 'messages')">Delete</button>
-                                    </td>
-                                `;
+                                        <td>${(page - 1) * 12 + (index + 1)}</td>
+                                        <td>${message.name}</td>
+                                        <td>${message.email}</td>
+                                        <td>${message.message}</td>
+                                        <td>
+                                            <button class="edit-btn" onClick="replyMessage('${message.email}')">Reply</button>
+                                            <button class="delete-btn" onClick="navigate(${message.id}, 'messages')">Delete</button>
+                                        </td>
+                                         `;
+
                                     messagesContainer.appendChild(messageRow);
                                 });
 
@@ -97,6 +99,10 @@ $total_pages = ceil($total_messages / $limit);
                 const currentPage = new URLSearchParams(window.location.search).get('page') || 1;
                 loadMessages(parseInt(currentPage));
             });
+
+            function replyMessage(email) {
+                window.location.href = `mail.php?receiver=${email}`;
+            }
         </script>
 
 </body>

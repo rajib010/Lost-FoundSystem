@@ -1,13 +1,18 @@
 <?php
 require './components/Header.php';
 require '../vendor/autoload.php';
+require '../utility/SendMail.php';
 
 use Dotenv\Dotenv;
+
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+$receiverEmail = '';
+
+if (isset($_GET['receiver'])) {
+    $receiverEmail = $_GET['receiver']?? '';
+}
 
 ?>
 
@@ -30,42 +35,14 @@ use PHPMailer\PHPMailer\Exception;
                     $receiverEmail = $_POST['receiver-email'];
                     $subject = $_POST['subject'];
                     $content = $_POST['content'];
-
-                    $mail = new PHPMailer(true);
-
-                    try {
-                        // Server settings
-                        $mail->isSMTP();
-                        $mail->Host = $_ENV['SMTP_HOST'];
-                        $mail->SMTPAuth = true;
-                        $mail->Username = $_ENV['SMTP_USER'];
-                        $mail->Password = $_ENV['SMTP_PASS'];
-                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                        $mail->Port = $_ENV['SMTP_PORT'];
-
-                        // Recipients
-                        $mail->setFrom($_ENV['MAIL_FROM'], 'Rajib Pokhrel');
-                        $mail->addAddress($receiverEmail);
-
-                        // Content
-                        $mail->isHTML(true);
-                        $mail->Subject = $subject;
-                        $mail->Body = $content;
-
-                        $mail->send();
-                        echo "<script>alert('Email sent successfully!')
-                                window.reload();        
-                        </script>";
-                    } catch (Exception $e) {
-                        echo "<script>alert('Message could not be sent. Mailer Error: {$mail->ErrorInfo}')</script>";
-                    }
+                    sendMail($receiverEmail, $subject, $content);
                 }
                 ?>
 
                 <form class="form-class" method="POST">
                     <div class="form-group">
                         <label for="receiver-email">Receiver Email:</label>
-                        <input type="email" id="receiver-email" name="receiver-email" required>
+                        <input type="email" id="receiver-email" name="receiver-email" value="<?= $receiverEmail ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="subject">Subject:</label>
