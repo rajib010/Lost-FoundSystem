@@ -62,8 +62,8 @@ $row = $result->fetch_assoc();
         <?php
         if ($_SESSION['loggedinuserId'] === $row['author_id']) {
             echo '<div class="top-class">
-                   <button class="btn" id="deleteBtn">
-                        <i class="fa-solid fa-trash"></i>
+                   <button class="btn" id="editBtn">
+                        <i class="fa-solid fa-pen"></i>
                     </button>
                   </div>';
         }
@@ -88,9 +88,9 @@ $row = $result->fetch_assoc();
 
     <?php require("../components/Footer.php"); ?>
     <script>
-        document.querySelector("#deleteBtn").addEventListener('click', () => {
-            if(confirm('Are you sure you want to delete?')){
-                return window.location.href = `delete.php?id=${<?php echo $row['id']; ?>}`;
+        document.querySelector("#editBtn").addEventListener('click', () => {
+            if(confirm('Do you want to update the post?')){
+                return window.location.href = `updatepost.php?id=${<?php echo $row['id']; ?>}`;
             }
         })
     </script>

@@ -1,9 +1,7 @@
 <?php
 include "../utility/Database.php";
 $db = new Database();
-
 $errors = [];
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["loginBtn"])) {
         $email = $_POST["email"];

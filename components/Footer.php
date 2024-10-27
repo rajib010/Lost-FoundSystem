@@ -91,16 +91,10 @@
     <div class="footer-section">
         <h3 class="post-title">Follow Us</h3>
         <ul class="footer-items">
-            <li><a href="#" class="nav-text">
-                    Facebook
-                </a></li>
-            <li><a href="#" class="nav-text">
-                    Twitter
-                </a></li>
-            <li><a href="#" class="nav-text">
-                    Instagram
-                </a></li>
-        </ul>
+                <li><a href="https://www.facebook.com" target="_blank" class="nav-text">Facebook</a></li>
+                <li><a href="https://www.twitter.com" target="_blank" class="nav-text">Twitter</a></li>
+                <li><a href="https://www.instagram.com" target="_blank" class="nav-text">Instagram</a></li>
+            </ul>
     </div>
     <div class="footer-bottom">
         © 2024 Lost & Found System. All rights reserved.

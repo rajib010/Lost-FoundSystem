@@ -11,7 +11,6 @@ if (!isset($_SESSION['loggedinuserId'])) {
 }
 
 $id = $_SESSION['loggedinuserId'];
-
 $where = "id='$id'";
 
 $result = $db->select("user_info", '*', null, $where, null, null);
@@ -30,97 +29,65 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $phone_number = trim($_POST['phone_number']);
         $email = trim($_POST['email']);
         $address = trim($_POST['address']);
+        $profileImg = $_FILES['profileImg'] ?? null;
 
+        // verify the password
         if (!password_verify($password, $row['password'])) {
             $errors['password'] = 'Incorrect password.';
-        }
+        } else {
+            $updateData = [];
 
-        if (empty($name) || strlen($name) < 4) {
-            $errors['fullName'] = "Please enter a valid name (minimum 4 characters).";
-        }
+            // Only add fields to the update array if they've changed
+            if ($name !== $row['name']) $updateData['name'] = $name;
+            if ($email !== $row['email']) $updateData['email'] = $email;
+            if ($phone_number !== $row['phone_number']) $updateData['phone_number'] = $phone_number;
+            if ($address !== $row['address']) $updateData['address'] = $address;
 
-        if (empty($email)) {
-            $errors['email'] = "Email is required.";
-        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errors['email'] = "Invalid email format.";
-        }
-
-        if (empty($address)) {
-            $errors['address'] = "Address is required.";
-        }
-
-        if (empty($phone_number)) {
-            $errors['phone_number'] = "Phone number is required.";
-        } elseif (!preg_match('/^\+?\d{10,15}$/', $phone_number)) {
-            $errors['phone_number'] = "Invalid phone number format.";
-        }
-
-        // Handle profile image upload
-        $fileName = $row['profileImg'];
-        if (isset($_FILES['profileImg']) && $_FILES['profileImg']['error'] === 0) {
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-            $fileType = mime_content_type($_FILES['profileImg']['tmp_name']);
-
-            if (!in_array($fileType, $allowedTypes)) {
-                $errors['profileImg'] = "Only JPG, PNG, and GIF formats are allowed.";
-            } else {
-                $fileExtension = pathinfo($_FILES['profileImg']['name'], PATHINFO_EXTENSION);
-                $fileName = uniqid('profile_', true) . '.' . $fileExtension;
-                $uploadDir = '../uploads/user/';
-                $targetFile = $uploadDir . $fileName;
-
-                // Ensure the upload directory exists
-                if (!is_dir($uploadDir)) {
-                    mkdir($uploadDir, 0755, true);
-                }
-
-                if (!move_uploaded_file($_FILES['profileImg']['tmp_name'], $targetFile)) {
-                    $errors['profileImg'] = "Failed to upload image.";
-                } else {
-                    // Optionally, delete the old profile image if it's not the default one
-                    if (!empty($row['profileImg']) && file_exists($uploadDir . $row['profileImg'])) {
-                        unlink($uploadDir . $row['profileImg']);
+            // Handle profile image upload if a new one is provided
+            if ($profileImg && $profileImg['size'] > 0) {
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (in_array($profileImg['type'], $allowedTypes)) {
+                    $fileName = uniqid() . '_' . basename($profileImg['name']);
+                    $targetPath = "../uploads/user/" . $fileName;
+                    if (move_uploaded_file($profileImg['tmp_name'], $targetPath)) {
+                        $updateData['profileImg'] = $fileName;
+                    } else {
+                        $errors['profileImg'] = 'Failed to upload image.';
                     }
+                } else {
+                    $errors['profileImg'] = 'Invalid image format.';
                 }
             }
-        }
 
-        // Proceed to update the database if no errors
-        if (empty($errors)) {
-            $updateData = [
-                "name" => $name,
-                "email" => $email,
-                "phone_number" => $phone_number,
-                "address" => $address,
-                "profileImg" => $fileName
-            ];
-
+            // If the user entered a new password, validate and hash it
             if (!empty($newPassword)) {
                 if (strlen($newPassword) < 6) {
-                    $errors['newPassword'] = "New password must be at least 6 characters long.";
+                    $errors['newPassword'] = 'New password must be at least 6 characters long.';
                 } else {
-                    $updateData["password"] = $newPassword;
+                    $updateData['password'] = $newPassword;
                 }
             }
 
-            if (empty($errors)) {
+            // Update the database if there are no errors and changes were made
+            if (empty($errors) && !empty($updateData)) {
                 $updateResult = $db->update('user_info', $updateData, $where);
 
                 if ($updateResult) {
                     echo "<script>
-                        alert('user info updated successfully');
-                        window.location.href= './home.php';
+                        alert('User info updated successfully');
+                        window.location.href= '../pages/home.php';
                     </script>";
                 } else {
-                    echo "<script>
-                        alert('failed to update user info');
-                    </script>";
+                    echo "<script>alert('Failed to update user info');</script>";
                 }
+            } elseif (empty($errors)) {
+                echo "<script>alert('No changes made to update');</script>";
             }
         }
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -146,6 +113,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
         .edituser-section .form-group {
             width: 100%;
+        }
+
+        .error {
+            margin-top: 5px;
         }
 
         .signup-section button {
@@ -179,6 +150,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             object-fit: cover;
         }
 
+        .note {
+            font-style: italic;
+            font: small;
+        }
+
         @media (max-width: 767px) {
             .edituser-section form {
                 grid-template-columns: 1fr;
@@ -195,16 +171,16 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 <body>
     <section class="edituser-section" id="section">
         <h1 class="content-header">Update Your Profile</h1>
-        <form action="" class="form-class" method="post" enctype="multipart/form-data" novalidate>
+        <form action="" class="form-class" method="post" enctype="multipart/form-data" novalidate onsubmit="return validateForm()">
             <div class="form-group">
                 <label for="fullName">Full Name</label>
                 <input type="text" id="fullName" class="inputField" name="fullName" value="<?php echo htmlspecialchars($row['name']); ?>" required>
-                <p class="error"><?php echo $errors['fullName'] ?? ''; ?></p>
+                <p class="error" id="fullNameError"></p>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" class="inputField" name="email" value="<?php echo htmlspecialchars($row['email'] ?? ''); ?>" required>
-                <p class="error"><?php echo $errors['email'] ?? ''; ?></p>
+                <p class="error" id="emailError"></p>
             </div>
             <div class="form-group">
                 <label for="password">Current Password</label>
@@ -214,8 +190,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                         <i class="fa-solid fa-eye-slash"></i>
                     </span>
                 </div>
-                <p class="error"><?php echo $errors['password'] ?? ''; ?></p>
+                <p class="error" id="passwordError"><?php echo $errors['password'] ?? ''; ?></p>
+                <p class="note">(Enter your password to confirm change.)</p>
             </div>
+
             <div class="form-group">
                 <label for="newPassword">New Password</label>
                 <div class="passwordContainer">
@@ -224,17 +202,17 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                         <i class="fa-solid fa-eye-slash"></i>
                     </span>
                 </div>
-                <p class="error"><?php echo $errors['newPassword'] ?? ''; ?></p>
+                <p class="error" id="newPasswordError"></p>
             </div>
             <div class="form-group">
                 <label for="phone_number">Phone No</label>
                 <input type="text" id="phone_number" class="inputField" name="phone_number" value="<?php echo htmlspecialchars($row['phone_number'] ?? ''); ?>" required>
-                <p class="error"><?php echo $errors['phone_number'] ?? ''; ?></p>
+                <p class="error" id="phoneError"></p>
             </div>
             <div class="form-group">
                 <label for="address">Address</label>
                 <input type="text" id="address" class="inputField" name="address" value="<?php echo htmlspecialchars($row['address'] ?? ''); ?>" required>
-                <p class="error"><?php echo $errors['address'] ?? ''; ?></p>
+                <p class="error" id="addressError"></p>
             </div>
 
             <div class="form-group">
@@ -246,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                         <img class="displayedImg" src="../uploads/user/<?php echo htmlspecialchars($row['profileImg']); ?>" alt="Profile Image">
                     <?php endif; ?>
                 </div>
-                <p class="error"><?php echo $errors['profileImg'] ?? ''; ?></p>
+                <p class="error" id="profileImgError"></p>
             </div>
 
             <div class="buttons center">
@@ -258,22 +236,97 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     <?php require("../components/Footer.php") ?>
 
     <script>
-        function navigate() {
-            window.history.back();
+        function validateForm() {
+            let isValid = true;
+
+            // Clear previous error messages
+            document.getElementById('fullNameError').innerText = '';
+            document.getElementById('emailError').innerText = '';
+            document.getElementById('passwordError').innerText = '';
+            document.getElementById('newPasswordError').innerText = '';
+            document.getElementById('phoneError').innerText = '';
+            document.getElementById('addressError').innerText = '';
+            document.getElementById('profileImgError').innerText = '';
+
+            // Full Name Validation
+            const fullName = document.getElementById('fullName').value.trim();
+            if (!fullName || fullName.length < 4) {
+                document.getElementById('fullNameError').innerText = "Please enter a valid name (minimum 4 characters).";
+                isValid = false;
+            }
+
+            // Email Validation
+            const email = document.getElementById('email').value.trim();
+            if (!email) {
+                document.getElementById('emailError').innerText = "Email is required.";
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                document.getElementById('emailError').innerText = "Invalid email format.";
+                isValid = false;
+            }
+
+            // Phone Number Validation
+            const phoneNumber = document.getElementById('phone_number').value.trim();
+            const phoneRegex = /^\+?\d{10,15}$/;
+            if (!phoneNumber) {
+                document.getElementById('phoneError').innerText = "Phone number is required.";
+                isValid = false;
+            } else if (!phoneRegex.test(phoneNumber)) {
+                document.getElementById('phoneError').innerText = "Invalid phone number format.";
+                isValid = false;
+            }
+
+            // Address Validation
+            const address = document.getElementById('address').value.trim();
+            if (!address) {
+                document.getElementById('addressError').innerText = "Address is required.";
+                isValid = false;
+            }
+
+            //check if password field is empty
+            const password = document.getElementById('password').value;
+            if (password.length == 0) {
+                document.getElementById('passwordError').innerText = 'Enter password to confirm change.';
+            }
+
+            // New Password Validation
+            const newPassword = document.getElementById('newPassword').value;
+            if (newPassword && newPassword.length < 6) {
+                document.getElementById('newPasswordError').innerText = "New password must be at least 6 characters long.";
+                isValid = false;
+            }
+
+            // Profile Image Validation
+            const profileImg = document.getElementById('profileImg');
+            if (profileImg.files.length > 0) {
+                const fileType = profileImg.files[0].type;
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!allowedTypes.includes(fileType)) {
+                    document.getElementById('profileImgError').innerText = "Only JPG, PNG, and GIF formats are allowed.";
+                    isValid = false;
+                }
+            }
+
+            return isValid;
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
         }
 
         document.getElementById('profileImg').addEventListener('change', function() {
-            const fileNameSpan = document.getElementById('file-name');
-            const displayedImg = this.parentElement.querySelector('.displayedImg');
-            if (this.files && this.files.length > 0) {
-                const fileName = this.files[0].name;
-                fileNameSpan.textContent = fileName;
+            const displayedImg = document.querySelector('.displayedImg');
 
+            if (this.files && this.files[0]) {
                 const reader = new FileReader();
+
                 reader.onload = function(e) {
+
                     if (displayedImg) {
                         displayedImg.src = e.target.result;
                     } else {
+
                         const img = document.createElement('img');
                         img.classList.add('displayedImg');
                         img.src = e.target.result;
@@ -284,9 +337,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                         document.querySelector('.file-upload-container').appendChild(img);
                     }
                 };
+
                 reader.readAsDataURL(this.files[0]);
             } else {
-                fileNameSpan.textContent = '';
                 if (displayedImg) {
                     displayedImg.src = '../uploads/user/<?php echo htmlspecialchars($row['profileImg']); ?>';
                 }
@@ -306,7 +359,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 icon.classList.add('fa-eye-slash');
             }
         }
+
+        document.getElementById('cancelBtn').addEventListener('click', () => {
+            return window.location.href = document.referrer;
+        })
     </script>
+
 </body>
 
 </html>

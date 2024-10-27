@@ -11,7 +11,7 @@ if ($rev->num_rows > 0) {
     exit();
 }
 ob_end_flush();
-$errors = [];
+
 $satisfaction = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -23,37 +23,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message = $_POST['message'] ?? '';
         $dateTime = date('Y-m-d H:i:s');
 
-        // Validate fields
-        if (empty($satisfaction)) {
-            $errors['satisfaction'] = 'Drag the cursor to select your satisfaction level';
-        }
-        if (empty($found)) {
-            $errors['found'] = 'Please select one option';
-        }
-        if (empty($recommend)) {
-            $errors['recommend'] = 'Please select one option';
-        }
-        if (empty($message)) {
-            $errors['message'] = 'Message field cannot be empty';
-        }
+        $result = $db->insert('reviews', [
+            'author_id' => $authorId,
+            'satisfaction' => $satisfaction,
+            'found' => $found,
+            'recommend' => $recommend,
+            'message' => $message,
+            'time' => $dateTime
+        ]);
 
-        if (empty($errors)) {
-            $result = $db->insert('reviews', [
-                'author_id' => $authorId,
-                'satisfaction' => $satisfaction,
-                'found' => $found,
-                'recommend' => $recommend,
-                'message' => $message,
-                'time' => $dateTime
-            ]);
-
-            if ($result) {
-                echo '<script>
+        if ($result) {
+            echo '<script>
                         alert("Thank you for the review. Enjoy using our application");
-                        window.location.href = "../pages/home.php";
+                        window.location.href = document.referrer;
                     </script>';
-                exit();
-            }
+            exit();
         }
     }
 }
@@ -73,12 +57,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             width: 80%;
             margin: auto;
         }
-        
-        .content-p{
+
+        .content-p {
             margin-bottom: 10px;
             font-weight: normal;
         }
-        
+
         .satisfaction-slider {
             display: flex;
             align-items: center;
@@ -87,16 +71,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     </style>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('reviewForm').addEventListener('submit', function(event) {
+                if (!validateForm()) {
+                    event.preventDefault();
+                } else {
+                    const confirmation = confirm('Are you sure to give the review?');
+                    if (!confirmation) {
+                        event.preventDefault();
+                    }
+                }
+            });
+        });
+
         function updateSatisfactionValue(val) {
             document.getElementById('satisfactionValue').innerText = val;
+
+            if (val > 0) {
+                document.getElementById('satisfactionError').innerText = '';
+            }
+        }
+
+        function validateForm() {
+            let isValid = true;
+
+            // Clear previous errors
+            document.getElementById('satisfactionError').innerText = '';
+            document.getElementById('foundError').innerText = '';
+            document.getElementById('recommendError').innerText = '';
+            document.getElementById('messageError').innerText = '';
+
+            const satisfaction = parseInt(document.getElementById('satisfaction').value.trim(), 10);
+            const found = document.querySelector('input[name="found"]:checked');
+            const recommend = document.querySelector('input[name="recommend"]:checked');
+            const message = document.getElementById('message').value.trim();
+
+            // Satisfaction Validation
+            if (satisfaction <= 0) { 
+                document.getElementById('satisfactionError').innerText = "Satisfaction rating is required and must be greater than 0.";
+                isValid = false;
+            }
+
+            // Found Validation
+            if (!found) {
+                document.getElementById('foundError').innerText = "Please select whether you found your belongings.";
+                isValid = false;
+            }
+
+            // Recommend Validation
+            if (!recommend) {
+                document.getElementById('recommendError').innerText = "Please select if you recommend us.";
+                isValid = false;
+            }
+
+            // Message Validation
+            if (message.length < 10) {
+                document.getElementById('messageError').innerText = "Review message must be at least 10 characters long.";
+                isValid = false;
+            }
+
+            return isValid;
         }
     </script>
+
 </head>
 
 <body>
     <section class="review-form-section">
         <h1 class="content-header">Found us Useful? Send a review</h1>
-        <form class="form-class" method="post" action="">
+        <form class="form-class" method="post" action="" id="reviewForm">
             <label for="satisfaction" class="post-title bold">Your satisfaction</label>
             <div class="satisfaction-slider">
                 <span>0</span>
@@ -104,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <span>10</span>
             </div>
             <p id="satisfactionValue" class="post-title"><?= htmlspecialchars($satisfaction) ?? ''; ?></p>
-            <p class="error"><?= htmlspecialchars($errors['satisfaction'] ?? ''); ?></p>
+            <p class="error" id="satisfactionError"></p>
 
             <div class="form-group">
                 <p class="content-p bold">Did you find your lost belongings?</p>
@@ -114,9 +157,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label class="content-p">
                     <input type="radio" name="found" value="0" <?= isset($found) && $found == '0' ? 'checked' : ''; ?>> No
                 </label>
-
             </div>
-            <p class="error"><?= htmlspecialchars($errors['found'] ?? ''); ?></p>
+            <p class="error" id="foundError"></p>
 
             <div class="form-group">
                 <p class="content-p bold">Will you recommend us to your friends and family?</p>
@@ -127,20 +169,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="radio" name="recommend" value="0" <?= isset($recommend) && $recommend == '0' ? 'checked' : ''; ?>> No
                 </label>
             </div>
-            <p class="error"><?= htmlspecialchars($errors['recommend'] ?? ''); ?></p>
+            <p class="error" id="recommendError"></p>
 
             <div class="form-group">
                 <label class="content-p" for="message">Message</label>
                 <textarea id="message" name="message" rows="4" placeholder="Write your review here..."><?= htmlspecialchars($_POST['message'] ?? ""); ?></textarea>
             </div>
-            <p class="error"><?= htmlspecialchars($errors['message'] ?? ''); ?></p>
+            <p class="error" id="messageError"></p>
 
             <button type="submit" class="btn" name="submitBtn">Submit</button>
         </form>
     </section>
 
     <?php require("../components/Footer.php") ?>
-
 </body>
 
 </html>

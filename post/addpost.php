@@ -2,10 +2,11 @@
 require("../Navbar.php");
 
 $db = new Database();
-
 $errors = [];
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['submitBtn'])) {
+        // Collect form data
         $title = $_POST['title'];
         $description = $_POST['description'];
         $location = $_POST['location'];
@@ -13,41 +14,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $authorId = $_SESSION["loggedinuserId"];
         $currentDateTime = date('Y-m-d H:i:s');
 
-        //validate form
-        if (empty($title)) {
-            $errors['title'] = "Title is required";
-        }
-        if (empty($description)) {
-            $errors['description'] = "Description is required";
-        }
-        if (empty($location)) {
-            $errors['location'] = "Location is required";
-        }
-        if (empty($category)) {
-            $errors['category'] = "Category is required";
-        }
+        // Image upload and validation
+        $fileName = $row['image']; // Retain existing image if no new image is uploaded
 
-        if (!isset($_FILES['image']) || $_FILES['image']['error'] != 0) {
-            $errors['image'] = "Item image is required or failed to upload";
-        } else {
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-            $fileType = $_FILES['image']['type'];
+        if (isset($_FILES['itemImage']) && $_FILES['itemImage']['error'] == 0) {
+            $fileExtension = pathinfo($_FILES['itemImage']['name'], PATHINFO_EXTENSION);
+            $fileName = uniqid() . '.' . $fileExtension;
+            $uploadDir = '../uploads/posts/';
+            $targetFile = $uploadDir . $fileName;
 
-            if (!in_array($fileType, $allowedTypes)) {
-                $errors['image'] = "Only JPG, PNG, and GIF formats are allowed.";
-            } else {
-                $fileExtension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-                $fileName = uniqid() . '.' . $fileExtension;
-                $uploadDir = '../uploads/posts/';
-                $targetFile = $uploadDir . $fileName;
-
-                if (!move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
-                    $errors['image'] = "Failed to upload image.";
-                }
+            if (!move_uploaded_file($_FILES['itemImage']['tmp_name'], $targetFile)) {
+                $errors['image'] = "Failed to upload image.";
             }
         }
 
-        //procced to database entry
+        // Proceed to database entry if no errors
         if (empty($errors)) {
             $result = $db->insert("posts", [
                 'title' => $title,
@@ -66,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                       </script>";
                 exit();
             } else {
-                echo "Error during post";
+                echo "<p>Error: Unable to insert post. Please check database connection or SQL query.</p>";
             }
         }
     }
@@ -82,10 +63,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <title>Add Posts</title>
     <link rel="stylesheet" href="../index.css" />
     <style>
-        #item-category{
+        #item-category {
             width: 250px;
         }
-        #section{
+
+        #section {
             width: 90%;
         }
     </style>
@@ -94,35 +76,35 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 <body>
     <section class="add-post-section" id="section">
         <h1 class="content-header">Provide Information of the Found Item</h1>
-        <form class="form-class" method="post" action="" enctype="multipart/form-data">
+        <form class="form-class" method="post" action="" enctype="multipart/form-data" onsubmit="return validateForm()">
             <div class="form-group">
                 <label for="item-title">Item Title</label>
-                <input type="text" id="item-title" name="title" value="<?php $_POST['title'] ?? ''; ?>">
-                <p class="error"><?php $errors['title'] ?? '' ?></p>
+                <input type="text" id="item-title" name="title" value="<?php echo htmlspecialchars($_POST['title'] ?? '', ENT_QUOTES); ?>">
+                <p class="error" id="titleError"></p>
             </div>
-
             <div class="form-group">
                 <label for="item-description">Description</label>
-                <textarea id="item-description" name="description" rows="4" value="<?php $_POST['description'] ?? ''; ?>"></textarea>
-                <p class="error"><?php $errors['description'] ?? '' ?></p>
+                <textarea id="item-description" name="description" rows="4"><?php echo htmlspecialchars($_POST['description'] ?? '', ENT_QUOTES); ?></textarea>
+                <p class="error" id="descriptionError"></p>
             </div>
-
             <div class="form-group">
                 <label for="item-location">Location</label>
-                <input type="text" id="item-location" name="location" value="<?php $_POST['location'] ?? ''; ?>">
-                <p class="error"><?php $errors['location'] ?? '' ?></p>
+                <input type="text" id="item-location" name="location" value="<?php echo htmlspecialchars($_POST['location'] ?? '', ENT_QUOTES); ?>">
+                <p class="error" id="locationError"></p>
             </div>
-
             <div class="form-group">
-                <label for="item-image">Item Image</label>
-                <input type="file" id="item-image" name="image">
-                <p class="error"><?php $errors['image'] ?? '' ?></p>
+                <label for="profileImg">Item Image</label>
+                <div class="file-upload-container">
+                    <input type="file" id="itemImage" name="itemImage" style="display: none;" accept="image/*" onchange="previewImage(event)">
+                    <button type="button" class="file-btn" onclick="document.getElementById('itemImage').click()">Choose Image</button>
+                </div>
+                <img class="displayedImg" style="display:none; max-width: 100px; margin-top: 10px;">
+                <p class="error" id="itemImageError"><?php echo $errors['image'] ?? ''; ?></p>
             </div>
-
             <div class="form-group">
                 <label for="item-category">Category</label>
                 <select id="item-category" name="category">
-                    <option selected disabled>---Select Category---</option>
+                    <option selected>---Select Category---</option>
                     <option value="electronics">Electronics</option>
                     <option value="animal">Animal</option>
                     <option value="jwellery">Jwellery</option>
@@ -131,14 +113,87 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     <option value="vehicle">Vehicles</option>
                     <option value="other">Other</option>
                 </select>
-                <p class="error"><?php $errors['category'] ?? '' ?></p>
+                <p class="error" id="categoryError"></p>
             </div>
-
             <button type="submit" name="submitBtn" class="btn">Submit</button>
         </form>
     </section>
 
     <?php require("../components/Footer.php");  ?>
+
+    <script>
+        function validateForm() {
+            let isValid = true;
+
+            // Clear previous errors
+            document.getElementById('titleError').innerText = '';
+            document.getElementById('descriptionError').innerText = '';
+            document.getElementById('locationError').innerText = '';
+            document.getElementById('categoryError').innerText = '';
+            document.getElementById('itemImageError').innerText = '';
+
+            // Get values from form fields
+            const title = document.getElementById('item-title').value.trim();
+            const description = document.getElementById('item-description').value.trim();
+            const location = document.getElementById('item-location').value.trim();
+            const category = document.getElementById('item-category').value;
+            const itemImg = document.getElementById('itemImage').files[0];
+
+            // Title Validation
+            if (title.length === 0) {
+                document.getElementById('titleError').innerText = "Item title cannot be empty";
+                isValid = false;
+            }
+
+            // Description Validation
+            if (description.length < 10) {
+                document.getElementById('descriptionError').innerText = "Description should be at least 10 characters";
+                isValid = false;
+            }
+
+            // Location Validation
+            if (location.length === 0) {
+                document.getElementById('locationError').innerText = "Location cannot be empty";
+                isValid = false;
+            }
+
+            // Category Validation
+            if (category === "---Select Category---") {
+                document.getElementById('categoryError').innerText = "Please select a category";
+                isValid = false;
+            }
+
+            // Item Image Validation
+            if (!itemImg) {
+                document.getElementById('itemImageError').innerText = "Item image is required";
+                isValid = false;
+            } else {
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!allowedTypes.includes(itemImg.type)) {
+                    document.getElementById('itemImageError').innerText = "Only JPG, PNG, and GIF formats are allowed.";
+                    isValid = false;
+                }
+            }
+
+            return isValid;
+        }
+
+        function previewImage(event) {
+            const image = document.querySelector('.displayedImg');
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    image.src = e.target.result;
+                    image.style.display = 'block'; // Display the image
+                };
+                reader.readAsDataURL(file);
+            } else {
+                image.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 
 </html>

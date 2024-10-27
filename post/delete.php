@@ -1,13 +1,15 @@
 <?php
 include "../utility/Database.php";
 $db = new Database();
-$id = $_GET["id"];
+$id = intval($_GET["id"]);
 $where = "id=$id";
 $result = $db->delete("posts", $where);
 
 if ($result) {
-    header('location: ../pages/home.php');
-    exit();
+    echo "<script>
+        alert('Post Deleted Successfully');
+        window.location.href='./viewposts.php';
+    </script>";
 } else {
     echo "<script> alert('failed to delete data')</script>";
 }

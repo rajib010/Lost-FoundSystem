@@ -4,8 +4,8 @@ include_once "../utility/Database.php";
 $db = new Database();
 $errors = [];
 
-$id = $_GET['id'];
-$where = "posts.id = $id";
+$id = intval($_GET['id']);;
+$where = "posts.id = '$id'";
 $result = $db->select("posts", '*', null, $where, null, null);
 if ($result->num_rows !== 0) {
     $row = $result->fetch_assoc();
@@ -34,28 +34,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $errors['category'] = "Category is required";
         }
 
-        $fileName = $row['image']; //use current image if no changes
+        $fileName = $row['image'];
+
         if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-            $fileType = $_FILES['image']['type'];
+            $fileExtension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+            $fileName = uniqid() . '.' . $fileExtension;
+            $uploadDir = '../uploads/posts/';
+            $targetFile = $uploadDir . $fileName;
 
-            if (!in_array($fileType, $allowedTypes)) {
-                $errors['image'] = "Only JPG, PNG, and GIF formats are allowed.";
-            } else {
-                $fileExtension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-                $fileName = uniqid() . '.' . $fileExtension;
-                $uploadDir = '../uploads/posts/';
-                $targetFile = $uploadDir . $fileName;
-
-                if (!move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
-                    $errors['image'] = "Failed to upload image.";
-                }
+            if (!move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
+                $errors['itemImageError'] = "Failed to upload image.";
             }
         }
 
         // Proceed to database entry if no errors
         if (empty($errors)) {
-            $where = "posts.id = $id";
             $result = $db->update('posts', [
                 "title" => $title,
                 "description" => $description,
@@ -63,6 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 "category" => $category,
                 "image" => $fileName
             ], $where);
+
+            echo $result;
 
             if ($result) {
                 header("Location: ./post.php?id=$id");
@@ -92,7 +87,8 @@ require("../Navbar.php");
             margin: auto;
             margin-bottom: 20px;
         }
-        select{
+
+        select {
             width: 20%;
         }
 
@@ -212,23 +208,28 @@ require("../Navbar.php");
 <body>
     <section class="updatepost-section">
         <h1 class="content-header">Update Post</h1>
+        <div class="top-class">
+            <button class="btn" id="deleteBtn" onclick="navigate(<?= $id ?>)">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </div>
         <form class="form-class" method="post" action="" enctype="multipart/form-data" id="updateForm">
             <div class="form-group">
                 <label for="item-title">Item Title</label>
                 <input type="text" id="item-title" name="title" value="<?= htmlspecialchars($row['title']) ?>">
-                <p class="error"><?= $errors['title'] ?? '' ?></p>
+                <p class="error" id="titleError"></p>
             </div>
 
             <div class="form-group">
                 <label for="item-description">Description</label>
                 <textarea id="item-description" name="description" rows="4"><?= htmlspecialchars($row['description']) ?></textarea>
-                <p class="error"><?= $errors['description'] ?? '' ?></p>
+                <p class="error" id="descriptionError"></p>
             </div>
 
             <div class="form-group">
                 <label for="item-location">Location</label>
                 <input type="text" id="item-location" name="location" value="<?= htmlspecialchars($row['location']) ?>">
-                <p class="error"><?= $errors['location'] ?? '' ?></p>
+                <p class="error" id="locationError"></p>
             </div>
 
             <div class="form-group">
@@ -243,7 +244,7 @@ require("../Navbar.php");
                     <option value="vehicle" <?= $row['category'] == 'vehicle' ? 'selected' : '' ?>>Vehicles</option>
                     <option value="other" <?= $row['category'] == 'other' ? 'selected' : '' ?>>Other</option>
                 </select>
-                <p class="error"><?= $errors['category'] ?? '' ?></p>
+                <p class="error" id="categoryError"></p>
             </div>
 
             <div class="form-group">
@@ -254,7 +255,7 @@ require("../Navbar.php");
                         <img class="displayedImg" src="../uploads/posts/<?php echo htmlspecialchars($row['image']); ?>" alt="Post Image">
                     <?php endif; ?>
                 </div>
-                <p class="error"><?= $errors['image'] ?? '' ?></p>
+                <p class="error" id="itemImageError"><?= $errors['itemImageError'] ?? '' ?></p>
             </div>
 
             <div class="buttons">
@@ -267,16 +268,78 @@ require("../Navbar.php");
     <?php require("../components/Footer.php");  ?>
 
     <script>
-        document.getElementById('submitBtn').addEventListener('click', function(event) {
-            const confirmation = confirm('Are you sure you want to update the post?');
-            if (!confirmation) {
+        document.getElementById('updateForm').addEventListener('submit', function(event) {
+            if (!validateForm()) {
                 event.preventDefault();
+            } else {
+                const confirmation = confirm('Are you sure you want to update the post?');
+                if (!confirmation) {
+                    event.preventDefault();
+                }
             }
         });
 
+        function validateForm() {
+            let isValid = true;
+
+            // Clear previous errors
+            document.getElementById('titleError').innerText = '';
+            document.getElementById('descriptionError').innerText = '';
+            document.getElementById('locationError').innerText = '';
+            document.getElementById('categoryError').innerText = '';
+            document.getElementById('itemImageError').innerText = '';
+
+            // Get values from form fields
+            const title = document.getElementById('item-title').value.trim();
+            const description = document.getElementById('item-description').value.trim();
+            const location = document.getElementById('item-location').value.trim();
+            const category = document.getElementById('item-category').value;
+            const itemImg = document.getElementById('image').files[0];
+            const displayedImg = document.querySelector('.displayedImg'); // Check if there's already an image displayed
+
+            // Title Validation
+            if (title.length === 0) {
+                document.getElementById('titleError').innerText = "Item title cannot be empty";
+                isValid = false;
+            }
+
+            // Description Validation
+            if (description.length < 10) {
+                document.getElementById('descriptionError').innerText = "Description should be at least 10 characters";
+                isValid = false;
+            }
+
+            // Location Validation
+            if (location.length === 0) {
+                document.getElementById('locationError').innerText = "Location cannot be empty";
+                isValid = false;
+            }
+
+            // Category Validation
+            if (category === "---Select Category---") {
+                document.getElementById('categoryError').innerText = "Please select a category";
+                isValid = false;
+            }
+
+            // Image Validation
+            if (!itemImg && !displayedImg) {
+                document.getElementById('itemImageError').innerText = "Item image is required";
+                isValid = false;
+            } else if (itemImg) {
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!allowedTypes.includes(itemImg.type)) {
+                    document.getElementById('itemImageError').innerText = "Only JPG, PNG, and GIF formats are allowed.";
+                    isValid = false;
+                }
+            }
+
+            return isValid;
+        }
+
+
         document.getElementById('cancelBtn').addEventListener('click', () => {
-            window.location.href = '../pages/home.php';
-        })
+            window.location.href = document.referrer;
+        });
 
         document.getElementById('image').addEventListener('change', function() {
             const displayedImg = this.parentElement.querySelector('.displayedImg');
@@ -300,7 +363,15 @@ require("../Navbar.php");
                 }
             }
         });
+
+        function navigate(id) {
+            if (confirm('Are you sure you want to delete the post?')) {
+                return window.location.href = `./delete.php?id=${id}`;
+            }
+        }
     </script>
+
+
 
 </body>
 

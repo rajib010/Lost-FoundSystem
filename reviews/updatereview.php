@@ -1,5 +1,55 @@
 <?php
-require("../Navbar.php"); ?>
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+require("../Navbar.php");
+
+$db = new Database();
+
+$id = intval($_GET['id']);
+$where = "id = '$id'";
+$result = $db->select('reviews', "*", null, $where, null, null);
+
+// Initialize review data
+$satisfaction = $found = $recommend = $message = '';
+$errors = [];
+
+// Check if review exists
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    // Populate variables with existing review data
+    $satisfaction = $row['satisfaction'] ?? '';
+    $found = $row['found'] ?? '';
+    $recommend = $row['recommend'] ?? '';
+    $message = $row['message'] ?? '';
+}
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
+    $satisfaction = $_POST['satisfaction'] ?? '';
+    $found = $_POST['found'] ?? '';
+    $recommend = $_POST['recommend'] ?? '';
+    $message = $_POST['message'] ?? '';
+
+    $updateData = [
+        'satisfaction' => $satisfaction,
+        'found' => $found,
+        'recommend' => $recommend,
+        'message' => $message
+    ];
+
+    $where = "id = $id";
+    $updateResult = $db->update('reviews', $updateData, $where);
+
+    if ($updateResult) {
+        echo "<script>alert('Review updated successfully'); window.location.href = 'viewreview.php'</script>";
+        exit();
+    } else {
+        echo "<script>alert('Failed to update review')</script>";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +61,7 @@ require("../Navbar.php"); ?>
     <style>
         .top-class {
             width: 100%;
-            margin: -2vw 0px 0px 0px;
+            margin: -2vw 0 0;
             display: flex;
             justify-content: flex-end;
         }
@@ -33,53 +83,13 @@ require("../Navbar.php"); ?>
         }
 
         .form-group label {
-            font-weight: none;
+            font-weight: normal;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" />
 </head>
 
 <body>
-    <?php
-    $db = new Database();
-    $id = $_GET['id'];
-    $where = "id = '$id'";
-    $result = $db->select('reviews', "*", null, $where, null, null);
-
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-    }
-
-    $satisfaction = $_POST['satisfaction'] ?? $row['satisfaction'] ?? '';
-    $found = $_POST['found'] ?? $row['found'] ?? '';
-    $recommend = $_POST['recommend'] ?? $row['recommend'] ?? '';
-    $message = $_POST['message'] ?? $row['message'] ?? '';
-    $errors = [];
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
-        // Validation
-        if (empty($satisfaction)) $errors['satisfaction'] = 'Please select satisfaction level';
-        if (!isset($found) || $found === '') $errors['found'] = 'Please indicate if you found your item';
-        if (!isset($recommend) || $recommend === '') $errors['recommend'] = 'Please indicate if you recommend us';
-        if (empty($message)) $errors['message'] = 'Please provide a message';
-
-        // Update database if no errors
-        if (empty($errors)) {
-            $updateData = [
-                'satisfaction' => $satisfaction,
-                'found' => $found,
-                'recommend' => $recommend,
-                'message' => $message
-            ];
-            $where = "rid = $id";
-            $updateResult = $db->update('reviews', $updateData, $where);
-
-            if ($updateResult) {
-                echo '<script>alert("Review updated successfully"); window.location.href = "viewreview.php";</script>';
-            }
-        }
-    }
-    ?>
     <section class="update-review-section">
         <h1 class="content-header">Update your review.</h1>
         <div class="top-class">
@@ -87,15 +97,15 @@ require("../Navbar.php"); ?>
                 <i class="fa-solid fa-trash"></i>
             </button>
         </div>
-        <form class="form-class" method="post" action="">
+        <form class="form-class" method="post" action="" id="updateReviewForm">
             <label for="satisfaction" class="post-title bold">Your satisfaction</label>
             <div class="satisfaction-slider">
                 <span>0</span>
-                <input type="range" id="satisfaction" name="satisfaction" min="0" max="10" value="<?= $satisfaction ?>" oninput="updateSatisfactionValue(this.value)">
+                <input type="range" id="satisfaction" name="satisfaction" min="0" max="10" value="<?= htmlspecialchars($satisfaction) ?>" oninput="updateSatisfactionValue(this.value)">
                 <span>10</span>
             </div>
-            <p id="satisfactionValue" class="post-title bold"><?= htmlspecialchars($satisfaction) ?? ''; ?></p>
-            <p class="error"><?= htmlspecialchars($errors['satisfaction'] ?? ''); ?></p>
+            <p id="satisfactionValue" class="post-title bold"><?= htmlspecialchars($satisfaction) ?></p>
+            <p class="error" id="satisfactionError"></p>
 
             <div class="form-group">
                 <p class="content-p bold">Did you find your lost belongings?</p>
@@ -105,9 +115,8 @@ require("../Navbar.php"); ?>
                 <label class="content-p">
                     <input type="radio" name="found" value="0" <?= $found == '0' ? 'checked' : ''; ?>> No
                 </label>
-                
             </div>
-            <p class="error"><?= htmlspecialchars($errors['found'] ?? ''); ?></p>
+            <p class="error" id="foundError"></p>
 
             <div class="form-group">
                 <p class="content-p bold">Will you recommend us to your friends and family?</p>
@@ -118,13 +127,13 @@ require("../Navbar.php"); ?>
                     <input type="radio" name="recommend" value="0" <?= $recommend == '0' ? 'checked' : ''; ?>> No
                 </label>
             </div>
-            <p class="error"><?= htmlspecialchars($errors['recommend'] ?? ''); ?></p>
+            <p class="error" id="recommendError"></p>
 
             <div class="form-group">
                 <label for="message" class="content-p bold">Message</label>
-                <textarea id="message" name="message" rows="4" placeholder="Write your review here..."><?= htmlspecialchars($message); ?></textarea>
+                <textarea id="message" name="message" rows="4" placeholder="Write your review here..."><?= htmlspecialchars($message) ?></textarea>
             </div>
-            <p class="error"><?= htmlspecialchars($errors['message'] ?? ''); ?></p>
+            <p class="error" id="messageError"></p>
 
             <div class="buttons">
                 <button type="submit" class="btn" name="submitBtn">Update</button>
@@ -133,22 +142,80 @@ require("../Navbar.php"); ?>
 
             <script>
                 function back() {
-                    window.location.href = `viewreview.php`;
+                    window.location.href = 'viewreview.php';
                 }
+
                 function navigate(id) {
                     if (confirm('Are you sure you want to delete?')) {
                         window.location.href = `deleteReview.php?id=${id}`;
                     }
                 }
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    document.getElementById('updateReviewForm').addEventListener('submit', function(event) {
+                        if (!validateForm()) {
+                            event.preventDefault();
+                        } else {
+                            const confirmation = confirm('Are you sure to update the review?');
+                            if (!confirmation) {
+                                event.preventDefault();
+                            }
+                        }
+                    });
+                });
+
                 function updateSatisfactionValue(val) {
-                    document.getElementById('satisfactionValue').textContent = val;
+                    document.getElementById('satisfactionValue').innerText = val;
+
+                    if (val > 0) {
+                        document.getElementById('satisfactionError').innerText = '';
+                    }
+                }
+
+                function validateForm() {
+                    let isValid = true;
+
+                    // Clear previous errors
+                    document.getElementById('satisfactionError').innerText = '';
+                    document.getElementById('foundError').innerText = '';
+                    document.getElementById('recommendError').innerText = '';
+                    document.getElementById('messageError').innerText = '';
+
+                    const satisfaction = parseInt(document.getElementById('satisfaction').value.trim(), 10);
+                    const found = document.querySelector('input[name="found"]:checked');
+                    const recommend = document.querySelector('input[name="recommend"]:checked');
+                    const message = document.getElementById('message').value.trim();
+
+                    // Satisfaction Validation
+                    if (satisfaction <= 0) {
+                        document.getElementById('satisfactionError').innerText = "Satisfaction rating is required and must be greater than 0.";
+                        isValid = false;
+                    }
+
+                    // Found Validation
+                    if (!found) {
+                        document.getElementById('foundError').innerText = "Please select whether you found your belongings.";
+                        isValid = false;
+                    }
+
+                    // Recommend Validation
+                    if (!recommend) {
+                        document.getElementById('recommendError').innerText = "Please select if you recommend us.";
+                        isValid = false;
+                    }
+
+                    // Message Validation
+                    if (message.length < 10) {
+                        document.getElementById('messageError').innerText = "Review message must be at least 10 characters long.";
+                        isValid = false;
+                    }
+
+                    return isValid;
                 }
             </script>
         </form>
     </section>
-    <?php
-    require("../components/Footer.php");
-    ?>
+    <?php require("../components/Footer.php"); ?>
 </body>
 
 </html>

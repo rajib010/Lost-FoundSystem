@@ -18,7 +18,7 @@
             <h1 class="content-header">Welcome to Finderz ! !</h1>
             <p class="content-p">"Discover the hidden gems waiting to be claimed by their owners..." </p>
             <button class="btn">
-                <a href="../post/viewpost.php">Get Started</a>
+                <a href="../post/viewposts.php">Get Started</a>
             </button>
         </div>
     </main>

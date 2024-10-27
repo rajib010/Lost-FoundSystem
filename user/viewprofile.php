@@ -6,7 +6,7 @@ $id = $_SESSION['loggedinuserId'];
 $where = "user_info.id='$id'";
 $join = 'posts on posts.author_id=user_info.id';
 
-$result = $db->select('user_info', '*', $join, $where, null, null);
+$result = $db->select('user_info', '*,COUNT(*) as totalposts', $join, $where, null, null);
 
 $row = $result->fetch_assoc();
 ?>
@@ -61,6 +61,7 @@ $row = $result->fetch_assoc();
         <p class="content-p"><span class="bold">Email: </span><?= htmlspecialchars($row['email']) ?></p>
         <p class="content-p"><span class="bold">Contact: </span><?= htmlspecialchars($row['phone_number']) ?></p>
         <p class="content-p"><span class="bold">From: </span><?= htmlspecialchars($row['address']) ?></p>
+        <p class="content-p"><span class="bold">Total Posts: </span><?= htmlspecialchars($row['totalposts']) ?></p>
 
     </main>
     <?php require("../components/Footer.php") ?>
