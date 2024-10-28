@@ -87,6 +87,17 @@ $total_pages = ceil($total_posts / $limit);
         .post-card>.post-title {
             margin: 10px auto;
         }
+
+        @media (max-width: 767px){
+           .filter{
+            width: 100%;
+            margin: 15px 0px;
+           } 
+
+           #text{
+            padding: 0px;
+           }
+        }
     </style>
     <link rel="stylesheet" href="../index.css" />
     <script src="../utility/CreatePagination.js"></script>

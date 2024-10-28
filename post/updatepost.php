@@ -1,5 +1,7 @@
 <?php
-session_start();
+
+require("../Navbar.php");
+
 include_once "../utility/Database.php";
 $db = new Database();
 
@@ -56,7 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 }
 
-require("../Navbar.php");
 ?>
 
 

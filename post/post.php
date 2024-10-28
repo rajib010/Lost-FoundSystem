@@ -63,7 +63,7 @@ $row = $result->fetch_assoc();
         if ($_SESSION['loggedinuserId'] === $row['author_id']) {
             echo '<div class="top-class">
                    <button class="btn" id="editBtn">
-                        <i class="fa-solid fa-pen"></i>
+                        <i class="fa-solid fa-pen-to-square"></i>
                     </button>
                   </div>';
         }

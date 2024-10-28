@@ -62,7 +62,8 @@
 
         $db = new Database();
         $join = "user_info on reviews.author_id=user_info.id";
-        $result = $db->select("reviews", "*", $join, null, null, null);
+        $orderBy ='time DESC';
+        $result = $db->select("reviews", "*", $join, null, $orderBy, null);
 
         $reviewsArray = [];
 

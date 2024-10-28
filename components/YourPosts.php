@@ -90,7 +90,7 @@
                     <div class="post-card" onclick="viewPost(<?php echo $row['id']; ?>)">
                         <img class="post-img" src="<?php echo 'http://localhost/finderz/uploads/posts/' . htmlspecialchars($row['image']); ?>" alt="image">
                         <div class="edit-posts">
-                            <p class="edit" onclick="event.stopPropagation(); editPost(<?php echo $row['id']; ?>)"><i class="fa-solid fa-pen"></i></p>
+                            <p class="edit" onclick="event.stopPropagation(); editPost(<?php echo $row['id']; ?>)"><i class="fa-solid fa-pen-to-square"></i></p>
                             <p class="delete" onclick="event.stopPropagation(); deletePost(<?php echo $row['id']; ?>)"><i class="fa-solid fa-trash"></i></p>
                         </div>
 
