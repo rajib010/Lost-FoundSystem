@@ -1,3 +1,5 @@
+<?php require_once('../utility/CheckSession.php'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,19 +21,7 @@
             object-fit: cover;
         }
 
-        #sliderBtn {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin-left: 1.5%;
-            padding: 0;
-            font-size: 2.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #userReview{
+        #userReview {
             width: 80%;
             margin: 8px auto;
         }
@@ -86,7 +76,6 @@
                     <div class="userImage">
                         <img src="" alt="User Image" id="userImage">
                     </div>
-                    <button class=" btn" id="sliderBtn" onclick="nextUser()">&#8250;</button>
                 </div>
                 <p id="userReview" class="content-p"></p>
                 <h3 id="userName" class="post-title"></h3>
@@ -101,6 +90,7 @@
 
             window.onload = function() {
                 updateUserDetails();
+                setInterval(nextUser, 3000); // Call nextUser every 3 seconds
             };
 
             function updateUserDetails() {

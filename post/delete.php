@@ -1,4 +1,5 @@
 <?php
+require_once("../utility/CheckSession.php");
 include "../utility/Database.php";
 $db = new Database();
 $id = intval($_GET["id"]);

@@ -31,23 +31,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Handle image upload
-        if (!isset($_FILES['profileImg']) || $_FILES['profileImg']['error'] != 0) {
-            $errors['profileImg'] = "Profile image is required or failed to upload";
+        if (!isset($_FILES['profileImg']) || $_FILES['profileImg']['error'] !== UPLOAD_ERR_OK) {
+            $errors['profileImg'] = "Profile image is required or failed to upload.";
         } else {
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-            $fileType = $_FILES['profileImg']['type'];
+            //unique filename
+            $fileExtension = pathinfo($_FILES['profileImg']['name'], PATHINFO_EXTENSION);
+            $fileName = uniqid() . '.' . $fileExtension;
+            $uploadDir = '../uploads/user/';
+            $targetFile = $uploadDir . $fileName;
 
-            if (!in_array($fileType, $allowedTypes)) {
-                $errors['profileImg'] = "Only JPG, PNG, and GIF formats are allowed.";
-            } else {
-                $fileExtension = pathinfo($_FILES['profileImg']['name'], PATHINFO_EXTENSION);
-                $fileName = uniqid() . '.' . $fileExtension;
-                $uploadDir = '../uploads/user/';
-                $targetFile = $uploadDir . $fileName;
-
-                if (!move_uploaded_file($_FILES['profileImg']['tmp_name'], $targetFile)) {
-                    $errors['profileImg'] = "Failed to upload image.";
-                }
+            if (!move_uploaded_file($_FILES['profileImg']['tmp_name'], $targetFile)) {
+                $errors['profileImg'] = "Failed to upload image.";
             }
         }
 
@@ -244,7 +238,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             document.getElementById('addressError').innerText = '';
             document.getElementById('profileImgError').innerText = '';
 
-            // Get values from form fields
+            // Get values
             const fullName = document.getElementById('fullName').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;

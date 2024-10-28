@@ -1,3 +1,5 @@
+<?php require_once('../utility/CheckSession.php'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

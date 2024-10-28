@@ -1,6 +1,6 @@
 <?php
-
 require_once '../../utility/Database.php';
+
 $db = new Database();
 $where = "1=1";
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;

@@ -1,42 +1,31 @@
 <?php
-
+session_start();
 include_once "../utility/Database.php";
 $db = new Database();
-$errors = [];
 
-$id = intval($_GET['id']);;
+$id = intval($_GET['id']);
 $where = "posts.id = '$id'";
 $result = $db->select("posts", '*', null, $where, null, null);
-if ($result->num_rows !== 0) {
+
+$errors = [];
+
+if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
+} else {
+    die("No post found with this ID.");
 }
 
-// After updates
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['updateBtn'])) {
         $title = $_POST['title'];
         $description = $_POST['description'];
         $location = $_POST['location'];
         $category = $_POST['category'];
-        $id = $_GET['id']; //id of the post
-
-        // Validate form
-        if (empty($title)) {
-            $errors['title'] = "Title is required";
-        }
-        if (empty($description)) {
-            $errors['description'] = "Description is required";
-        }
-        if (empty($location)) {
-            $errors['location'] = "Location is required";
-        }
-        if (empty($category)) {
-            $errors['category'] = "Category is required";
-        }
 
         $fileName = $row['image'];
 
-        if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
             $fileExtension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
             $fileName = uniqid() . '.' . $fileExtension;
             $uploadDir = '../uploads/posts/';
@@ -57,20 +46,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 "image" => $fileName
             ], $where);
 
-            echo $result;
-
             if ($result) {
                 header("Location: ./post.php?id=$id");
                 exit();
             } else {
-                echo "Error during post update";
+                $errors['updateError'] = "Error during post update.";
             }
         }
     }
 }
-require("../Navbar.php");
 
+require("../Navbar.php");
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -255,7 +243,7 @@ require("../Navbar.php");
                         <img class="displayedImg" src="../uploads/posts/<?php echo htmlspecialchars($row['image']); ?>" alt="Post Image">
                     <?php endif; ?>
                 </div>
-                <p class="error" id="itemImageError"><?= $errors['itemImageError'] ?? '' ?></p>
+                <p class="error" id="itemImageError"></p>
             </div>
 
             <div class="buttons">

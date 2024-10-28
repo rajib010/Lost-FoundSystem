@@ -1,7 +1,8 @@
 <?php
-    require("../utility/Database.php");
+require("../utility/Database.php");
 ?>
 <html>
+
 <head>
     <style>
         * {

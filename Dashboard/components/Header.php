@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (empty($_SESSION['loggedinadmin'])) {
-    header('location: ../index.php');
+    header('location: ../user/login.php');
 }
 ?>
 

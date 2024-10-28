@@ -45,19 +45,16 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
             // Handle profile image upload if a new one is provided
             if ($profileImg && $profileImg['size'] > 0) {
-                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-                if (in_array($profileImg['type'], $allowedTypes)) {
-                    $fileName = uniqid() . '_' . basename($profileImg['name']);
-                    $targetPath = "../uploads/user/" . $fileName;
-                    if (move_uploaded_file($profileImg['tmp_name'], $targetPath)) {
-                        $updateData['profileImg'] = $fileName;
-                    } else {
-                        $errors['profileImg'] = 'Failed to upload image.';
-                    }
+                $fileName = uniqid() . '_' . basename($profileImg['name']);
+                $targetPath = "../uploads/user/" . $fileName;
+
+                if (move_uploaded_file($profileImg['tmp_name'], $targetPath)) {
+                    $updateData['profileImg'] = $fileName;
                 } else {
-                    $errors['profileImg'] = 'Invalid image format.';
+                    $errors['profileImg'] = 'Failed to upload image.';
                 }
             }
+
 
             // If the user entered a new password, validate and hash it
             if (!empty($newPassword)) {

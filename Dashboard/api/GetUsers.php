@@ -1,5 +1,6 @@
 <?php
 require_once '../../utility/Database.php';
+
 $db = new Database();
 
 $where = "1=1";
