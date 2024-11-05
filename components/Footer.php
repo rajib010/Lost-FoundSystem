@@ -86,8 +86,8 @@
     <div class="footer-section">
         <h3 class="post-title">Legal</h3>
         <ul class="footer-items">
-            <li><a href="#" class="nav-text">Terms of Service</a></li>
-            <li><a href="#" class="nav-text">Privacy Policy</a></li>
+            <li><a href="https://www.freeprivacypolicy.com/live/f3a9893f-3e34-4dbe-8635-c389ce9bebe5" class="nav-text" target="_blank">Terms & Conditions</a></li>
+            <li><a href="https://www.freeprivacypolicy.com/live/c47af128-24f3-4bca-9664-dcd10a10eb65" class="nav-text" target="_blank">Privacy Policy</a></li>
         </ul>
     </div>
     <div class="footer-section">

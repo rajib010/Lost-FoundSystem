@@ -14,6 +14,20 @@
             margin-bottom: 20px;
         }
 
+        .stars-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .star {
+            font-size: 24px;
+            color: #ffd700;
+            /* Gold color */
+            margin: 0 2px;
+        }
+
+
         #userImage {
             width: 300px;
             height: 300px;
@@ -62,7 +76,7 @@
 
         $db = new Database();
         $join = "user_info on reviews.author_id=user_info.id";
-        $orderBy ='time DESC';
+        $orderBy = 'time DESC';
         $result = $db->select("reviews", "*", $join, null, $orderBy, null);
 
         $reviewsArray = [];
@@ -78,9 +92,11 @@
                         <img src="" alt="User Image" id="userImage">
                     </div>
                 </div>
+                <div id="userRating" class="stars-container"></div>
                 <p id="userReview" class="content-p"></p>
                 <h3 id="userName" class="post-title"></h3>
             </div>
+
         <?php
         }
         ?>
@@ -102,6 +118,14 @@
                 userImage.src = `http://localhost/finderz/uploads/user/${users[currentIndex].profileImg}`;
                 userReview.textContent = `" ${users[currentIndex].message}. "`;
                 userName.textContent = users[currentIndex].name;
+                userRating.innerHTML = ''; 
+                let rating = users[currentIndex].satisfaction; 
+                for (let i = 1; i <= 5; i++) {
+                    let star = document.createElement('span');
+                    star.classList.add('star');
+                    star.textContent = i <= rating ? '★' : '☆';
+                    userRating.appendChild(star);
+                }
             }
 
             function nextUser() {

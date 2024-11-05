@@ -20,7 +20,7 @@ ob_end_flush();
 <body>
     <nav class="nav-bar">
         <div class="logo-div">
-            <a href="../pages/home.php"><img src="../public/logo.svg" alt="logo" class="logo-img"></a>
+            <a href="../pages/home.php" title="home"><img src="../public/logo.svg" alt="logo" class="logo-img"></a>
         </div>
         <ul class="list-items">
             <li><a href="../post/viewposts.php" class='nav-text'>Post</a></li>

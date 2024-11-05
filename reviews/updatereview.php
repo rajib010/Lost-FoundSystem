@@ -4,17 +4,28 @@ ini_set('display_errors', 1);
 
 require("../Navbar.php");
 
+// Create a new database instance
 $db = new Database();
 
-$id = intval($_GET['id']);
-$where = "id = '$id'";
+// Sanitize and retrieve the review ID from the GET request
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+// Check if ID is valid
+if ($id <= 0) {
+    die("Invalid review ID");
+}
+
+// Prepare the where condition
+$where = "id = $id"; // Directly using $id here is safe due to intval
+
+// Fetch the review from the database
 $result = $db->select('reviews', "*", null, $where, null, null);
 
 // Initialize review data
 $satisfaction = $found = $recommend = $message = '';
 $errors = [];
 
-// Check if review exists
+// Check if the review exists
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     // Populate variables with existing review data
@@ -22,15 +33,19 @@ if ($result->num_rows > 0) {
     $found = $row['found'] ?? '';
     $recommend = $row['recommend'] ?? '';
     $message = $row['message'] ?? '';
+} else {
+    die("Review not found");
 }
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
-    $satisfaction = $_POST['satisfaction'] ?? '';
-    $found = $_POST['found'] ?? '';
-    $recommend = $_POST['recommend'] ?? '';
-    $message = $_POST['message'] ?? '';
+    // Sanitize form inputs
+    $satisfaction = isset($_POST['satisfaction']) ? intval($_POST['satisfaction']) : '';
+    $found = isset($_POST['found']) ? intval($_POST['found']) : '';
+    $recommend = isset($_POST['recommend']) ? intval($_POST['recommend']) : '';
+    $message = trim($_POST['message']) ?? '';
 
+    // Prepare data for updating the review
     $updateData = [
         'satisfaction' => $satisfaction,
         'found' => $found,
@@ -38,9 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
         'message' => $message
     ];
 
-    $where = "id = $id";
+    // Update the review in the database
     $updateResult = $db->update('reviews', $updateData, $where);
 
+    // Check if the update was successful
     if ($updateResult) {
         echo "<script>alert('Review updated successfully'); window.location.href = 'viewreview.php'</script>";
         exit();
@@ -58,12 +74,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Review</title>
     <link rel="stylesheet" href="../index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" />
     <style>
-        .top-class {
-            width: 100%;
-            margin: -2vw 0 0;
+        .star-rating {
             display: flex;
-            justify-content: flex-end;
+            direction: row-reverse;
+            font-size: 2rem;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating input:checked~label,
+        .star-rating label:hover,
+        .star-rating label:hover~label {
+            color: #f5b301;
         }
 
         .form-class {
@@ -75,37 +101,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
             margin-bottom: 10px;
         }
 
-        .satisfaction-slider {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
         .form-group label {
             font-weight: normal;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" />
 </head>
 
 <body>
     <section class="update-review-section">
-        <h1 class="content-header">Update your review.</h1>
+        <h1 class="content-header">Update your review</h1>
         <div class="top-class">
             <button class="btn" id="deleteBtn" onclick="navigate(<?= $id ?>)">
                 <i class="fa-solid fa-trash"></i>
             </button>
         </div>
         <form class="form-class" method="post" action="" id="updateReviewForm">
-            <label for="satisfaction" class="post-title bold">Your satisfaction</label>
-            <div class="satisfaction-slider">
-                <span>0</span>
-                <input type="range" id="satisfaction" name="satisfaction" min="0" max="10" value="<?= htmlspecialchars($satisfaction) ?>" oninput="updateSatisfactionValue(this.value)">
-                <span>10</span>
+            
+            <div class="form-group">
+                <label for="satisfaction" class="post-title bold">Your satisfaction</label>
+                <div class="star-rating">
+                    <?php for ($i = 0; $i < 5; $i++): ?>
+                        <input type="radio" id="star-<?= $i ?>" name="satisfaction" value="<?= $i + 1 ?>" <?= $satisfaction == ($i + 1) ? 'checked' : ''; ?> class="star-input" onchange="fillStars(this.value - 1)">
+                        <label for="star-<?= $i ?>" title="<?= $i + 1 ?> stars" class="star">&#9733;</label>
+                    <?php endfor; ?>
+                </div>
             </div>
-            <p id="satisfactionValue" class="post-title bold"><?= htmlspecialchars($satisfaction) ?></p>
-            <p class="error" id="satisfactionError"></p>
 
             <div class="form-group">
                 <p class="content-p bold">Did you find your lost belongings?</p>
@@ -116,7 +136,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
                     <input type="radio" name="found" value="0" <?= $found == '0' ? 'checked' : ''; ?>> No
                 </label>
             </div>
-            <p class="error" id="foundError"></p>
 
             <div class="form-group">
                 <p class="content-p bold">Will you recommend us to your friends and family?</p>
@@ -127,95 +146,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
                     <input type="radio" name="recommend" value="0" <?= $recommend == '0' ? 'checked' : ''; ?>> No
                 </label>
             </div>
-            <p class="error" id="recommendError"></p>
 
             <div class="form-group">
                 <label for="message" class="content-p bold">Message</label>
                 <textarea id="message" name="message" rows="4" placeholder="Write your review here..."><?= htmlspecialchars($message) ?></textarea>
             </div>
-            <p class="error" id="messageError"></p>
 
             <div class="buttons">
                 <button type="submit" class="btn" name="submitBtn">Update</button>
-                <button type="button" class="btn" id="cancelBtn" onclick="back()">Cancel</button>
+                <button type="button" class="btn" id="cancelBtn">Cancel</button>
             </div>
-
-            <script>
-                function back() {
-                    window.location.href = 'viewreview.php';
-                }
-
-                function navigate(id) {
-                    if (confirm('Are you sure you want to delete?')) {
-                        window.location.href = `deleteReview.php?id=${id}`;
-                    }
-                }
-
-                document.addEventListener('DOMContentLoaded', function() {
-                    document.getElementById('updateReviewForm').addEventListener('submit', function(event) {
-                        if (!validateForm()) {
-                            event.preventDefault();
-                        } else {
-                            const confirmation = confirm('Are you sure to update the review?');
-                            if (!confirmation) {
-                                event.preventDefault();
-                            }
-                        }
-                    });
-                });
-
-                function updateSatisfactionValue(val) {
-                    document.getElementById('satisfactionValue').innerText = val;
-
-                    if (val > 0) {
-                        document.getElementById('satisfactionError').innerText = '';
-                    }
-                }
-
-                function validateForm() {
-                    let isValid = true;
-
-                    // Clear previous errors
-                    document.getElementById('satisfactionError').innerText = '';
-                    document.getElementById('foundError').innerText = '';
-                    document.getElementById('recommendError').innerText = '';
-                    document.getElementById('messageError').innerText = '';
-
-                    const satisfaction = parseInt(document.getElementById('satisfaction').value.trim(), 10);
-                    const found = document.querySelector('input[name="found"]:checked');
-                    const recommend = document.querySelector('input[name="recommend"]:checked');
-                    const message = document.getElementById('message').value.trim();
-
-                    // Satisfaction Validation
-                    if (satisfaction <= 0) {
-                        document.getElementById('satisfactionError').innerText = "Satisfaction rating is required and must be greater than 0.";
-                        isValid = false;
-                    }
-
-                    // Found Validation
-                    if (!found) {
-                        document.getElementById('foundError').innerText = "Please select whether you found your belongings.";
-                        isValid = false;
-                    }
-
-                    // Recommend Validation
-                    if (!recommend) {
-                        document.getElementById('recommendError').innerText = "Please select if you recommend us.";
-                        isValid = false;
-                    }
-
-                    // Message Validation
-                    if (message.length < 10) {
-                        document.getElementById('messageError').innerText = "Review message must be at least 10 characters long.";
-                        isValid = false;
-                    }
-
-                    return isValid;
-                }
-            </script>
         </form>
     </section>
     <?php require("../components/Footer.php"); ?>
+
+    <script>
+        function fillStars(index) {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, i) => {
+                star.style.color = i <= index ? '#f5b301' : 'gray';
+            });
+        }
+
+        document.querySelector("#cancelBtn").addEventListener('click',()=>{
+            if(confirm('Are you sure?')){
+                window.location.href=document.referrer;
+            }
+        })
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkedStar = document.querySelector('input[name="satisfaction"]:checked');
+            if (checkedStar) {
+                fillStars(checkedStar.value - 1);
+            }
+        });
+    </script>
 </body>
 
 </html>

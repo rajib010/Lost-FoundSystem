@@ -17,7 +17,7 @@ $satisfaction = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submitBtn'])) {
         $authorId = $_SESSION['loggedinuserId'];
-        $satisfaction = $_POST['satisfaction'] ?? '';
+        $satisfaction = min(intval($_POST['satisfaction'] ?? 0), 5);
         $found = $_POST['found'] ?? '';
         $recommend = $_POST['recommend'] ?? '';
         $message = $_POST['message'] ?? '';
@@ -63,33 +63,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-weight: normal;
         }
 
-        .satisfaction-slider {
+        .block {
+            display: block;
+        }
+
+        .stars {
             display: flex;
-            align-items: center;
-            width: 100%;
-            margin-bottom: 20px;
+            gap: 5px;
+        }
+
+        .star {
+            font-size: 30px;
+            cursor: pointer;
+            color: lightgray;
+            transition: color 0.2s;
+        }
+
+        .star.filled {
+            color: gold;
         }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('reviewForm').addEventListener('submit', function(event) {
-                if (!validateForm()) {
-                    event.preventDefault();
-                } else {
-                    const confirmation = confirm('Are you sure to give the review?');
-                    if (!confirmation) {
-                        event.preventDefault();
+            const stars = document.querySelectorAll('.star');
+            const satisfactionInput = document.getElementById('satisfaction');
+            const satisfactionError = document.getElementById('satisfactionError');
+
+            stars.forEach((star, index) => {
+                star.addEventListener('click', function() {
+                    if (index < 5) {
+                        fillStars(index);
+                        satisfactionInput.value = index + 1;
+                        satisfactionError.innerText = '';
                     }
-                }
+                });
             });
         });
 
-        function updateSatisfactionValue(val) {
-            document.getElementById('satisfactionValue').innerText = val;
 
-            if (val > 0) {
-                document.getElementById('satisfactionError').innerText = '';
-            }
+        function fillStars(index) {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, i) => {
+                if (i <= index) {
+                    star.classList.add('filled');
+                } else {
+                    star.classList.remove('filled');
+                }
+            });
         }
 
         function validateForm() {
@@ -107,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const message = document.getElementById('message').value.trim();
 
             // Satisfaction Validation
-            if (satisfaction <= 0) { 
+            if (satisfaction <= 0) {
                 document.getElementById('satisfactionError').innerText = "Satisfaction rating is required and must be greater than 0.";
                 isValid = false;
             }
@@ -140,14 +160,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <section class="review-form-section">
         <h1 class="content-header">Found us Useful? Send a review</h1>
         <form class="form-class" method="post" action="" id="reviewForm">
-            <label for="satisfaction" class="post-title bold">Your satisfaction</label>
-            <div class="satisfaction-slider">
-                <span>0</span>
-                <input type="range" id="satisfaction" name="satisfaction" min="0" max="10" value="<?= htmlspecialchars($satisfaction) ?? ''; ?>" oninput="updateSatisfactionValue(this.value)">
-                <span>10</span>
+            <div class="form-group">
+                <p class="content-p bold block">Your satisfaction</p>
+                <div class="stars">
+                    <span class="star">&#9733;</span>
+                    <span class="star">&#9733;</span>
+                    <span class="star">&#9733;</span>
+                    <span class="star">&#9733;</span>
+                    <span class="star">&#9733;</span>
+                </div>
             </div>
-            <p id="satisfactionValue" class="post-title"><?= htmlspecialchars($satisfaction) ?? ''; ?></p>
             <p class="error" id="satisfactionError"></p>
+            <input type="hidden" id="satisfaction" name="satisfaction" value="">
 
             <div class="form-group">
                 <p class="content-p bold">Did you find your lost belongings?</p>
