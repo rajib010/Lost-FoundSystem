@@ -1,3 +1,18 @@
+<?php
+session_start();
+
+if (isset($_SESSION['loggedinuserId'])) {
+    if (file_exists('../pages/home.php')) {
+        header('location: ../pages/home.php');
+        exit();
+    } else {
+        header('location: ./pages/home.php');
+        exit();
+    }
+}
+session_write_close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -67,16 +82,10 @@
 
 <body>
 
-    <!-- Authentication Check (Server-Side) -->
-    <!-- 
-        Implement server-side logic here to check if the user is logged in.
-        If the user is logged in, redirect them to the dashboard or another appropriate page.
-        If not, render the landing page below.
-    -->
 
     <nav class="nav-bar">
         <div class="logo-div">
-            <a href="../pages/home.php">
+            <a href="#">
                 <img src="./public/logo.svg" alt="logo" class="logo-img">
             </a>
         </div>
