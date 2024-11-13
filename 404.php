@@ -38,7 +38,7 @@
 <body>
     <div class="container">
         <h1>404 - Page Not Found</h1>
-        <img src="./public/notFound.avif" alt="page not found">
+        <img src="http://localhost/finderz/public/notFound.avif" alt="page not found">
     </div>
 </body>
 </html>
