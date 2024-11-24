@@ -31,6 +31,11 @@ $total_pages = ceil($total_messages / $limit);
     <link rel="stylesheet" href="../index.css">
     <script src="../utility/CreatePagination.js"></script>
     <script src='../utility/navigate.js'></script>
+    <style>
+        body {
+            top: 0vw;
+        }
+    </style>
 </head>
 
 <body>

@@ -49,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
             align-items: center;
             height: 100vh;
             padding: 0;
+            top: 0;
         }
 
         .forgot-section {

@@ -31,6 +31,11 @@ $total_pages = ceil($total_reviews / $limit);
     <title>View Reviews</title>
     <link rel="stylesheet" href="../index.css">
     <script src="../utility/CreatePagination.js"></script>
+    <style>
+        body {
+            top: 0vw;
+        }
+    </style>
 </head>
 
 <body>

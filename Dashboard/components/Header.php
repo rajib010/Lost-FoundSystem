@@ -6,9 +6,14 @@ if (empty($_SESSION['loggedinadmin'])) {
 ?>
 
 <html>
+
 <head>
     <link rel="stylesheet" href="../index.css" />
     <style>
+        body {
+            top: 0vw;
+        }
+
         .admin-header {
             width: 100%;
             display: flex;
@@ -20,20 +25,22 @@ if (empty($_SESSION['loggedinadmin'])) {
             background-color: #ff5722;
             color: white;
         }
-        h1{
+
+        h1 {
             font-size: 2.1vw;
         }
     </style>
 </head>
 
-<header class="admin-header">
-    <h1>Welcome, Admin</h1>
-    <button class="btn logoutItem" id="cancelBtn">
-        Log Out
-    </button>
-</header>
 
 <body>
+    <header class="admin-header">
+        <h1>Welcome, Admin</h1>
+        <button class="btn logoutItem" id="cancelBtn">
+            Log Out
+        </button>
+    </header>
+
     <script>
         document.querySelector(".logoutItem").addEventListener('click', function() {
             let userResponse = confirm("Do you want to logout?");

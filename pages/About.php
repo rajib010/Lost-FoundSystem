@@ -11,6 +11,22 @@
         .post-title {
             margin-bottom: 8px;
         }
+
+        .semi-container {
+            max-width: 100%;
+            padding: 3vw 0vw 0vw 0vw;
+            margin: 1vw 0px 2vw;
+        }
+
+        .semi-container>h2 {
+            margin-bottom: 3vw;
+        }
+
+        @media (max-width:768px) {
+            .semi-container>h2 {
+                margin-bottom: 5vw;
+            }
+        }
     </style>
 </head>
 
@@ -49,48 +65,49 @@
                     inquiries.</p>
             </div>
         </div>
-            <section class="home-section">
-                <h2 class="content-header">How It Works</h2>
-                <div class="about-container">
-                    <div class="card">
-                        <img src="../public/report.avif" class='card-img' alt="Fast and Easy">
-                        <h3 class='post-title'>Report an Item</h3>
-                        <p class='card-description'>Submit details about your lost or found item in just a few clicks.</p>
-                    </div>
-                    <div class="card">
-                        <img src="../public/match.avif" class='card-img' alt="Fast and Easy">
-                        <h3 class='post-title'>Match with the Right Owner</h3>
-                        <p class='card-description'>Our system connects you with those who reported matching lost or found items.</p>
-                    </div>
-                    <div class="card">
-                        <img src="../public/give.avif" class='card-img' alt="Fast and Easy">
-                        <h3 class='post-title'>Get/Give Item Back</h3>
-                        <p class='card-description'>Once matched, coordinate securely to return or claim the item.</p>
-                    </div>
-                </div>
-            </section>
 
-            <!-- Features Section -->
-            <section class="home-section" id="requirement">
-                <h2 class="content-header">Why Use Our System?</h2>
-                <div class="about-container">
-                    <div class="card">
-                        <img src="../public/fast&easy.avif" class='card-img' alt="Fast and Easy">
-                        <h3 class='post-title'>Fast and Easy</h3>
-                        <p class='card-description'>Report lost or found items with just a few details.</p>
-                    </div>
-                    <div class="card">
-                        <img src="../public/secure.avif" class='card-img' alt="Secure">
-                        <h3 class='post-title'>Secure</h3>
-                        <p class='card-description'>Your information is kept safe while we help connect you with others.</p>
-                    </div>
-                    <div class="card">
-                        <img src="../public/reliable.avif" class='card-img' alt="Reliable Matching">
-                        <h3 class='post-title'>Reliable Matching</h3>
-                        <p class='card-description'>Our matching system ensures you find the right person.</p>
-                    </div>
+        <div class="semi-container">
+            <h2 class="content-header">How It Works</h2>
+            <div class="about-container">
+                <div class="card">
+                    <img src="../public/report.avif" class='card-img' alt="Fast and Easy">
+                    <h3 class='post-title'>Report an Item</h3>
+                    <p class='card-description'>Submit details about your lost or found item in just a few clicks.</p>
                 </div>
-            </section>
+                <div class="card">
+                    <img src="../public/match.avif" class='card-img' alt="Fast and Easy">
+                    <h3 class='post-title'>Match with the Right Owner</h3>
+                    <p class='card-description'>Our system connects you with those who reported matching lost or found items.</p>
+                </div>
+                <div class="card">
+                    <img src="../public/give.avif" class='card-img' alt="Fast and Easy">
+                    <h3 class='post-title'>Get/Give Item Back</h3>
+                    <p class='card-description'>Once matched, coordinate securely to return or claim the item.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="semi-container">
+            <h2 class="content-header">Why Use Our System?</h2>
+            <div class="about-container">
+                <div class="card">
+                    <img src="../public/fast&easy.avif" class='card-img' alt="Fast and Easy">
+                    <h3 class='post-title'>Fast and Easy</h3>
+                    <p class='card-description'>Report lost or found items with just a few details.</p>
+                </div>
+                <div class="card">
+                    <img src="../public/secure.avif" class='card-img' alt="Secure">
+                    <h3 class='post-title'>Secure</h3>
+                    <p class='card-description'>Your information is kept safe while we help connect you with others.</p>
+                </div>
+                <div class="card">
+                    <img src="../public/reliable.avif" class='card-img' alt="Reliable Matching">
+                    <h3 class='post-title'>Reliable Matching</h3>
+                    <p class='card-description'>Our matching system ensures you find the right person.</p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <?php

@@ -30,6 +30,11 @@ $total_pages = ceil($total_posts / $limit);
     <title>Manage Posts</title>
     <link rel="stylesheet" href="../index.css">
     <script src="../utility/CreatePagination.js"></script>
+    <style>
+        body {
+            top: 0vw;
+        }
+    </style>
 <style>
     .delete-btn{
         margin: 5px;

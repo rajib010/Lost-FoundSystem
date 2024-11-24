@@ -166,6 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             max-width: 100px;
             border-radius: 5px;
             object-fit: cover;
+            z-index: 1;
         }
 
         /* Buttons Styling */

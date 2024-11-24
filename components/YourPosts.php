@@ -31,6 +31,9 @@
             line-height: 1;
         }
 
+        .link{
+            color: blue;
+        }
 
         .edit,
         .delete {
@@ -83,7 +86,7 @@
             $where = "author_id = '$id'";
             $result = $db->select("posts", "*", null, $where, null, null);
             if ($result->num_rows == 0) {
-                echo "<div>You haven't posted anything. <a href='../post/addpost.php'>Tap here to create a new post.</a></div>";
+                echo "<div>You haven't posted anything. <a class='link' href='../post/addpost.php'>Tap here to create a new post.</a></div>";
             } else {
                 while ($row = $result->fetch_assoc()) {
             ?>

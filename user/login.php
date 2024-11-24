@@ -57,6 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../index.css" />
     <style>
+        
         html,
         body {
             height: 100%;
@@ -64,6 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         body {
             overflow: hidden;
+            top: 0vw;
         }
 
         .login-section {

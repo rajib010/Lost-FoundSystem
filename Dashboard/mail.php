@@ -22,6 +22,11 @@ if (isset($_GET['receiver'])) {
 <head>
     <title>Send Mail</title>
     <link rel="stylesheet" href="../index.css">
+    <style>
+        body {
+            top: 0vw;
+        }
+    </style>
 </head>
 
 <body>

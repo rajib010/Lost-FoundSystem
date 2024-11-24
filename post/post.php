@@ -13,7 +13,7 @@ $db = new Database();
 $where = "posts.id='$id'";
 $join = "user_info ON posts.author_id = user_info.id";
 
-$result = $db->select($table, 'posts.*, user_info.name', $join, $where, null, null);
+$result = $db->select($table, 'posts.*, user_info.name,user_info.email,user_info.phone_number', $join, $where, null, null);
 
 $row = $result->fetch_assoc();
 ?>
@@ -47,6 +47,9 @@ $row = $result->fetch_assoc();
             width: 90%;
             text-align: right;
         }
+        .date{
+            line-height: 1.5;
+        }
 
         @media (max-width: 480px) {
             .displayImg {
@@ -78,6 +81,8 @@ $row = $result->fetch_assoc();
         <h3 class="post-title"><?= !empty($row['title']) ? htmlspecialchars($row['title']) : 'No title available'; ?></h3>
         <p class="content-p"><?= !empty($row['description']) ? htmlspecialchars($row['description']) : 'No description available'; ?></p>
         <p class="author bold content-p">Posted by: <?= !empty($row['name']) ? htmlspecialchars($row['name']) : 'Unknown'; ?></p>
+        <p class="author bold content-p">Contact: <?= !empty($row['phone_number']) ? htmlspecialchars($row['phone_number']) : 'Unknown'; ?></p>
+        <p class="author bold content-p">Email: <?= !empty($row['email']) ? htmlspecialchars($row['email']) : 'Unknown'; ?></p>
         <p class="date content-p">
             <?= date('F j, Y', strtotime($row['time'])); ?><br>
             <?= date('g:i a', strtotime($row['time'])); ?>
@@ -89,7 +94,7 @@ $row = $result->fetch_assoc();
     <?php require("../components/Footer.php"); ?>
     <script>
         document.querySelector("#editBtn").addEventListener('click', () => {
-            if(confirm('Do you want to update the post?')){
+            if (confirm('Do you want to update the post?')) {
                 return window.location.href = `updatepost.php?id=${<?php echo $row['id']; ?>}`;
             }
         })

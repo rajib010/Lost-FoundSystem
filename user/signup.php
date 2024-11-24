@@ -86,6 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <style>
         body {
             overflow-y: auto;
+            top: 0vw;
         }
 
         .signup-section {

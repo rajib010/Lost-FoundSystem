@@ -14,6 +14,8 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     color: #333;
+    position: relative;
+    top: 7vw;
 }
 
 .top-main,
@@ -307,6 +309,7 @@ option:hover {
     max-height: 40vh;
     border-radius: 10px;
     object-fit: cover;
+    z-index: 1;
 }
 
 
@@ -347,7 +350,7 @@ option:hover {
     border-color: #ddd;
 }
 
-.about-container{
+.about-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -380,12 +383,16 @@ option:hover {
     border-radius: 50%;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
 }
 
 
 /* nav bar css */
 .nav-bar {
     max-width: 100%;
+    position: fixed;
+    width: 100%;
+    top: 0;
     height: 7vw;
     background: linear-gradient(90deg, #3a7bd5, #00d2ff);
     display: flex;
@@ -394,7 +401,6 @@ option:hover {
     padding: 0 2vw;
     color: white;
     font-weight: bolder;
-    position: relative;
     z-index: 10;
 }
 
@@ -494,6 +500,10 @@ option:hover {
 
 /* for tablets   */
 @media (min-width: 768px) and (max-width: 1024px) {
+    body {
+        top: 9vw;
+    }
+
     .nav-bar {
         height: 9vw;
     }
@@ -540,6 +550,14 @@ option:hover {
 
 /* for mobile devices */
 @media (max-width: 768px) {
+    body {
+        top: 15vw;
+    }
+
+    section {
+        top: 10vw;
+    }
+
     .nav-bar {
         height: 14vw;
         padding: 0px 4vw;
@@ -737,7 +755,7 @@ button.edit-btn:hover {
     height: auto;
 }
 
-.admin-title{
+.admin-title {
     margin: 0px 0px 25px 0px;
     width: 100%;
     text-align: center;

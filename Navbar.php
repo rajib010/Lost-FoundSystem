@@ -15,12 +15,20 @@ ob_end_flush();
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./index.css" />
+    <style>
+        img{
+            z-index: 40;
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+    </style>
 </head>
 
 <body>
     <nav class="nav-bar">
         <div class="logo-div">
-            <a href="../pages/home.php" title="home"><img src="../public/logo.svg" alt="logo" class="logo-img"></a>
+            <a href="../pages/home.php" title="home"><img src="http://localhost/finderz/public/logo.png" alt="logo" class="logo-img"></a>
         </div>
         <ul class="list-items">
             <li><a href="../post/viewposts.php" class='nav-text'>Post</a></li>

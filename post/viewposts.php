@@ -45,12 +45,7 @@ $total_pages = ceil($total_posts / $limit);
     <style>
         .header {
             margin: auto;
-            padding: 10px 30px;
             max-width: 550px;
-            background: linear-gradient(90deg, #81b3e8, #99ecff);
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin-bottom: 10px;
         }
 
         .center {
@@ -88,15 +83,83 @@ $total_pages = ceil($total_posts / $limit);
             margin: 10px auto;
         }
 
-        @media (max-width: 767px){
-           .filter{
-            width: 100%;
-            margin: 15px 0px;
-           } 
+        #text {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: #ffffff;
+            background-color: #007bff;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            animation: bounce 2s infinite, colorChange 4s infinite;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+        }
 
-           #text{
-            padding: 0px;
-           }
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes colorChange {
+            0% {
+                background-color: #007bff;
+            }
+
+            25% {
+                background-color: #28a745;
+            }
+
+            50% {
+                background-color: #ffc107;
+            }
+
+            75% {
+                background-color: #dc3545;
+            }
+
+            100% {
+                background-color: #007bff;
+            }
+        }
+
+        #text:hover {
+            animation: shake 0.5s infinite, colorChange 4s infinite;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            50% {
+                transform: translateX(5px);
+            }
+        }
+
+
+        @media (max-width: 767px) {
+            .filter {
+                width: 100%;
+                margin: 15px 0px;
+            }
+
+            #text {
+                padding: 0px;
+            }
         }
     </style>
     <link rel="stylesheet" href="../index.css" />
@@ -106,8 +169,9 @@ $total_pages = ceil($total_posts / $limit);
 <body>
     <main class="main-section">
         <div class="header center">
-            <span class="content-p" id="text">Click here if you have found an item!!!</span>
-            <button class="btn"><a href="addpost.php" id="here">Here!</a></button>
+            <span class="content-p" id="text">
+                <a href="addpost.php" id="here">Click here if you have found an item!!!</a>
+            </span>
         </div>
 
         <div class="content">

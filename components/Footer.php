@@ -69,6 +69,7 @@
         }
     </style>
 </head>
+
 <footer class="footer">
     <div class="footer-section">
         <h3 class="post-title">Lost & Found</h3>

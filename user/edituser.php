@@ -55,8 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 }
             }
 
-
-            // If the user entered a new password, validate and hash it
             if (!empty($newPassword)) {
                 if (strlen($newPassword) < 6) {
                     $errors['newPassword'] = 'New password must be at least 6 characters long.';
@@ -65,7 +63,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 }
             }
 
-            // Update the database if there are no errors and changes were made
             if (empty($errors) && !empty($updateData)) {
                 $updateResult = $db->update('user_info', $updateData, $where);
 
