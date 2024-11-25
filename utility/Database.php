@@ -2,9 +2,9 @@
 
 if (file_exists('../../vendor/autoload.php')) {
     require_once('../../vendor/autoload.php');
-} else if(file_exists('../../../vendor/autoload.php')) {
+} else if (file_exists('../../../vendor/autoload.php')) {
     require_once('../../../vendor/autoload.php');
-}else{
+} else {
     require_once('../vendor/autoload.php');
 }
 
@@ -174,15 +174,13 @@ class Database
 
             $limit = intval($limit);
             if ($limit <= 0) {
-                $limit = 8;
+                $limit = 12;
             }
 
             $start = ($page - 1) * $limit;
 
             $sql .= " LIMIT $start, $limit";
         }
-
-        // echo $sql;
 
         $stmt = $this->conn->prepare($sql);
 

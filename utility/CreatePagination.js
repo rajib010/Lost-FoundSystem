@@ -1,5 +1,5 @@
 // pagination.js
-function createPagination(totalPages, currentPage, paginationContainer, loadFunction) {
+function createPagination(totalPages, currentPage, paginationContainer, loadFunction, filter = '') {
     paginationContainer.innerHTML = '';
 
     // Prev Button
@@ -9,7 +9,7 @@ function createPagination(totalPages, currentPage, paginationContainer, loadFunc
         prevButton.textContent = 'Prev';
         prevButton.onclick = (e) => {
             e.preventDefault();
-            loadFunction(currentPage - 1);
+            loadFunction(filter, currentPage - 1);
         };
         paginationContainer.appendChild(prevButton);
     }
@@ -24,7 +24,7 @@ function createPagination(totalPages, currentPage, paginationContainer, loadFunc
         }
         pageLink.onclick = (e) => {
             e.preventDefault();
-            loadFunction(i);
+            loadFunction(filter, i);
         };
         paginationContainer.appendChild(pageLink);
     }
@@ -36,7 +36,7 @@ function createPagination(totalPages, currentPage, paginationContainer, loadFunc
         nextButton.textContent = 'Next';
         nextButton.onclick = (e) => {
             e.preventDefault();
-            loadFunction(currentPage + 1);
+            loadFunction(filter, currentPage + 1);
         };
         paginationContainer.appendChild(nextButton);
     }

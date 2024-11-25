@@ -35,15 +35,16 @@ $total_pages = ceil($total_posts / $limit);
             top: 0vw;
         }
     </style>
-<style>
-    .delete-btn{
-        margin: 5px;
-    }
-    img{
-        width: 100px;
-        height: 100px;
-    }
-</style>
+    <style>
+        .delete-btn {
+            margin: 5px;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
 </head>
 
 <body>
