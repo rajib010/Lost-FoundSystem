@@ -8,7 +8,6 @@ $result = $db->delete("posts", $where);
 
 if ($result) {
     echo "<script>
-        alert('Post Deleted Successfully');
         window.location.href='./viewposts.php';
     </script>";
 } else {

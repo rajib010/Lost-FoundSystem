@@ -68,14 +68,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
                 if ($updateResult) {
                     echo "<script>
-                        alert('User info updated successfully');
                         window.location.href= '../pages/home.php';
                     </script>";
                 } else {
                     echo "<script>alert('Failed to update user info');</script>";
                 }
-            } elseif (empty($errors)) {
-                echo "<script>alert('No changes made to update');</script>";
             }
         }
     }
@@ -233,7 +230,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         function validateForm() {
             let isValid = true;
 
-            // Clear previous error messages
+            // clear prev
             document.getElementById('fullNameError').innerText = '';
             document.getElementById('emailError').innerText = '';
             document.getElementById('passwordError').innerText = '';
@@ -242,7 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             document.getElementById('addressError').innerText = '';
             document.getElementById('profileImgError').innerText = '';
 
-            // Full Name Validation
+            // name Validation
             const fullName = document.getElementById('fullName').value.trim();
             if (!fullName || fullName.length < 4) {
                 document.getElementById('fullNameError').innerText = "Please enter a valid name (minimum 4 characters).";

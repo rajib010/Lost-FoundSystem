@@ -27,21 +27,10 @@ if ($action === 'block') {
     exit();
 }
 
-// Update post status
-// Update post status
 $result = $db->update('posts', ['status' => $status], "id = $id");
 
 if ($result) {
-    $message = ($action === 'block') ? 'Post blocked successfully' : 'Post unblocked successfully';
     echo "<script>
-    alert('$message');
-    window.location.href = document.referrer;
-    </script>";
-} else {
-    echo "<script>
-    alert('Action failed');
-    window.location.href = document.referrer;
+        window.location.href= document.referrer;
     </script>";
 }
-
-?>

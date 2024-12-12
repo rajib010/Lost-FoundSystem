@@ -57,7 +57,7 @@
 
         @media (min-width: 768px) and (max-width: 1024px) {
             .footer-section>.footer-items {
-                line-height: 2vw;
+                line-height: 3vw;
             }
         }
 
@@ -78,10 +78,9 @@
     <div class="footer-section">
         <h3 class="post-title">Quick Links</h3>
         <ul class="footer-items">
-            <li><a href="../pages/home.php" class="nav-text">Home</a></li>
-            <li><a href="../pages/about.php" class="nav-text">About Us</a></li>
-            <li><a href="#faqs" class="nav-text">How It Works</a></li>
-            <li><a href="../pages/contact.php" class="nav-text">Contact Us</a></li>
+            <li><a href="http://localhost/finderz/pages/" class="nav-text">Home</a></li>
+            <li><a href="http://localhost/finderz/pages/about.php" class="nav-text">About Us</a></li>
+            <li><a href="http://localhost/finderz/pages/contact.php" class="nav-text">Contact Us</a></li>
         </ul>
     </div>
     <div class="footer-section">

@@ -144,7 +144,7 @@ class Database
     }
 
     // Function to select from tables...
-    public function select($table, $row = '*', $join = null, $where = null, $order = null, $limit = null)
+    public function select($table, $row = '*', $join = null, $where = null, $order = null, $limit = null, $groupBy = null)
     {
         // Constructing the SQL query
         $sql = "SELECT $row FROM $table";
@@ -152,6 +152,11 @@ class Database
         // Adding JOIN clause
         if ($join != null) {
             $sql .= " JOIN $join";
+        }
+
+        //Adding GROUPBY clause
+        if ($groupBy !== null) {
+            $sql .= " GROUP BY $groupBy";
         }
 
         // Adding WHERE clause
@@ -174,13 +179,15 @@ class Database
 
             $limit = intval($limit);
             if ($limit <= 0) {
-                $limit = 12;
+                $limit = 8;
             }
 
             $start = ($page - 1) * $limit;
 
             $sql .= " LIMIT $start, $limit";
         }
+
+        // echo $sql;
 
         $stmt = $this->conn->prepare($sql);
 

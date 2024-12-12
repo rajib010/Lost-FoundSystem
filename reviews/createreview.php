@@ -34,7 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($result) {
             echo '<script>
-                        alert("Thank you for the review. Enjoy using our application");
                         window.location.href = document.referrer;
                     </script>';
             exit();

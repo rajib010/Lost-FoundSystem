@@ -30,11 +30,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $errors['phone_number'] = 'Phone number already used';
         }
 
-        // Handle image upload
+        // image upload
         if (!isset($_FILES['profileImg']) || $_FILES['profileImg']['error'] !== UPLOAD_ERR_OK) {
             $errors['profileImg'] = "Profile image is required or failed to upload.";
         } else {
-            //unique filename
+            //generate unique filename
             $fileExtension = pathinfo($_FILES['profileImg']['name'], PATHINFO_EXTENSION);
             $fileName = uniqid() . '.' . $fileExtension;
             $uploadDir = '../uploads/user/';
@@ -45,7 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        // If no errors, proceed with the signup process
         if (empty($errors)) {
             $result = $db->insert("user_info", [
                 'name' => $name,
@@ -58,9 +57,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($result) {
                 echo "<script>
-                        if (confirm('You have been registered successfully. Click OK to redirect to the login page')) {
+                        if (confirm('You have been registered successfully. Click OK to    redirect to the login page')) {
                             window.location.href = './login.php';
-                        }
+                            }
                       </script>";
                 exit();
             } else {

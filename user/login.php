@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     exit();
                 } else if ($row['user_type'] == 1) {
                     $_SESSION["loggedinadmin"] = $row["name"];
-                    header("location: ../dashboard/users.php");
+                    header("location: ../dashboard/index.php");
                     exit();
                 }
             }
@@ -56,8 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../index.css" />
-    <style>
-        
+    <style>      
         html,
         body {
             height: 100%;

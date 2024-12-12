@@ -154,11 +154,11 @@
             </div>
 
             <div id="posts-container" class="post-grid">
-                <!-- Posts will be loaded here dynamically -->
+                <!-- posts will be loaded here -->
             </div>
 
             <div id="pagination" class="pagination">
-                <!-- Pagination links will be dynamically generated -->
+                <!-- pagination links will be loaded here -->
             </div>
         </div>
     </main>
@@ -173,18 +173,22 @@
 
             // Function to load posts
             async function loadPosts(filter = 'time', page = 1) {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
                 const url = `../utility/LoadmorePosts.php?filterpost=${filter}&page=${page}`;
                 try {
                     const response = await fetch(url);
                     const data = await response.json();
                     console.log(data);
 
-                    // Clear the containers
+                    // Clear containers
                     postsContainer.innerHTML = '';
                     paginationContainer.innerHTML = '';
 
                     if (data.status === 'success') {
-                        // Render posts
+                        // Render posts dynamically
                         data.posts.forEach(post => {
                             const postCard = document.createElement('div');
                             postCard.className = 'post-card';
@@ -210,8 +214,7 @@
                             postsContainer.appendChild(postCard);
                         });
 
-                        // Render pagination with the current filter and page
-                        createPagination(data.total_pages, page, paginationContainer, loadPosts, filter);
+                        createPagination(data.total_pages, page, paginationContainer, loadPosts, savedFilter);
                     } else {
                         postsContainer.innerHTML = `<div class="no-items"><h1 class='header-content'>${data.message}</h1></div>`;
                     }
@@ -220,14 +223,13 @@
                 }
             }
 
-            // Navigate to post details
             function viewItem(id) {
                 window.location.href = `post.php?id=${id}`;
             }
 
             filterDropdown.addEventListener('change', () => {
                 const selectedFilter = filterDropdown.value;
-                localStorage.setItem('selectedFilter', selectedFilter); 
+                localStorage.setItem('selectedFilter', selectedFilter);
                 loadPosts(selectedFilter, 1);
             });
 

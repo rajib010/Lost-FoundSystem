@@ -1,13 +1,10 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
 require("../Navbar.php");
 
-// Create a new database instance
 $db = new Database();
 
-// Sanitize and retrieve the review ID from the GET request
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 // Check if ID is valid
@@ -37,7 +34,6 @@ if ($result->num_rows > 0) {
     die("Review not found");
 }
 
-// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
     // Sanitize form inputs
     $satisfaction = isset($_POST['satisfaction']) ? intval($_POST['satisfaction']) : '';
@@ -45,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
     $recommend = isset($_POST['recommend']) ? intval($_POST['recommend']) : '';
     $message = trim($_POST['message']) ?? '';
 
-    // Prepare data for updating the review
     $updateData = [
         'satisfaction' => $satisfaction,
         'found' => $found,
@@ -53,12 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
         'message' => $message
     ];
 
-    // Update the review in the database
     $updateResult = $db->update('reviews', $updateData, $where);
 
-    // Check if the update was successful
     if ($updateResult) {
-        echo "<script>alert('Review updated successfully'); window.location.href = 'viewreview.php'</script>";
+        echo "<script>
+            window.location.href = 'viewreview.php'
+         </script>";
         exit();
     } else {
         echo "<script>alert('Failed to update review')</script>";
@@ -116,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
             </button>
         </div>
         <form class="form-class" method="post" action="" id="updateReviewForm">
-            
+
             <div class="form-group">
                 <label for="satisfaction" class="post-title bold">Your satisfaction</label>
                 <div class="star-rating">
@@ -168,10 +163,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
             });
         }
 
-        document.querySelector("#cancelBtn").addEventListener('click',()=>{
-            if(confirm('Are you sure?')){
-                window.location.href=document.referrer;
-            }
+        document.querySelector("#cancelBtn").addEventListener('click', () => {
+            window.location.href = document.referrer;
         })
 
         document.addEventListener('DOMContentLoaded', () => {

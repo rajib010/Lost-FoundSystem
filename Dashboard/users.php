@@ -1,28 +1,6 @@
 <?php
 require("components/Header.php");
 require("./components/Nav.php");
-
-$db = new Database();
-$limit = 8;
-
-// Get the current page or set to 1 if not set
-if (isset($_GET['page']) && is_numeric($_GET['page'])) {
-    $current_page = (int) $_GET['page'];
-    if ($current_page < 1) {
-        $current_page = 1;
-    }
-} else {
-    $current_page = 1;
-}
-
-$total_posts = 0;
-$count_result = $db->select('user_info', "COUNT(*) as total", null, null, null,null);
-if ($count_result && $count_result->num_rows > 0) {
-    $count_row = $count_result->fetch_assoc();
-    $total_posts = $count_row['total'];
-}
-$total_pages = ceil($total_posts / $limit);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -80,7 +58,7 @@ $total_pages = ceil($total_posts / $limit);
                             data.users.forEach((user, index) => {
                                 const userRow = document.createElement('tr');
                                 userRow.innerHTML = `
-                                    <td>${(page - 1) * 12 + (index + 1)}</td>
+                                    <td>${(page - 1) * 8 + (index + 1)}</td>
                                     <td>${user.name}</td>
                                     <td>${user.email}</td>
                                     <td>${user.address}</td>
@@ -98,7 +76,7 @@ $total_pages = ceil($total_posts / $limit);
                                 usersContainer.appendChild(userRow);
                             });
 
-                            const totalPages = <?php echo $total_pages; ?>;
+                            const totalPages = data.totalPages;
                             // custom pagination
                             createPagination(totalPages, page, paginationContainer, loadUsers);
                         } else {

@@ -358,22 +358,32 @@ option:hover {
     gap: 40px;
 }
 
-.card {
+.card,.admin-card {
     background-color: #f9f9f9;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 30px;
     flex: 1;
-    min-width: 280px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
+    cursor: pointer;
 
     &:hover {
         transform: translateY(-10px);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
+}
+
+.card{
+    min-width: 280px;
+}
+
+.admin-card{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .card-img {
@@ -498,6 +508,21 @@ option:hover {
     border-radius: 0.2rem;
 }
 
+.controls {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.dashborad-cards{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
 /* for tablets   */
 @media (min-width: 768px) and (max-width: 1024px) {
     body {
@@ -544,6 +569,9 @@ option:hover {
 
     .dropdown-menu {
         right: -15px;
+    }
+    .dashborad-cards{
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
@@ -689,6 +717,9 @@ option:hover {
     .bar-button>i {
         font-size: xx-large;
     }
+    .dashborad-cards{
+        grid-template-columns: repeat(2, 1fr);
+    }
 
 }
 
@@ -707,6 +738,7 @@ option:hover {
     padding: 20px;
     background: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-height: 84vh;
 }
 
 table {

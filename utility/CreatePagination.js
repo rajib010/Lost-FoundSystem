@@ -1,6 +1,7 @@
-// pagination.js
-function createPagination(totalPages, currentPage, paginationContainer, loadFunction, filter = '') {
+function createPagination(totalPages, currentPage, paginationContainer, loadFunction, filter = null) {
+
     paginationContainer.innerHTML = '';
+    if (totalPages <= 1) return;
 
     // Prev Button
     if (currentPage > 1) {
@@ -9,7 +10,9 @@ function createPagination(totalPages, currentPage, paginationContainer, loadFunc
         prevButton.textContent = 'Prev';
         prevButton.onclick = (e) => {
             e.preventDefault();
-            loadFunction(filter, currentPage - 1);
+            if (!filter) loadFunction(currentPage - 1);
+            if (filter) loadFunction(filter, currentPage - 1)
+
         };
         paginationContainer.appendChild(prevButton);
     }
@@ -24,7 +27,8 @@ function createPagination(totalPages, currentPage, paginationContainer, loadFunc
         }
         pageLink.onclick = (e) => {
             e.preventDefault();
-            loadFunction(filter, i);
+            if (!filter) loadFunction(i);
+            if (filter) loadFunction(filter, i)
         };
         paginationContainer.appendChild(pageLink);
     }
@@ -36,7 +40,8 @@ function createPagination(totalPages, currentPage, paginationContainer, loadFunc
         nextButton.textContent = 'Next';
         nextButton.onclick = (e) => {
             e.preventDefault();
-            loadFunction(filter, currentPage + 1);
+            if (!filter) loadFunction(currentPage + 1);
+            if (filter) loadFunction(filter, currentPage + 1)
         };
         paginationContainer.appendChild(nextButton);
     }

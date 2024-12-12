@@ -6,7 +6,7 @@ $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['submitBtn'])) {
-        // Collect form data
+        // get form data
         $title = $_POST['title'];
         $description = $_POST['description'];
         $location = $_POST['location'];
@@ -14,8 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $authorId = $_SESSION["loggedinuserId"];
         $currentDateTime = date('Y-m-d H:i:s');
 
-        // Image upload and validation
-        $fileName = $row['image']; // Retain existing image if no new image is uploaded
+        // img upload and validation
+        $fileName = $row['image']; 
 
         if (isset($_FILES['itemImage']) && $_FILES['itemImage']['error'] == 0) {
             $fileExtension = pathinfo($_FILES['itemImage']['name'], PATHINFO_EXTENSION);
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             }
         }
 
-        // Proceed to database entry if no errors
+        //db entry
         if (empty($errors)) {
             $result = $db->insert("posts", [
                 'title' => $title,
@@ -41,9 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             ]);
             if ($result) {
                 echo "<script>
-                        if (confirm('Post added successfully. Click yes to redirect to ViewPosts.')) {
                             window.location.href = './viewposts.php';
-                        }
                       </script>";
                 exit();
             } else {
@@ -125,14 +123,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         function validateForm() {
             let isValid = true;
 
-            // Clear previous errors
+            // Clear errors
             document.getElementById('titleError').innerText = '';
             document.getElementById('descriptionError').innerText = '';
             document.getElementById('locationError').innerText = '';
             document.getElementById('categoryError').innerText = '';
             document.getElementById('itemImageError').innerText = '';
 
-            // Get values from form fields
+            // get values from form 
             const title = document.getElementById('item-title').value.trim();
             const description = document.getElementById('item-description').value.trim();
             const location = document.getElementById('item-location').value.trim();
@@ -186,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     image.src = e.target.result;
-                    image.style.display = 'block'; // Display the image
+                    image.style.display = 'block'; // display the image
                 };
                 reader.readAsDataURL(file);
             } else {

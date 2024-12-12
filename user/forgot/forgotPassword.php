@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
         $db->update('user_info', $updateParams, $where);
 
         if (sendMail($email, $subject, $content)) {
-            echo "<script>alert('OTP sent.'); window.location.href='./enterCode.php?email=$email';</script>";
+            echo "<script> window.location.href='./enterCode.php?email=$email';</script>";
             exit();
         }
     } else {

@@ -87,7 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             margin-bottom: 5px;
         }
 
-        /* Custom Radio Button Styling */
         .radio-group {
             width: 80%;
             margin: 10px auto;
@@ -113,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             font-size: 16px;
         }
 
-        /* Hide the default radio button */
+        /*hiding default radio */
         .radio-option input {
             position: absolute;
             opacity: 0;

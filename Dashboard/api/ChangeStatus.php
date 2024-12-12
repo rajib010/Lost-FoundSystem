@@ -30,9 +30,7 @@ if ($action === 'suspend') {
 $result = $db->update('user_info', ['status' => $status], "id = $id");
 
 if ($result) {
-    $message = ($action === 'suspend') ? 'User suspended successfully' : 'User unsuspended successfully';
     echo "<script>
-    alert('$message');
     window.location.href = document.referrer;
     </script>";
 } else {
