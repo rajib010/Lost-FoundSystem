@@ -9,13 +9,7 @@ if (isset($_SESSION['loggedinuserId'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['resetBtn'])) {
     $password = htmlspecialchars($_POST['password']);
-    $cpassword = htmlspecialchars($_POST['cpassword']);
     $email = htmlspecialchars($_GET['email']);
-
-    if ($password !== $cpassword) {
-        echo "<script>alert('Passwords do not match.');</script>";
-        exit();
-    }
 
     $db = new Database();
     $where = "email='$email'";
@@ -27,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['resetBtn'])) {
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,13 +56,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['resetBtn'])) {
             color: blue;
             font-size: small;
         }
+
+        .error {
+            margin: 5px 0px;
+
+        }
     </style>
 </head>
 
 <body>
     <section class="forgot-section">
         <h1 class="content-header">Change Password</h1>
-        <form class="form-class" method="post" action="">
+        <form class="form-class" method="post" action="" onsubmit="return validatePassword()">
             <div class="form-group">
                 <input type="password" placeholder="Enter new password" name="password" id="password">
                 <span class="toggle-password" onclick="togglePasswordVisibility('password', this)">
@@ -81,11 +79,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['resetBtn'])) {
                 <span class="toggle-password" onclick="togglePasswordVisibility('cpassword', this)">
                     <i class="fa-solid fa-eye-slash"></i>
                 </span>
+                <p class="error"></p>
             </div>
             <button type="submit" class="btn" name="resetBtn">Reset</button>
         </form>
     </section>
     <script>
+        function validatePassword() {
+            let isValid = true;
+            const errorParagraph = document.querySelector(".error");
+            errorParagraph.innerText = "";
+            const password = document.getElementById('password').value;
+            const cpassword = document.getElementById('cpassword').value;
+
+            if (password.length < 6) {
+                errorParagraph.innerText = 'Password must be at least 6 characters long'
+                isValid = false
+            }
+
+            if (password !== cpassword) {
+                errorParagraph.innerText = 'Passwords donot match'
+                isValid = false;
+            }
+            return isValid;
+        }
+
         function togglePasswordVisibility(fieldId, iconElement) {
             const passwordField = document.getElementById(fieldId);
             if (passwordField.type === "password") {
