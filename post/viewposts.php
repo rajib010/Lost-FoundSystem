@@ -173,10 +173,6 @@
 
             // Function to load posts
             async function loadPosts(filter = 'time', page = 1) {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
                 const url = `../utility/LoadmorePosts.php?filterpost=${filter}&page=${page}`;
                 try {
                     const response = await fetch(url);
@@ -220,6 +216,11 @@
                     }
                 } catch (error) {
                     console.error('Error:', error);
+                } finally {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
                 }
             }
 

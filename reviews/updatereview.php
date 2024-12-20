@@ -2,63 +2,6 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require("../Navbar.php");
-
-$db = new Database();
-
-$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-
-// Check if ID is valid
-if ($id <= 0) {
-    die("Invalid review ID");
-}
-
-// Prepare the where condition
-$where = "id = $id"; // Directly using $id here is safe due to intval
-
-// Fetch the review from the database
-$result = $db->select('reviews', "*", null, $where, null, null);
-
-// Initialize review data
-$satisfaction = $found = $recommend = $message = '';
-$errors = [];
-
-// Check if the review exists
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    // Populate variables with existing review data
-    $satisfaction = $row['satisfaction'] ?? '';
-    $found = $row['found'] ?? '';
-    $recommend = $row['recommend'] ?? '';
-    $message = $row['message'] ?? '';
-} else {
-    die("Review not found");
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
-    // Sanitize form inputs
-    $satisfaction = isset($_POST['satisfaction']) ? intval($_POST['satisfaction']) : '';
-    $found = isset($_POST['found']) ? intval($_POST['found']) : '';
-    $recommend = isset($_POST['recommend']) ? intval($_POST['recommend']) : '';
-    $message = trim($_POST['message']) ?? '';
-
-    $updateData = [
-        'satisfaction' => $satisfaction,
-        'found' => $found,
-        'recommend' => $recommend,
-        'message' => $message
-    ];
-
-    $updateResult = $db->update('reviews', $updateData, $where);
-
-    if ($updateResult) {
-        echo "<script>
-            window.location.href = 'viewreview.php'
-         </script>";
-        exit();
-    } else {
-        echo "<script>alert('Failed to update review')</script>";
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -103,6 +46,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
 </head>
 
 <body>
+    <!-- php code to update the review -->
+    <?php
+        $db = new Database();
+
+        $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+        if ($id <= 0) {
+            die("Invalid review ID");
+        }
+
+        $where = "id = $id";
+
+        $result = $db->select('reviews', "*", null, $where, null, null);
+
+        $satisfaction = $found = $recommend = $message = '';
+        $errors = [];
+
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $satisfaction = $row['satisfaction'] ?? '';
+            $found = $row['found'] ?? '';
+            $recommend = $row['recommend'] ?? '';
+            $message = $row['message'] ?? '';
+        } else {
+            die("Review not found");
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
+            // Sanitize form inputs
+            $satisfaction = isset($_POST['satisfaction']) ? intval($_POST['satisfaction']) : '';
+            $found = isset($_POST['found']) ? intval($_POST['found']) : '';
+            $recommend = isset($_POST['recommend']) ? intval($_POST['recommend']) : '';
+            $message = trim($_POST['message']) ?? '';
+
+            $updateData = [
+                'satisfaction' => $satisfaction,
+                'found' => $found,
+                'recommend' => $recommend,
+                'message' => $message
+            ];
+
+            $updateResult = $db->update('reviews', $updateData, $where);
+
+            if ($updateResult) {
+                echo "<script>
+                        window.location.href = 'viewreview.php'
+                    </script>";
+                exit();
+            } else {
+                echo "<script>alert('Failed to update review')</script>";
+            }
+        }
+    ?>
+
     <section class="update-review-section">
         <h1 class="content-header">Update your review</h1>
         <div class="top-class">
@@ -161,6 +159,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
             stars.forEach((star, i) => {
                 star.style.color = i <= index ? '#f5b301' : 'gray';
             });
+        }
+
+        function navigate(id) {
+            if (confirm('Are you sure to delete this review?')) {
+                return window.location = `deleteReview.php?id=${id}`;
+            }
         }
 
         document.querySelector("#cancelBtn").addEventListener('click', () => {

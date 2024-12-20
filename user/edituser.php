@@ -278,6 +278,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             const password = document.getElementById('password').value;
             if (password.length == 0) {
                 document.getElementById('passwordError').innerText = 'Enter password to confirm change.';
+                isValid=false;
             }
 
             // New Password Validation
@@ -352,7 +353,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         }
 
         document.getElementById('cancelBtn').addEventListener('click', () => {
-            return window.location.href = document.referrer;
+            return window.location.href = 'viewprofile.php';
         })
     </script>
 

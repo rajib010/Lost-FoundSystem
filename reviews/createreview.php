@@ -12,34 +12,6 @@ if ($rev->num_rows > 0) {
 }
 ob_end_flush();
 
-$satisfaction = '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['submitBtn'])) {
-        $authorId = $_SESSION['loggedinuserId'];
-        $satisfaction = min(intval($_POST['satisfaction'] ?? 0), 5);
-        $found = $_POST['found'] ?? '';
-        $recommend = $_POST['recommend'] ?? '';
-        $message = $_POST['message'] ?? '';
-        $dateTime = date('Y-m-d H:i:s');
-
-        $result = $db->insert('reviews', [
-            'author_id' => $authorId,
-            'satisfaction' => $satisfaction,
-            'found' => $found,
-            'recommend' => $recommend,
-            'message' => $message,
-            'time' => $dateTime
-        ]);
-
-        if ($result) {
-            echo '<script>
-                        window.location.href = document.referrer;
-                    </script>';
-            exit();
-        }
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -204,7 +176,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </section>
 
-    <?php require("../components/Footer.php") ?>
+    <?php
+    $satisfaction = '';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['submitBtn'])) {
+            $authorId = $_SESSION['loggedinuserId'];
+            $satisfaction = min(intval($_POST['satisfaction'] ?? 0), 5);
+            $found = $_POST['found'] ?? '';
+            $recommend = $_POST['recommend'] ?? '';
+            $message = $_POST['message'] ?? '';
+            $dateTime = date('Y-m-d H:i:s');
+
+            $result = $db->insert('reviews', [
+                'author_id' => $authorId,
+                'satisfaction' => $satisfaction,
+                'found' => $found,
+                'recommend' => $recommend,
+                'message' => $message,
+                'time' => $dateTime
+            ]);
+
+            if ($result) {
+                echo '<script>
+                            window.location.href = document.referrer;
+                        </script>';
+                exit();
+            }
+        }
+    }
+    require("../components/Footer.php") ?>
 </body>
 
 </html>

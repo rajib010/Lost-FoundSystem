@@ -1,59 +1,5 @@
-<?php
-require("../Navbar.php");
-
-$db = new Database();
-$errors = [];
-
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    if (isset($_POST['submitBtn'])) {
-        // get form data
-        $title = $_POST['title'];
-        $description = $_POST['description'];
-        $location = $_POST['location'];
-        $category = $_POST['category'];
-        $authorId = $_SESSION["loggedinuserId"];
-        $currentDateTime = date('Y-m-d H:i:s');
-
-        // img upload and validation
-        $fileName = $row['image']; 
-
-        if (isset($_FILES['itemImage']) && $_FILES['itemImage']['error'] == 0) {
-            $fileExtension = pathinfo($_FILES['itemImage']['name'], PATHINFO_EXTENSION);
-            $fileName = uniqid() . '.' . $fileExtension;
-            $uploadDir = '../uploads/posts/';
-            $targetFile = $uploadDir . $fileName;
-
-            if (!move_uploaded_file($_FILES['itemImage']['tmp_name'], $targetFile)) {
-                $errors['image'] = "Failed to upload image.";
-            }
-        }
-
-        //db entry
-        if (empty($errors)) {
-            $result = $db->insert("posts", [
-                'title' => $title,
-                'author_id' => $authorId,
-                'description' => $description,
-                'location' => $location,
-                'image' => $fileName,
-                'category' => $category,
-                'time' => $currentDateTime
-            ]);
-            if ($result) {
-                echo "<script>
-                            window.location.href = './viewposts.php';
-                      </script>";
-                exit();
-            } else {
-                echo "<p>Error: Unable to insert post. Please check database connection or SQL query.</p>";
-            }
-        }
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -72,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </head>
 
 <body>
+    <?php require("../Navbar.php"); ?>
     <section class="add-post-section" id="section">
         <h1 class="content-header">Provide Information of the Found Item</h1>
         <form class="form-class" method="post" action="" enctype="multipart/form-data" onsubmit="return validateForm()">
@@ -193,5 +140,57 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         }
     </script>
 </body>
+
+<?php
+$db = new Database();
+$errors = [];
+
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    if (isset($_POST['submitBtn'])) {
+        // get form data
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $location = $_POST['location'];
+        $category = $_POST['category'];
+        $authorId = $_SESSION["loggedinuserId"];
+        $currentDateTime = date('Y-m-d H:i:s');
+
+        // img upload and validation
+        $fileName = $row['image'];
+
+        if (isset($_FILES['itemImage']) && $_FILES['itemImage']['error'] == 0) {
+            $fileExtension = pathinfo($_FILES['itemImage']['name'], PATHINFO_EXTENSION);
+            $fileName = uniqid() . '.' . $fileExtension;
+            $uploadDir = '../uploads/posts/';
+            $targetFile = $uploadDir . $fileName;
+
+            if (!move_uploaded_file($_FILES['itemImage']['tmp_name'], $targetFile)) {
+                $errors['image'] = "Failed to upload image.";
+            }
+        }
+
+        //db entry
+        if (empty($errors)) {
+            $result = $db->insert("posts", [
+                'title' => $title,
+                'author_id' => $authorId,
+                'description' => $description,
+                'location' => $location,
+                'image' => $fileName,
+                'category' => $category,
+                'time' => $currentDateTime
+            ]);
+            if ($result) {
+                echo "<script>
+                            window.location.href = './viewposts.php';
+                      </script>";
+                exit();
+            } else {
+                echo "<p>Error: Unable to insert post. Please check database connection or SQL query.</p>";
+            }
+        }
+    }
+}
+?>
 
 </html>
