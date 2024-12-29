@@ -145,8 +145,8 @@
                     <option value="time">Recently Posted</option>
                     <option value="electronics">Electronics</option>
                     <option value="animal">Animal</option>
-                    <option value="jewellery">Jewellery</option>
-                    <option value="documents">Documents</option>
+                    <option value="jwellery">Jewellery</option>
+                    <option value="document">Documents</option>
                     <option value="clothing">Clothing</option>
                     <option value="vehicle">Vehicles</option>
                     <option value="other">Other</option>
@@ -200,13 +200,13 @@
                             postTitle.className = 'post-title';
                             postTitle.textContent = post.title;
 
-                            const postAuthor = document.createElement('p');
-                            postAuthor.className = 'content-p';
-                            postAuthor.textContent = `Found by: ${post.name}`;
+                            const postLocation = document.createElement('p');
+                            postLocation.className = 'content-p';
+                            postLocation.textContent = `${post.location}`;
 
                             postCard.appendChild(postImg);
                             postCard.appendChild(postTitle);
-                            postCard.appendChild(postAuthor);
+                            postCard.appendChild(postLocation);
                             postsContainer.appendChild(postCard);
                         });
 

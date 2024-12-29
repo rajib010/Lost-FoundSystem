@@ -126,6 +126,7 @@ select {
 
 select {
     padding: 15px;
+    font-size: 1em;
 }
 
 .btn:hover {

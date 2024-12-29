@@ -227,7 +227,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     <option selected disabled>---Select Category---</option>
                     <option value="electronics" <?= $row['category'] == 'electronics' ? 'selected' : '' ?>>Electronics</option>
                     <option value="animal" <?= $row['category'] == 'animal' ? 'selected' : '' ?>>Animal</option>
-                    <option value="jewellery" <?= $row['category'] == 'jewellery' ? 'selected' : '' ?>>Jewellery</option>
+                    <option value="jwellery" <?= $row['category'] == 'jwellery' ? 'selected' : '' ?>>Jwellery</option>
                     <option value="document" <?= $row['category'] == 'document' ? 'selected' : '' ?>>Documents</option>
                     <option value="clothing" <?= $row['category'] == 'clothing' ? 'selected' : '' ?>>Clothing</option>
                     <option value="vehicle" <?= $row['category'] == 'vehicle' ? 'selected' : '' ?>>Vehicles</option>

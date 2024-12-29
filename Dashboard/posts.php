@@ -115,7 +115,13 @@ $total_pages = ceil($total_posts / $limit);
                                 postsContainer.innerHTML = `<tr><td colspan='9'>${data.message}</td></tr>`;
                             }
                         })
-                        .catch(error => console.error('Error:', error));
+                        .catch(error => console.error('Error:', error))
+                        .finally(
+                            window.scrollTo({
+                                top: 0,
+                                behavior: 'smooth'
+                            })
+                        );
                 }
 
                 // Load initial posts

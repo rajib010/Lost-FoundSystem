@@ -29,10 +29,20 @@ $row = $result->fetch_assoc();
             text-align: left;
 
         }
+        .info-div{
+            width: 40%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
         @media (max-width: 767px) {
             .content-p {
                 width: 60%;
+            }
+            .info-div{
+                width: 45%;
             }
         }
     </style>
@@ -58,11 +68,13 @@ $row = $result->fetch_assoc();
         </div>
         <h3 class="post-title"><?= htmlspecialchars($row['name']); ?></h3>
 
-        <p class="content-p"><span class="bold">Email: </span><?= htmlspecialchars($row['email']) ?></p>
-        <p class="content-p"><span class="bold">Contact: </span><?= htmlspecialchars($row['phone_number']) ?></p>
-        <p class="content-p"><span class="bold">From: </span><?= htmlspecialchars($row['address']) ?></p>
-        <p class="content-p"><span class="bold">Total Posts: </span><?= htmlspecialchars($row['totalposts']) ?></p>
+        <div class="info-div">
+            <p class="content-p"><span class="bold">Email: </span><?= htmlspecialchars($row['email']) ?></p>
+            <p class="content-p"><span class="bold">Contact: </span><?= htmlspecialchars($row['phone_number']) ?></p>
+            <p class="content-p"><span class="bold">From: </span><?= htmlspecialchars($row['address']) ?></p>
+            <p class="content-p"><span class="bold">Total Posts: </span><?= htmlspecialchars($row['totalposts']) ?></p>
 
+        </div>
     </main>
     <?php require("../components/Footer.php") ?>
 </body>

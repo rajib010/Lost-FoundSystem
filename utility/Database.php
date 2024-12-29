@@ -171,23 +171,13 @@ class Database
 
         // Adding LIMIT clause for pagination
         if ($limit != null) {
-            if (isset($_GET['page']) && is_numeric($_GET['page'])) {
-                $page = intval($_GET['page']);
-            } else {
-                $page = 1;
-            }
-
-            $limit = intval($limit);
             if ($limit <= 0) {
-                $limit = 8;
+                $limit = ' 0 , 8';
             }
-
-            $start = ($page - 1) * $limit;
-
-            $sql .= " LIMIT $start, $limit";
+            $sql .= " LIMIT $limit";
         }
 
-        // echo $sql;
+        //echo $sql
 
         $stmt = $this->conn->prepare($sql);
 

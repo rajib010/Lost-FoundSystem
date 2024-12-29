@@ -1,85 +1,3 @@
-<?php
-
-include_once "../utility/Database.php";
-require("../Navbar.php");
-$db = new Database();
-$errors = [];
-
-if (!isset($_SESSION['loggedinuserId'])) {
-    header('Location: ../login.php');
-    exit();
-}
-
-$id = $_SESSION['loggedinuserId'];
-$where = "id='$id'";
-
-$result = $db->select("user_info", '*', null, $where, null, null);
-if ($result && $result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-} else {
-    echo "User not found.";
-    exit();
-}
-
-if ($_SERVER['REQUEST_METHOD'] === "POST") {
-    if (isset($_POST['submitBtn'])) {
-        $name = trim($_POST['fullName']);
-        $password = $_POST['password'];
-        $newPassword = $_POST['newPassword'];
-        $phone_number = trim($_POST['phone_number']);
-        $email = trim($_POST['email']);
-        $address = trim($_POST['address']);
-        $profileImg = $_FILES['profileImg'] ?? null;
-
-        // verify the password
-        if (!password_verify($password, $row['password'])) {
-            $errors['password'] = 'Incorrect password.';
-        } else {
-            $updateData = [];
-
-            // Only add fields to the update array if they've changed
-            if ($name !== $row['name']) $updateData['name'] = $name;
-            if ($email !== $row['email']) $updateData['email'] = $email;
-            if ($phone_number !== $row['phone_number']) $updateData['phone_number'] = $phone_number;
-            if ($address !== $row['address']) $updateData['address'] = $address;
-
-            // Handle profile image upload if a new one is provided
-            if ($profileImg && $profileImg['size'] > 0) {
-                $fileName = uniqid() . '_' . basename($profileImg['name']);
-                $targetPath = "../uploads/user/" . $fileName;
-
-                if (move_uploaded_file($profileImg['tmp_name'], $targetPath)) {
-                    $updateData['profileImg'] = $fileName;
-                } else {
-                    $errors['profileImg'] = 'Failed to upload image.';
-                }
-            }
-
-            if (!empty($newPassword)) {
-                if (strlen($newPassword) < 6) {
-                    $errors['newPassword'] = 'New password must be at least 6 characters long.';
-                } else {
-                    $updateData['password'] = $newPassword;
-                }
-            }
-
-            if (empty($errors) && !empty($updateData)) {
-                $updateResult = $db->update('user_info', $updateData, $where);
-
-                if ($updateResult) {
-                    echo "<script>
-                        window.location.href= '../pages/home.php';
-                    </script>";
-                } else {
-                    echo "<script>alert('Failed to update user info');</script>";
-                }
-            }
-        }
-    }
-}
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -158,6 +76,86 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         }
     </style>
 </head>
+<?php
+
+include_once "../utility/Database.php";
+require("../Navbar.php");
+$db = new Database();
+$errors = [];
+
+if (!isset($_SESSION['loggedinuserId'])) {
+    header('Location: ../login.php');
+    exit();
+}
+
+$id = $_SESSION['loggedinuserId'];
+$where = "id='$id'";
+
+$result = $db->select("user_info", '*', null, $where, null, null);
+if ($result && $result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+} else {
+    echo "User not found.";
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
+    if (isset($_POST['submitBtn'])) {
+        $name = trim($_POST['fullName']);
+        $password = $_POST['password'];
+        $newPassword = $_POST['newPassword'];
+        $phone_number = trim($_POST['phone_number']);
+        $email = trim($_POST['email']);
+        $address = trim($_POST['address']);
+        $profileImg = $_FILES['profileImg'] ?? null;
+
+        // verify the password
+        if (!password_verify($password, $row['password'])) {
+            $errors['password'] = 'Incorrect password.';
+        } else {
+            $updateData = [];
+
+            // Only add fields to the update array if they've changed
+            if ($name !== $row['name']) $updateData['name'] = $name;
+            if ($email !== $row['email']) $updateData['email'] = $email;
+            if ($phone_number !== $row['phone_number']) $updateData['phone_number'] = $phone_number;
+            if ($address !== $row['address']) $updateData['address'] = $address;
+
+            // Handle profile image upload if a new one is provided
+            if ($profileImg && $profileImg['size'] > 0) {
+                $fileName = uniqid() . '_' . basename($profileImg['name']);
+                $targetPath = "../uploads/user/" . $fileName;
+
+                if (move_uploaded_file($profileImg['tmp_name'], $targetPath)) {
+                    $updateData['profileImg'] = $fileName;
+                } else {
+                    $errors['profileImg'] = 'Failed to upload image.';
+                }
+            }
+
+            if (!empty($newPassword)) {
+                if (strlen($newPassword) < 6) {
+                    $errors['newPassword'] = 'New password must be at least 6 characters long.';
+                } else {
+                    $updateData['password'] = $newPassword;
+                }
+            }
+
+            if (empty($errors) && !empty($updateData)) {
+                $updateResult = $db->update('user_info', $updateData, $where);
+
+                if ($updateResult) {
+                    echo "<script>
+                        window.location.href= 'viewprofile.php';
+                    </script>";
+                } else {
+                    echo "<script>alert('Failed to update user info');</script>";
+                }
+            }
+        }
+    }
+}
+?>
 
 <body>
     <section class="edituser-section" id="section">
@@ -278,7 +276,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             const password = document.getElementById('password').value;
             if (password.length == 0) {
                 document.getElementById('passwordError').innerText = 'Enter password to confirm change.';
-                isValid=false;
+                isValid = false;
             }
 
             // New Password Validation

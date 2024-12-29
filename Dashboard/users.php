@@ -83,7 +83,13 @@ require("./components/Nav.php");
                             usersContainer.innerHTML = `<tr><td colspan='7'>${data.message}</td></tr>`;
                         }
                     })
-                    .catch(error => console.error('Error in fetching user info:', error));
+                    .catch(error => console.error('Error in fetching user info:', error))
+                    .finally(
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        })
+                    );
             }
 
             // Load initial users

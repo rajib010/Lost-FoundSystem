@@ -48,57 +48,57 @@ require("../Navbar.php");
 <body>
     <!-- php code to update the review -->
     <?php
-        $db = new Database();
+    $db = new Database();
 
-        $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+    $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-        if ($id <= 0) {
-            die("Invalid review ID");
-        }
+    if ($id <= 0) {
+        die("Invalid review ID");
+    }
 
-        $where = "id = $id";
+    $where = "id = $id";
 
-        $result = $db->select('reviews', "*", null, $where, null, null);
+    $result = $db->select('reviews', "*", null, $where, null, null);
 
-        $satisfaction = $found = $recommend = $message = '';
-        $errors = [];
+    $satisfaction = $found = $recommend = $message = '';
+    $errors = [];
 
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $satisfaction = $row['satisfaction'] ?? '';
-            $found = $row['found'] ?? '';
-            $recommend = $row['recommend'] ?? '';
-            $message = $row['message'] ?? '';
-        } else {
-            die("Review not found");
-        }
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $satisfaction = $row['satisfaction'] ?? '';
+        $found = $row['found'] ?? '';
+        $recommend = $row['recommend'] ?? '';
+        $message = $row['message'] ?? '';
+    } else {
+        die("Review not found");
+    }
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
-            // Sanitize form inputs
-            $satisfaction = isset($_POST['satisfaction']) ? intval($_POST['satisfaction']) : '';
-            $found = isset($_POST['found']) ? intval($_POST['found']) : '';
-            $recommend = isset($_POST['recommend']) ? intval($_POST['recommend']) : '';
-            $message = trim($_POST['message']) ?? '';
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
+        // Sanitize form inputs
+        $satisfaction = isset($_POST['satisfaction']) ? intval($_POST['satisfaction']) : '';
+        $found = isset($_POST['found']) ? intval($_POST['found']) : '';
+        $recommend = isset($_POST['recommend']) ? intval($_POST['recommend']) : '';
+        $message = trim($_POST['message']) ?? '';
 
-            $updateData = [
-                'satisfaction' => $satisfaction,
-                'found' => $found,
-                'recommend' => $recommend,
-                'message' => $message
-            ];
+        $updateData = [
+            'satisfaction' => $satisfaction,
+            'found' => $found,
+            'recommend' => $recommend,
+            'message' => $message
+        ];
 
-            $updateResult = $db->update('reviews', $updateData, $where);
+        $updateResult = $db->update('reviews', $updateData, $where);
 
-            if ($updateResult) {
-                echo "<script>
+        if ($updateResult) {
+            echo "<script>
                         window.location.href = 'viewreview.php'
                     </script>";
-                exit();
-            } else {
-                echo "<script>alert('Failed to update review')</script>";
-            }
+            exit();
+        } else {
+            echo "<script>alert('Failed to update review')</script>";
         }
+    }
     ?>
 
     <section class="update-review-section">
@@ -108,7 +108,7 @@ require("../Navbar.php");
                 <i class="fa-solid fa-trash"></i>
             </button>
         </div>
-        <form class="form-class" method="post" action="" id="updateReviewForm">
+        <form class="form-class" method="post" action="" id="updateReviewForm" onsubmit="return validateForm()">
 
             <div class="form-group">
                 <label for="satisfaction" class="post-title bold">Your satisfaction</label>
@@ -128,6 +128,7 @@ require("../Navbar.php");
                 <label class="content-p">
                     <input type="radio" name="found" value="0" <?= $found == '0' ? 'checked' : ''; ?>> No
                 </label>
+                <p class="error" id="foundError"></p>
             </div>
 
             <div class="form-group">
@@ -138,15 +139,17 @@ require("../Navbar.php");
                 <label class="content-p">
                     <input type="radio" name="recommend" value="0" <?= $recommend == '0' ? 'checked' : ''; ?>> No
                 </label>
+                <p class="recommendError"></p>
             </div>
 
             <div class="form-group">
                 <label for="message" class="content-p bold">Message</label>
                 <textarea id="message" name="message" rows="4" placeholder="Write your review here..."><?= htmlspecialchars($message) ?></textarea>
+                <p class="error" id="messageError"></p>
             </div>
 
             <div class="buttons">
-                <button type="submit" class="btn" name="submitBtn">Update</button>
+                <button type="submit" class="btn" name="submitBtn" id="updateBtn">Update</button>
                 <button type="button" class="btn" id="cancelBtn">Cancel</button>
             </div>
         </form>
@@ -177,6 +180,60 @@ require("../Navbar.php");
                 fillStars(checkedStar.value - 1);
             }
         });
+        
+
+        const validateForm = () => {
+            let isValid = true;
+            let isFoundSelected = false;
+            let isRecommendSelected = false;
+
+            let messageInput = document.getElementById('message');
+            let foundRadio = document.getElementsByName('found');
+            let recommendRadio = document.getElementsByName('recommend');
+
+            let messageError = document.getElementById('messageError');
+            let foundError = document.getElementById('foundError');
+            let recommendError = document.getElementById('recommendError');
+
+            messageError.innerText = '';
+            foundError.innerText = '';
+            recommendError.innerText = '';
+
+            const messageLength = messageInput.value.trim().length;
+            console.log(messageLength);
+            
+            if (messageLength === 0) {
+                messageError.innerText = 'Review message cannot be empty';
+                isValid = false;
+            } else if (messageLength < 6) {
+                messageError.innerText = 'Message should be at least 6 characters long';
+                isValid = false;
+            }
+
+            for (let radio of foundRadio) {
+                if (radio.checked) {
+                    isFoundSelected = true;
+                    break;
+                }
+            }
+            if (!isFoundSelected) {
+                foundError.innerText = 'Please select an option';
+                isValid = false;
+            }
+
+            for (let radio of recommendRadio) {
+                if (radio.checked) {
+                    isRecommendSelected = true;
+                    break;
+                }
+            }
+            if (!isRecommendSelected) {
+                recommendError.innerText = 'Please select an option';
+                isValid = false;
+            }
+
+            return isValid;
+        };
     </script>
 </body>
 
