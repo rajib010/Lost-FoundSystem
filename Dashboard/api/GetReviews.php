@@ -5,9 +5,10 @@ $db = new Database();
 $where = "1=1";
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = 8;
+$offset = ($page - 1) * $limit;
 $orderBy ='time DESC';
 $join = 'user_info on user_info.id=reviews.author_id';
-$result = $db->select('reviews', "*", $join, $where, $orderBy, $limit);
+$result = $db->select('reviews', "*", $join, $where, $orderBy, "$offset, $limit");
 
 if ($result && $result->num_rows > 0) {
     $reviews = [];

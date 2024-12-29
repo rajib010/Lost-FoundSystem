@@ -5,8 +5,9 @@ $db = new Database();
 $where = "1=1";
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = 8;
-$orderBy= "recievedAt DESC";
-$result = $db->select('messages', "*", null, $where, $orderBy, $limit);
+$offset = ($page - 1) * $limit;
+$orderBy = "recievedAt DESC";
+$result = $db->select('messages', "*", null, $where, $orderBy, "$offset, $limit");
 
 if ($result && $result->num_rows > 0) {
     $messages = [];

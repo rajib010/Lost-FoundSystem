@@ -19,7 +19,8 @@ $messagesCount = $sql4->fetch_assoc()['totalMessages'];
 $sql5 = $db->select('posts', 'category', null, null, 'COUNT(*) DESC', 1, 'category');
 $topCategory = $sql5->fetch_assoc()['category'];
 
-$sql6 = $db->select('user_info', 'name', null, null, 'COUNT(*) DESC', 1, 'name');
+$join = " posts on posts.author_id = user_info.id ";
+$sql6 = $db->select('user_info', 'name', $join , null, 'COUNT(*) DESC', 1, 'name');
 $topFinder = $sql6->fetch_assoc()['name'];
 
 $sql6 = $db->select('posts', 'COUNT(*) AS blockedPost', null, 'status=0');

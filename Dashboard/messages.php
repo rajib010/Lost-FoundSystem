@@ -75,7 +75,7 @@ $total_pages = ceil($total_messages / $limit);
                                 data.messages.forEach((message, index) => {
                                     const messageRow = document.createElement('tr');
                                     messageRow.innerHTML = `
-                                        <td>${(page - 1) * 12 + (index + 1)}</td>
+                                        <td>${(page - 1) * 8 + (index + 1)}</td>
                                         <td>${message.name}</td>
                                         <td>${message.email}</td>
                                         <td>${message.message}</td>
