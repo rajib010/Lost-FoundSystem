@@ -13,7 +13,6 @@ $result = $db->delete($table, $where);
 
 if ($result) {
     echo "<script>
-    alert('Record deleted successfully');
     window.location.href = document.referrer;
     </script>";
 } else {

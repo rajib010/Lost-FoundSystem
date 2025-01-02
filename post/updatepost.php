@@ -292,15 +292,27 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 isValid = false;
             }
 
+            const titlePattern = /^[a-zA-Z0-9][a-zA-Z0-9\s\-,:.]{3,98}[a-zA-Z0-9]$/;
+            if (!titlePattern.test(title)) {
+                document.getElementById('titleError').innerText = "Invalid item title";
+                isValid = false;
+            }
+
             // Description Validation
-            if (description.length < 10) {
-                document.getElementById('descriptionError').innerText = "Description should be at least 10 characters";
+            if (description.length < 10 || description.length > 250) {
+                document.getElementById('descriptionError').innerText = "Description should be at between 10-250 characters";
+                isValid = false;
+            }
+
+            const descriptionPattern = /^(?=.*[a-zA-Z])[a-zA-Z0-9\s]*$/
+            if (!descriptionPattern.test(description)) {
+                document.getElementById('descriptionError').innerText = "Invalid description";
                 isValid = false;
             }
 
             // Location Validation
-            if (location.length === 0) {
-                document.getElementById('locationError').innerText = "Location cannot be empty";
+            if (location.length < 3) {
+                document.getElementById('locationError').innerText = "Invalid Location";
                 isValid = false;
             }
 

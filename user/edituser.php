@@ -228,61 +228,71 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         function validateForm() {
             let isValid = true;
 
+            let fullnameError =document.getElementById('fullNameError');
+            let emailError= document.getElementById('emailError');
+            let passwordError = document.getElementById('passwordError')
+            let newpasswordError = document.getElementById('newPasswordError')
+            let phoneError = document.getElementById('phoneError')
+            let addressError = document.getElementById('addressError')
+            let profileImgError = document.getElementById('profileImgError')
             // clear prev
-            document.getElementById('fullNameError').innerText = '';
-            document.getElementById('emailError').innerText = '';
-            document.getElementById('passwordError').innerText = '';
-            document.getElementById('newPasswordError').innerText = '';
-            document.getElementById('phoneError').innerText = '';
-            document.getElementById('addressError').innerText = '';
-            document.getElementById('profileImgError').innerText = '';
+            fullnameError.innerText = '';
+            emailError.innerText = '';
+            passwordError.innerText = '';
+            newpasswordError.innerText = '';
+            phoneError.innerText = '';
+            addressError.innerText = '';
+            profileImgError.innerText = '';
 
             // name Validation
             const fullName = document.getElementById('fullName').value.trim();
-            if (!fullName || fullName.length < 4) {
-                document.getElementById('fullNameError').innerText = "Please enter a valid name (minimum 4 characters).";
-                isValid = false;
+            
+            const fullnamePattern = /^[A-Za-z]{3,} [A-Za-z]{3,}$/
+            if(!fullnamePattern.test(fullName)){
+                fullnameError.innerText='Enter a valid name';
+                isValid= false
             }
 
             // Email Validation
             const email = document.getElementById('email').value.trim();
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!email) {
-                document.getElementById('emailError').innerText = "Email is required.";
+                emailError.innerText = "Email is required.";
                 isValid = false;
-            } else if (!validateEmail(email)) {
-                document.getElementById('emailError').innerText = "Invalid email format.";
+            } else if (!emailPattern.test(email)) {
+                emailError.innerText = "Invalid email format.";
                 isValid = false;
             }
 
             // Phone Number Validation
             const phoneNumber = document.getElementById('phone_number').value.trim();
-            const phoneRegex = /^\+?\d{10,15}$/;
+            const phoneRegex = /^\d{10}$/;
             if (!phoneNumber) {
-                document.getElementById('phoneError').innerText = "Phone number is required.";
+                phoneError.innerText = "Phone number is required.";
                 isValid = false;
             } else if (!phoneRegex.test(phoneNumber)) {
-                document.getElementById('phoneError').innerText = "Invalid phone number format.";
+                phoneError.innerText = "Invalid phone number format.";
                 isValid = false;
             }
 
             // Address Validation
             const address = document.getElementById('address').value.trim();
-            if (!address) {
-                document.getElementById('addressError').innerText = "Address is required.";
+            if (!address || address.length<4) {
+                addressError.innerText = "Enter a valid address";
                 isValid = false;
             }
 
             //check if password field is empty
             const password = document.getElementById('password').value;
             if (password.length == 0) {
-                document.getElementById('passwordError').innerText = 'Enter password to confirm change.';
+                passwordError.innerText = 'Enter password to confirm change.';
                 isValid = false;
             }
 
             // New Password Validation
             const newPassword = document.getElementById('newPassword').value;
             if (newPassword && newPassword.length < 6) {
-                document.getElementById('newPasswordError').innerText = "New password must be at least 6 characters long.";
+                newpasswordError.innerText = "New password must be at least 6 characters long.";
                 isValid = false;
             }
 
@@ -292,17 +302,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 const fileType = profileImg.files[0].type;
                 const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
                 if (!allowedTypes.includes(fileType)) {
-                    document.getElementById('profileImgError').innerText = "Only JPG, PNG, and GIF formats are allowed.";
+                    profileImgError.innerText = "Only JPG, PNG, and GIF formats are allowed.";
                     isValid = false;
                 }
             }
 
             return isValid;
-        }
-
-        function validateEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
         }
 
         document.getElementById('profileImg').addEventListener('change', function() {

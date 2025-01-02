@@ -132,6 +132,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             text-align: left;
         }
 
+        .error {
+            margin: 5px 5px 0px;
+        }
+
         @media (max-width: 767px) {
             .signup-section form {
                 grid-template-columns: 1fr;
@@ -230,13 +234,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             let isValid = true;
 
             // Clear previous errors
-            document.getElementById('nameError').innerText = '';
-            document.getElementById('emailError').innerText = '';
-            document.getElementById('passwordError').innerText = '';
-            document.getElementById('confirmPasswordError').innerText = '';
-            document.getElementById('phone_numberError').innerText = '';
-            document.getElementById('addressError').innerText = '';
-            document.getElementById('profileImgError').innerText = '';
+            let nameError = document.getElementById('nameError')
+            nameError.innerText = '';
+            let emailError=document.getElementById('emailError')
+            emailError.innerText = '';
+            let passwordError =document.getElementById('passwordError')
+            passwordError.innerText = '';
+            let confirmPasswordError = document.getElementById('confirmPasswordError')
+            confirmPasswordError.innerText = '';
+            let phoneNumberError = document.getElementById('phone_numberError')
+            phoneNumberError.innerText = '';
+            let addressError = document.getElementById('addressError')
+            addressError.innerText = '';
+            let profileImgError = document.getElementById('profileImgError')
+            profileImgError.innerText = '';
 
             // Get values
             const fullName = document.getElementById('fullName').value;
@@ -248,43 +259,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             const profileImg = document.getElementById('profileImg').files[0];
 
             // Full Name Validation
-            if (fullName.length === 0) {
-                document.getElementById('nameError').innerText = "Full name cannot be empty";
+            if (fullName.length < 3) {
+               nameError.innerText = "Full name cannot be empty";
                 isValid = false;
             }
 
+            const fullnamePattern = /^[A-Za-z]{3,} [A-Za-z]{3,}$/
+            if (!fullnamePattern.test(fullName)) {
+                nameError.innerText = 'Enter a valid name';
+                isValid = false
+            }
+
             // Email Validation
-            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!emailPattern.test(email)) {
-                document.getElementById('emailError').innerText = "Invalid email address";
+                emailError.innerText = "Invalid email address";
                 isValid = false;
             }
 
             // Password Validation
-            if (password.length < 6) {
-                document.getElementById('passwordError').innerText = "Password must be at least 6 characters";
+            const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{6,}$/;
+            if (!passwordPattern.test(password)) {
+                passwordError.innerText = "Password must be alpha numeric with a uppercase and a special character";
                 isValid = false;
             } else if (password !== confirmPassword) {
-                document.getElementById('confirmPasswordError').innerText = "Passwords do not match";
+                confirmPassword.innerText = "Passwords do not match";
                 isValid = false;
             }
 
             // Phone Number Validation
             const phonePattern = /^\d{10}$/;
             if (!phonePattern.test(phone)) {
-                document.getElementById('phone_numberError').innerText = "Invalid phone number";
+                phoneNumberError.innerText = "Invalid phone number";
                 isValid = false;
             }
 
             // Address Validation
-            if (address.length === 0) {
-                document.getElementById('addressError').innerText = "Address field cannot be empty";
+            if (address.length < 3) {
+                addressError.innerText = "Enter a valid address";
                 isValid = false;
             }
 
             // Profile Image Validation
             if (!profileImg) {
-                document.getElementById('profileImgError').innerText = "Profile image is required";
+                profileImgError.innerText = "Profile image is required";
                 isValid = false;
             } else {
                 const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];

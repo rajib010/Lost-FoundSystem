@@ -71,7 +71,7 @@ require("../Navbar.php");
         $recommend = $row['recommend'] ?? '';
         $message = $row['message'] ?? '';
     } else {
-        die("Review not found");
+        header('location: createreview.php');
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitBtn'])) {
@@ -180,60 +180,43 @@ require("../Navbar.php");
                 fillStars(checkedStar.value - 1);
             }
         });
-        
 
-        const validateForm = () => {
+
+        function validateForm() {
             let isValid = true;
-            let isFoundSelected = false;
-            let isRecommendSelected = false;
 
-            let messageInput = document.getElementById('message');
-            let foundRadio = document.getElementsByName('found');
-            let recommendRadio = document.getElementsByName('recommend');
+            const message = document.getElementById('message').value.trim();
+            const foundRadio = document.getElementsByName('found');
+            const recommendRadio = document.getElementsByName('recommend');
 
-            let messageError = document.getElementById('messageError');
-            let foundError = document.getElementById('foundError');
-            let recommendError = document.getElementById('recommendError');
+            const messageError = document.getElementById('messageError');
+            const foundError = document.getElementById('foundError');
+            const recommendError = document.getElementById('recommendError');
 
             messageError.innerText = '';
             foundError.innerText = '';
             recommendError.innerText = '';
 
-            const messageLength = messageInput.value.trim().length;
-            console.log(messageLength);
-            
-            if (messageLength === 0) {
-                messageError.innerText = 'Review message cannot be empty';
-                isValid = false;
-            } else if (messageLength < 6) {
-                messageError.innerText = 'Message should be at least 6 characters long';
+            const messagePattern = /^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9\s\-,:.]{5,}$/;
+            if (!messagePattern.test(message)) {
+                document.getElementById('messageError').innerText = "Message should be alphanumeric and at least 8 characters";
                 isValid = false;
             }
 
-            for (let radio of foundRadio) {
-                if (radio.checked) {
-                    isFoundSelected = true;
-                    break;
-                }
-            }
+            const isFoundSelected = Array.from(foundRadio).some(radio => radio.checked);
             if (!isFoundSelected) {
-                foundError.innerText = 'Please select an option';
+                foundError.innerText = 'Please select if you found your belongings.';
                 isValid = false;
             }
 
-            for (let radio of recommendRadio) {
-                if (radio.checked) {
-                    isRecommendSelected = true;
-                    break;
-                }
-            }
+            const isRecommendSelected = Array.from(recommendRadio).some(radio => radio.checked);
             if (!isRecommendSelected) {
-                recommendError.innerText = 'Please select an option';
+                recommendError.innerText = 'Please select if you recommend us.';
                 isValid = false;
             }
 
             return isValid;
-        };
+        }
     </script>
 </body>
 

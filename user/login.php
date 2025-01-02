@@ -225,17 +225,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="left-side center">
             <h1 class="content-header">Welcome back!!</h1>
             <div class="input-fields">
-                <form class="form-class" action="" method="post">
+                <form class="form-class" action="" method="post" onsubmit="return validateForm()">
                     <div class="form-group" data-icon="✉">
                         <input type="text" placeholder="Enter your email" name="email"
-                            value="<?php $_POST['email'] ?? '' ?>">
-                        <p class="error"><?php echo $errors['email'] ?? '' ?></p>
+                            value="<?php $_POST['email'] ?? '' ?>" id="email">
+                        <p class="error" id="emailError"><?php echo $errors['email'] ?? '' ?></p>
                     </div>
                     <div class="form-group" data-icon="🔒">
                         <input type="password" placeholder="Enter your password" name="password" id="password">
                         <span class="toggle-password" onclick="togglePasswordVisibility()"><i
                                 class="fa-solid fa-eye-slash"></i></span>
-                        <p class="error"><?php echo $errors['password'] ?? '' ?></p>
+                        <p class="error" id="passwordError"><?php echo $errors['password'] ?? '' ?></p>
                     </div>
                     <p class="content-p left"><a href="./forgot/forgotPassword.php">Forgot Password?</a></p>
                     <button type="submit" name="loginBtn" class="btn">Login</button>
@@ -263,6 +263,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 passwordField.type = "password";
                 toggleIcon.innerHTML = `<i class="fa-solid fa-eye-slash"> </i>`;
             }
+        }
+
+        function validateForm(){
+            let isValid= true;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            const emailError =document.getElementById('emailError');
+            const passwordError= document.getElementById('passwordError');
+
+            if(!email){
+                emailError.innerText = 'Email cannot be empty';
+                isValid = false;
+            }
+    
+            const emailPattern = /^^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if(!emailPattern.test(email)){
+                emailError.innerText = 'Invalid email';
+                return false;
+            }
+            
+            if(!password){
+                passwordError.innerText = 'Password cannot be empty';
+                isValid = false;
+            }
+            return isValid;
         }
     </script>
 </body>

@@ -54,83 +54,13 @@ ob_end_flush();
             color: gold;
         }
     </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const stars = document.querySelectorAll('.star');
-            const satisfactionInput = document.getElementById('satisfaction');
-            const satisfactionError = document.getElementById('satisfactionError');
-
-            stars.forEach((star, index) => {
-                star.addEventListener('click', function() {
-                    if (index < 5) {
-                        fillStars(index);
-                        satisfactionInput.value = index + 1;
-                        satisfactionError.innerText = '';
-                    }
-                });
-            });
-        });
-
-
-        function fillStars(index) {
-            const stars = document.querySelectorAll('.star');
-            stars.forEach((star, i) => {
-                if (i <= index) {
-                    star.classList.add('filled');
-                } else {
-                    star.classList.remove('filled');
-                }
-            });
-        }
-
-        function validateForm() {
-            let isValid = true;
-
-            // Clear previous errors
-            document.getElementById('satisfactionError').innerText = '';
-            document.getElementById('foundError').innerText = '';
-            document.getElementById('recommendError').innerText = '';
-            document.getElementById('messageError').innerText = '';
-
-            const satisfaction = parseInt(document.getElementById('satisfaction').value.trim(), 10);
-            const found = document.querySelector('input[name="found"]:checked');
-            const recommend = document.querySelector('input[name="recommend"]:checked');
-            const message = document.getElementById('message').value.trim();
-
-            // Satisfaction Validation
-            if (satisfaction <= 0) {
-                document.getElementById('satisfactionError').innerText = "Satisfaction rating is required and must be greater than 0.";
-                isValid = false;
-            }
-
-            // Found Validation
-            if (!found) {
-                document.getElementById('foundError').innerText = "Please select whether you found your belongings.";
-                isValid = false;
-            }
-
-            // Recommend Validation
-            if (!recommend) {
-                document.getElementById('recommendError').innerText = "Please select if you recommend us.";
-                isValid = false;
-            }
-
-            // Message Validation
-            if (message.length < 10) {
-                document.getElementById('messageError').innerText = "Review message must be at least 10 characters long.";
-                isValid = false;
-            }
-
-            return isValid;
-        }
-    </script>
 
 </head>
 
 <body>
     <section class="review-form-section">
         <h1 class="content-header">Found us Useful? Send a review</h1>
-        <form class="form-class" method="post" action="" id="reviewForm">
+        <form class="form-class" method="post" action="" id="reviewForm" onsubmit="return validateForm()">
             <div class="form-group">
                 <p class="content-p bold block">Your satisfaction</p>
                 <div class="stars">
@@ -206,6 +136,80 @@ ob_end_flush();
         }
     }
     require("../components/Footer.php") ?>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('.star');
+            const satisfactionInput = document.getElementById('satisfaction');
+            const satisfactionError = document.getElementById('satisfactionError');
+
+            stars.forEach((star, index) => {
+                star.addEventListener('click', function() {
+                    if (index < 5) {
+                        fillStars(index);
+                        satisfactionInput.value = index + 1;
+                        satisfactionError.innerText = '';
+                    }
+                });
+            });
+        });
+
+
+        function fillStars(index) {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, i) => {
+                if (i <= index) {
+                    star.classList.add('filled');
+                } else {
+                    star.classList.remove('filled');
+                }
+            });
+        }
+
+        function validateForm() {
+            let isValid = true;
+
+            // Clear previous errors
+            document.getElementById('satisfactionError').innerText = '';
+            document.getElementById('foundError').innerText = '';
+            document.getElementById('recommendError').innerText = '';
+            document.getElementById('messageError').innerText = '';
+
+            const satisfaction = parseInt(document.getElementById('satisfaction').value.trim(), 10);
+            const found = document.querySelector('input[name="found"]:checked');
+            const recommend = document.querySelector('input[name="recommend"]:checked');
+            const message = document.getElementById('message').value.trim();
+
+            // Satisfaction Validation
+            if (satisfaction <= 0) {
+                document.getElementById('satisfactionError').innerText = "Satisfaction rating is required and must be greater than 0.";
+                isValid = false;
+            }
+
+            // Found Validation
+            if (!found) {
+                document.getElementById('foundError').innerText = "Please select whether you found your belongings.";
+                isValid = false;
+            }
+
+            // Recommend Validation
+            if (!recommend) {
+                document.getElementById('recommendError').innerText = "Please select if you recommend us.";
+                isValid = false;
+            }
+
+            // Message Validation
+        
+            const messagePattern = /^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9\s\-,:.]{5,}$/;
+            if(!messagePattern.test(message)){
+                document.getElementById('messageError').innerText = "Message should be alphanumeric and at least 8 characters";
+                isValid = false;
+            }
+
+
+            return isValid;
+        }
+    </script>
 </body>
 
 </html>
