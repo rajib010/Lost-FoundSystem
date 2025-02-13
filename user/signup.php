@@ -283,7 +283,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 passwordError.innerText = "Password must be alpha numeric with a uppercase and a special character";
                 isValid = false;
             } else if (password !== confirmPassword) {
-                confirmPassword.innerText = "Passwords do not match";
+                confirmPasswordErr.innerText = "Passwords do not match";
                 isValid = false;
             }
 

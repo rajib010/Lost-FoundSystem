@@ -57,6 +57,7 @@
             max-width: 100px;
             border-radius: 5px;
             object-fit: cover;
+            z-index: 1;
         }
 
         .note {

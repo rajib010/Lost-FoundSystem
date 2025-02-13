@@ -23,7 +23,7 @@ $row = $result->fetch_assoc();
             margin-top: 10px;
         }
 
-        .content-p {
+        .data-p{
             margin: 10px 43.5%;
             width: 50%;
             text-align: left;
@@ -69,10 +69,10 @@ $row = $result->fetch_assoc();
         <h3 class="post-title"><?= htmlspecialchars($row['name']); ?></h3>
 
         <div class="info-div">
-            <p class="content-p"><span class="bold">Email: </span><?= htmlspecialchars($row['email']) ?></p>
-            <p class="content-p"><span class="bold">Contact: </span><?= htmlspecialchars($row['phone_number']) ?></p>
-            <p class="content-p"><span class="bold">From: </span><?= htmlspecialchars($row['address']) ?></p>
-            <p class="content-p"><span class="bold">Total Posts: </span><?= htmlspecialchars($row['totalposts']) ?></p>
+            <p class="data-p"><span class="bold">Email: </span><?= htmlspecialchars($row['email']) ?></p>
+            <p class="data-p"><span class="bold">Contact: </span><?= htmlspecialchars($row['phone_number']) ?></p>
+            <p class="data-p"><span class="bold">From: </span><?= htmlspecialchars($row['address']) ?></p>
+            <p class="data-p"><span class="bold">Total Posts: </span><?= htmlspecialchars($row['totalposts']) ?></p>
 
         </div>
     </main>

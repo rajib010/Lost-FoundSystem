@@ -14,6 +14,7 @@
         #section {
             width: 90%;
         }
+
     </style>
 </head>
 
@@ -43,7 +44,7 @@
                     <input type="file" id="itemImage" name="itemImage" style="display: none;" accept="image/*" onchange="previewImage(event)">
                     <button type="button" class="file-btn" onclick="document.getElementById('itemImage').click()">Choose Image</button>
                 </div>
-                <img class="displayedImg" style="display:none; max-width: 100px; margin-top: 10px;">
+                <img class="displayedImg" style="display:none; max-width: 100px; margin-top: 10px; z-index:1;">
                 <p class="error" id="itemImageError"><?php echo $errors['image'] ?? ''; ?></p>
             </div>
             <div class="form-group">
@@ -97,14 +98,8 @@
             }
 
             // Description Validation
-            if (description.length < 10 || description.length >250) {
-                document.getElementById('descriptionError').innerText = "Description should be at between 10-250 characters";
-                isValid = false;
-            }
-
-            const descriptionPattern = /^(?=.*[a-zA-Z])[a-zA-Z0-9\s]*$/
-            if(!descriptionPattern.test(description)){
-                document.getElementById('descriptionError').innerText = "Invalid description";
+            if (description.length < 10 || description.length >550) {
+                document.getElementById('descriptionError').innerText = "Description should be at between 10-550 characters";
                 isValid = false;
             }
 

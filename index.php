@@ -117,17 +117,17 @@ session_write_close();
         <h2 class="content-header">How It Works</h2>
         <div class="about-container">
             <div class="card">
-                <img src="./public/report.avif" class='card-img' alt="Fast and Easy">
+                <img src="./public/report.png" class='card-img' alt="Fast and Easy">
                 <h3 class='post-title'>Report an Item</h3>
                 <p class='card-description'>Submit details about your lost or found item in just a few clicks.</p>
             </div>
             <div class="card">
-                <img src="./public/match.avif" class='card-img' alt="Fast and Easy">
+                <img src="./public/match.png" class='card-img' alt="Fast and Easy">
                 <h3 class='post-title'>Match with the Right Owner</h3>
                 <p class='card-description'>Our system connects you with those who reported matching lost or found items.</p>
             </div>
             <div class="card">
-                <img src="./public/give.avif" class='card-img' alt="Fast and Easy">
+                <img src="./public/give.png" class='card-img' alt="Fast and Easy">
                 <h3 class='post-title'>Get/Give Item Back</h3>
                 <p class='card-description'>Once matched, coordinate securely to return or claim the item.</p>
             </div>
@@ -139,17 +139,17 @@ session_write_close();
         <h2 class="content-header">Why Use Our System?</h2>
         <div class="about-container">
             <div class="card">
-                <img src="./public/fast&easy.avif" class='card-img' alt="Fast and Easy">
+                <img src="./public/fast&easy.png" class='card-img' alt="Fast and Easy">
                 <h3 class='post-title'>Fast and Easy</h3>
                 <p class='card-description'>Report lost or found items with just a few details.</p>
             </div>
             <div class="card">
-                <img src="./public/secure.avif" class='card-img' alt="Secure">
+                <img src="./public/secure.png" class='card-img' alt="Secure">
                 <h3 class='post-title'>Secure</h3>
                 <p class='card-description'>Your information is kept safe while we help connect you with others.</p>
             </div>
             <div class="card">
-                <img src="./public/reliable.avif" class='card-img' alt="Reliable Matching">
+                <img src="./public/reliable.png" class='card-img' alt="Reliable Matching">
                 <h3 class='post-title'>Reliable Matching</h3>
                 <p class='card-description'>Our matching system ensures you find the right person.</p>
             </div>

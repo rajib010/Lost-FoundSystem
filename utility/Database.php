@@ -177,7 +177,7 @@ class Database
             $sql .= " LIMIT $limit";
         }
 
-        //echo $sql
+        // echo $sql;
 
         $stmt = $this->conn->prepare($sql);
 
