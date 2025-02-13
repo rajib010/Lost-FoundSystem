@@ -225,7 +225,7 @@ session_write_close();
                 let email = document.getElementById('email').value;
                 let name = document.getElementById('name').value;
 
-                const fullnamePattern = /^[A-Za-z]{3,} [A-Za-z]{3,}$/
+                const fullnamePattern = /^[A-Za-z]{3,}( [A-Za-z]{3,})+$/;
                 if (!fullnamePattern.test(name)) {
                     nameError.innerText = 'Enter a valid name';
                     isValid = false

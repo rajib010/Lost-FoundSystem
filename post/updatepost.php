@@ -299,14 +299,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             }
 
             // Description Validation
-            if (description.length < 10 || description.length > 250) {
+            if (description.length < 10 || description.length > 550) {
                 document.getElementById('descriptionError').innerText = "Description should be at between 10-250 characters";
-                isValid = false;
-            }
-
-            const descriptionPattern = /^(?=.*[a-zA-Z])[a-zA-Z0-9\s]*$/
-            if (!descriptionPattern.test(description)) {
-                document.getElementById('descriptionError').innerText = "Invalid description";
                 isValid = false;
             }
 
