@@ -24,6 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $description = $_POST['description'];
         $location = $_POST['location'];
         $category = $_POST['category'];
+        $question = $_POST['question'];
+        $answer = $_POST['answer'];
 
         $fileName = $row['image'];
 
@@ -45,7 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 "description" => $description,
                 "location" => $location,
                 "category" => $category,
-                "image" => $fileName
+                "image" => $fileName,
+                "question" => $question,
+                "answer" => $answer
             ], $where);
 
             if ($result) {
@@ -202,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <i class="fa-solid fa-trash"></i>
             </button>
         </div>
-        <form class="form-class" method="post" action="" enctype="multipart/form-data" id="updateForm">
+        <form class="form-class" method="post" action="" enctype="multipart/form-data" id="updateForm" onsubmit="return validateForm()">
             <div class="form-group">
                 <label for="item-title">Item Title</label>
                 <input type="text" id="item-title" name="title" value="<?= htmlspecialchars($row['title']) ?>">
@@ -247,6 +251,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <p class="error" id="itemImageError"></p>
             </div>
 
+            <div class="form-group">
+                <label for="question">Security Question</label>
+                <input type="text" id="question" name="question" value="<?= htmlspecialchars($row['question']) ?>">
+                <p class="error" id="questionError"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="answer">Security Answer</label>
+                <input type="text" id="answer" name="answer" value="<?= htmlspecialchars($row['answer']) ?>">
+                <p class="error" id="answerError"></p>
+            </div>
+
             <div class="buttons">
                 <button type="submit" name="updateBtn" class="btn" id="submitBtn">Update</button>
                 <button type="button" class="btn" id="cancelBtn">Cancel</button>
@@ -257,17 +273,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <?php require("../components/Footer.php");  ?>
 
     <script>
-        document.getElementById('updateForm').addEventListener('submit', function(event) {
-            if (!validateForm()) {
-                event.preventDefault();
-            } else {
-                const confirmation = confirm('Are you sure you want to update the post?');
-                if (!confirmation) {
-                    event.preventDefault();
-                }
-            }
-        });
-
         function validateForm() {
             let isValid = true;
 
@@ -277,6 +282,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             document.getElementById('locationError').innerText = '';
             document.getElementById('categoryError').innerText = '';
             document.getElementById('itemImageError').innerText = '';
+            document.getElementById('questionError').innerText = '';
+            document.getElementById('answerError').innerText = '';
 
             // Get values from form fields
             const title = document.getElementById('item-title').value.trim();
@@ -284,7 +291,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             const location = document.getElementById('item-location').value.trim();
             const category = document.getElementById('item-category').value;
             const itemImg = document.getElementById('image').files[0];
-            const displayedImg = document.querySelector('.displayedImg'); // Check if there's already an image displayed
+            const question = document.getElementById('question').value.trim();
+            const answer = document.getElementById('answer').value.trim();
+            const displayedImg = document.querySelector('.displayedImg');
 
             // Title Validation
             if (title.length === 0) {
@@ -326,6 +335,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     document.getElementById('itemImageError').innerText = "Only JPG, PNG, and GIF formats are allowed.";
                     isValid = false;
                 }
+            }
+            if (question.length < 3) {
+                document.getElementById('questionError').innerText = "Security question should be at least 3 characters long.";
+                isValid = false;
+            }
+            if (!((answer))) {
+                document.getElementById('answerError').innerText = "Answer is required";
+                isValid = false;
             }
 
             return isValid;

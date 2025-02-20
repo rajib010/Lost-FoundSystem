@@ -23,6 +23,8 @@
     location VARCHAR(200) NOT NULL,
     image LONGBLOB,  
     category VARCHAR(100) NOT NULL,
+    question varchar(200) not null,
+    answer varchar(100) not null,
     status INT NOT NULL DEFAULT 1,
     time DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (author_id) REFERENCES user_info(id) ON DELETE CASCADE

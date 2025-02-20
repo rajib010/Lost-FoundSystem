@@ -61,6 +61,16 @@
                 </select>
                 <p class="error" id="categoryError"></p>
             </div>
+            <div class="form-group">
+                <label for="question">Security Question</label>
+                <input type="text" id="question" name="question" value="<?php echo htmlspecialchars($_POST['question'] ?? '', ENT_QUOTES); ?>">
+                <p class="error" id="questionError"></p>
+            </div>
+            <div class="form-group">
+                <label for="answer">Security Answer</label>
+                <input type="text" id="answer" name="answer" value="<?php echo htmlspecialchars($_POST['answer'] ?? '', ENT_QUOTES); ?>">
+                <p class="error" id="answerError"></p>
+            </div>
             <button type="submit" name="submitBtn" class="btn">Submit</button>
         </form>
     </section>
@@ -77,6 +87,8 @@
             document.getElementById('locationError').innerText = '';
             document.getElementById('categoryError').innerText = '';
             document.getElementById('itemImageError').innerText = '';
+            document.getElementById('questionError').innerText = '';
+            document.getElementById('answerError').innerText = '';
 
             // get values from form 
             const title = document.getElementById('item-title').value.trim();
@@ -84,6 +96,8 @@
             const location = document.getElementById('item-location').value.trim();
             const category = document.getElementById('item-category').value;
             const itemImg = document.getElementById('itemImage').files[0];
+            const question = document.getElementById('question').value.trim();
+            const answer = document.getElementById('answer').value.trim();
 
             // Title Validation
             if (title.length === 0) {
@@ -127,6 +141,15 @@
                 }
             }
 
+            if(question.length < 3){
+                document.getElementById('questionError').innerText = "Security question should be at least 3 characters long.";
+                isValid = false;
+            }
+            if(!(answer)){
+                document.getElementById('answerError').innerText = "Answer is required";
+                isValid = false;
+            }
+
             return isValid;
         }
 
@@ -159,6 +182,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $description = $_POST['description'];
         $location = $_POST['location'];
         $category = $_POST['category'];
+        $question = $_POST['question'];
+        $answer = $_POST['answer'];
         $authorId = $_SESSION["loggedinuserId"];
         $currentDateTime = date('Y-m-d H:i:s');
 
@@ -184,6 +209,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 'description' => $description,
                 'location' => $location,
                 'image' => $fileName,
+                'question' => $question,
+                'answer' => $answer,
                 'category' => $category,
                 'time' => $currentDateTime
             ]);
