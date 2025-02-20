@@ -43,10 +43,10 @@
     ) -->
 
 
-    <!-- CREATE TABLE messages(
+    <!-- CREATE TABLE messages (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
+    user_id INT NOT NULL,
     message TEXT NOT NULL,
-    recievedAt DATETIME DEFAULT CURRENT_TIMESTAMP
-    ) -->
+    receivedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user_info(id) ON DELETE CASCADE
+); -->

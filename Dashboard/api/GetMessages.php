@@ -6,8 +6,9 @@ $where = "1=1";
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = 8;
 $offset = ($page - 1) * $limit;
-$orderBy = "recievedAt DESC";
-$result = $db->select('messages', "*", null, $where, $orderBy, "$offset, $limit");
+$orderBy = "receivedAt DESC";
+$join = "user_info on user_info.id=messages.user_id";
+$result = $db->select('messages', "*", $join, $where, $orderBy, "$offset, $limit");
 
 if ($result && $result->num_rows > 0) {
     $messages = [];

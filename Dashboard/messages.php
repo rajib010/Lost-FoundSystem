@@ -15,7 +15,7 @@ if (isset($_GET['page']) && is_numeric($_GET['page'])) {
 }
 
 $total_messages = 0;
-$count_result = $db->select('messages', "COUNT(*) as total", null, null, null);
+$count_result = $db->select('messages', "COUNT(*) as total");
 if ($count_result && $count_result->num_rows > 0) {
     $count_row = $count_result->fetch_assoc();
     $total_messages = $count_row['total'];
@@ -80,7 +80,6 @@ $total_pages = ceil($total_messages / $limit);
                                         <td>${message.email}</td>
                                         <td>${message.message}</td>
                                         <td>
-                                            <button class="edit-btn" onClick="replyMessage('${message.email}')">Reply</button>
                                             <button class="delete-btn" onClick="navigate(${message.id}, 'messages')">Delete</button>
                                         </td>
                                          `;
@@ -111,9 +110,6 @@ $total_pages = ceil($total_messages / $limit);
                 loadMessages(parseInt(currentPage));
             });
 
-            function replyMessage(email) {
-                window.location.href = `mail.php?receiver=${email}`;
-            }
         </script>
 
 </body>

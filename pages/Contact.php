@@ -34,17 +34,7 @@
 
             <div class="sub-content">
                 <h3 class="post-title">Send Us a Message</h3>
-                <form class="form-class" id="contactForm" method="post">
-                    <div class="form-group">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name" required>
-                        <p class="error" id="nameError"></p>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required>
-                        <p class="error" id="emailError"></p>
-                    </div>
+                <form class="form-class" id="contactForm" method="post" action="">
                     <div class="form-group">
                         <label for="message">Message:</label>
                         <textarea id="message" name="message" rows="5" required></textarea>
@@ -57,29 +47,11 @@
                         let isValid = true;
 
                         let messageError = document.getElementById('messageError');
-                        let nameError = document.getElementById('nameError');
-                        let emailError = document.getElementById('emailError');
 
                         messageError.innerText = ''
-                        nameError.innerText = ''
-                        emailError.innerText = ''
 
                         let message = document.getElementById('message').value.trim();
-                        let email = document.getElementById('email').value;
-                        let name = document.getElementById('name').value;
 
-                        const fullnamePattern = /^[A-Za-z]{3,}( [A-Za-z]{3,})+$/;
-                        if (!fullnamePattern.test(name)) {
-                            nameError.innerText = 'Enter a valid name';
-                            isValid = false;
-                        }
-
-
-                        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                        if (!emailPattern.test(email)) {
-                            emailError.innerText = "Invalid email address";
-                            isValid = false;
-                        }
 
                         if (message.length < 5) {
                             messageError.innerText = 'Please enter a valid message';
@@ -91,15 +63,19 @@
 
                     document.addEventListener('DOMContentLoaded', function() {
                         document.getElementById('contactForm').addEventListener('submit', async function(event) {
-                            if (!validateForm()) {
-                                event.preventDefault()
-                                return;
-                            }
                             event.preventDefault();
-                            let formData = new FormData(this);
+                            if (!validateForm()) return;
+
+                            let formData = {
+                                message: document.getElementById("message").value.trim()
+                            };
+
                             await fetch('../utility/SendMessage.php', {
                                     method: 'POST',
-                                    body: formData
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(formData)
                                 })
                                 .then(response => response.json())
                                 .then(data => {

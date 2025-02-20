@@ -81,10 +81,6 @@ require("../utility/Database.php");
                         View Messages
                         <i class="fa-solid fa-message"></i>
                     </a></button></li>
-            <li><button class="nav-btn"><a href="./mail.php">
-                        Send Mail
-                        <i class="fa-solid fa-message"></i>
-                    </a></button></li>
         </ul>
     </nav>
 </body>

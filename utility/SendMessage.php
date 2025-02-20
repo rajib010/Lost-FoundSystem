@@ -1,20 +1,27 @@
 <?php
+session_start(); 
 require_once './Database.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $message = $_POST['message'];
-
-    if (empty($name) || empty($email) || empty($message)) {
-        echo json_encode(['status' => 'error', 'message' => 'Please fill in all the fields']);
-        return;
+    if (!isset($_SESSION['loggedinuserId'])) {
+        echo json_encode(['status' => 'error', 'message' => 'User not logged in.']);
+        exit;
     }
+
+    $user_id = $_SESSION['loggedinuserId'];
+
+    $data = json_decode(file_get_contents("php://input"), true);
+    
+    if (!isset($data['message']) || empty(trim($data['message']))) {
+        echo json_encode(['status' => 'error', 'message' => 'Message cannot be empty']);
+        exit;
+    }
+
+    $message = trim($data['message']);
 
     $db = new Database();
     $result = $db->insert("messages", [
-        'name' => $name,
-        'email' => $email,
+        'user_id'=> $user_id,
         'message' => $message,
     ]);
 
